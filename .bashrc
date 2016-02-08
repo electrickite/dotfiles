@@ -7,7 +7,6 @@ chruby 2.3
 
 alias killvpn='sudo launchctl unload /Library/LaunchDaemons/com.cisco.anyconnect.vpnagentd.plist'
 alias startvpn='sudo launchctl load /Library/LaunchDaemons/com.cisco.anyconnect.vpnagentd.plist'
-alias start_elasticsearch='elasticsearch --config=/usr/local/opt/elasticsearch/config/elasticsearch.yml'
 alias start_postgres='postgres -D /usr/local/var/postgres'
 
 alias be='bundle exec'
