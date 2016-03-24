@@ -1,5 +1,21 @@
+local LIP = require 'LIP';
+
 local combo = {"cmd", "alt", "ctrl"}
+local comboRaw = 1835305
 local shortCombo = {"cmd", "alt"}
+local shortComboRaw = 1573160
+
+
+
+function fileExists(name)
+  local exists = false
+  local f = io.open(name, "r")
+  if f ~= nil then
+    exists = true
+    io.close(f)
+  end
+  return exists
+end
 
 
 -- Reload Config --
@@ -143,3 +159,84 @@ end
 hs.hotkey.bind(shortCombo, "V", function()
   hs.eventtap.keyStrokes(hs.pasteboard.getContents())
 end)
+
+
+
+-- Play some tunes --
+local pb
+local pbControl
+local pbDir = os.getenv("HOME") .. '/.config/pianobar/'
+local stations = {}
+
+if fileExists(pbDir .. 'stations.ini') then
+  local config = LIP.load(pbDir .. 'stations.ini');
+  stations = config.stations
+end
+
+function sendPianoBarCommand(cmd)
+  if pb:isRunning() then
+    os.execute( "echo '" .. cmd .. "' > " .. pbDir .. 'ctl' )
+  end
+end
+
+function ensurePianoBarPipe()
+  os.execute( 'if [[ ! -p ' .. pbDir .. 'ctl ]]; then mkfifo ' .. pbDir .. 'ctl; fi' )
+end
+
+function discardOutput(task, stdOut, stdErr)
+end
+
+function newPianoBar()
+  ensurePianoBarPipe()
+  pb = hs.task.new("/usr/local/bin/pianobar", discardOutput, discardOutput)
+  pb:setCallback(newPianoBar)
+end
+
+function newPbControl()
+  local menu = {
+    { title = 'Play/Pause', fn = function() sendPianoBarCommand('p') end },
+    { title = 'Next Track', fn = function() sendPianoBarCommand('n') end },
+    { title = '-' }
+  }
+
+  for k, v in pairs(stations) do
+    table.insert(menu, { title = v, fn = function() sendPianoBarCommand(k) end })
+  end
+
+  table.insert(menu, { title = "-" })
+  table.insert(menu, { title = "Quit Pianobar", fn = quitPianoBar })
+
+  pbControl = hs.menubar.new()
+  pbControl:setTitle('pb')
+  pbControl:setMenu(menu)
+end
+
+function quitPianoBar()
+  pb:terminate()
+  pbControl:delete()
+end
+
+newPianoBar()
+
+hs.hotkey.bind(combo, "P", function()
+  if pb:isRunning() then
+    quitPianoBar()
+  else
+    pb:start()
+    newPbControl()
+  end
+end)
+
+hs.eventtap.new({hs.eventtap.event.types.NSSystemDefined}, function(event)
+  local data = event:getRawEventData().NSEventData
+
+  if data.subtype == 8 and data.modifierFlags == shortComboRaw then
+    if data.data1 == 1051392 then
+      -- Play/Pause key
+      sendPianoBarCommand('p')
+    elseif data.data1 == 1248000 then
+      -- Next track key
+      sendPianoBarCommand('n')
+    end
+  end
+end):start()
