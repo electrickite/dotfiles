@@ -184,6 +184,7 @@ function ensurePianoBarPipe()
 end
 
 function discardOutput(task, stdOut, stdErr)
+  return true
 end
 
 function newPianoBar()
