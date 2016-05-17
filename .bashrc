@@ -1,4 +1,4 @@
-export PATH="/usr/local/sbin:$PATH"
+export PATH="/usr/local/sbin:$PATH:$HOME/bin"
 
 source /usr/local/opt/chruby/share/chruby/chruby.sh
 source /usr/local/opt/chruby/share/chruby/auto.sh
