@@ -20,6 +20,12 @@ webroot() {
   ln -s "$1" "$HOME/Sites/webroot"
 }
 
+sethostname() {
+  scutil --set ComputerName "$1"
+  scutil --set LocalHostName "$1"
+  scutil --set HostName "$1"
+}
+
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 
