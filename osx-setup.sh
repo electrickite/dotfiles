@@ -147,7 +147,7 @@ fi
 echo "Performing additional configurations..."
 git config --global user.name "$full_name"
 git config --global user.email "$email_address"
-git config --global core.excludesfile ~/.gitignore
+git config --global core.excludesfile ~/.gitignoreglobal
 git config --global include.path ~/.gitconfig_main
 
 mkdir "$HOME/Sites"
