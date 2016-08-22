@@ -20,6 +20,10 @@ webroot() {
   ln -s "$1" "$HOME/Sites/webroot"
 }
 
+tunnel() {
+  ssh -L $3:$2:$3 $1 -N
+}
+
 sethostname() {
   scutil --set ComputerName "$1"
   scutil --set LocalHostName "$1"
