@@ -21,10 +21,6 @@ webroot() {
   ln -s "$1" "$HOME/Sites/webroot"
 }
 
-tunnel() {
-  ssh -L $3:$2:$3 $1 -N
-}
-
 docker-rmc() {
   docker ps -a | awk '{ print $1,$2 }' | grep "$1" | awk '{print $1 }' | xargs docker rm
 }
