@@ -35,13 +35,19 @@ fi
 
 rm -f ~/.bashrc ~/.bash_profile ~/.gitconfig ~/.vimrc
 
-while read file; do
-  ln -s "$HOME/.dotfiles/$file" "$HOME/$file"
-done < "$HOME/.dotfiles/manifest"
+exclude_files=".DS_Store|.git|support"
+GLOBIGNORE=".:.."
+
+for path in $HOME/.dotfiles/*; do
+  filename=$(basename "$path")
+  if [[ ! $filename =~ ^($exclude_files)$ ]]; then
+    ln -s "$path" "$HOME/$filename"
+  fi
+done
 
 
 echo "Installing Homebrew..."
-ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
 type -P brew &>/dev/null || { echo "brew command not found. Aborting..."; exit 1; }
 
@@ -75,6 +81,7 @@ brew install libtasn1
 brew install libtool
 brew install libxml2
 brew install libyaml
+brew install lynx
 brew install mariadb
 brew install mcrypt
 brew install n
@@ -107,9 +114,11 @@ brew cask install firefox
 brew cask install google-chrome
 brew cask install google-earth
 brew cask install hammerspoon
+brew cask install hex-fiend
 brew cask install iterm2
 brew cask install keepassx
 brew cask install mysqlworkbench
+brew cask install paintbrush
 brew cask install pgadmin3
 brew cask install postman
 brew cask install sublime-text
@@ -147,7 +156,6 @@ fi
 echo "Performing additional configurations..."
 git config --global user.name "$full_name"
 git config --global user.email "$email_address"
-git config --global core.excludesfile ~/.gitignoreglobal
 git config --global include.path ~/.gitconfig_main
 
 mkdir "$HOME/Sites"
