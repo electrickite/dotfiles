@@ -9,6 +9,7 @@ alias killvpn='sudo launchctl unload /Library/LaunchDaemons/com.cisco.anyconnect
 alias startvpn='sudo launchctl load /Library/LaunchDaemons/com.cisco.anyconnect.vpnagentd.plist'
 alias start_postgres='postgres -D /usr/local/var/postgres'
 alias flushdns='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder; echo DNS flushed!'
+alias listening='lsof -nP +c 15 | grep LISTEN'
 
 alias be='bundle exec'
 
