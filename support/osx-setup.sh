@@ -4,7 +4,6 @@
 
 # Before running install the following:
 #   * Xcode (App store, be sure to open once and accept license)
-#   * XQuartz (http://www.xquartz.org)
 #   * If available, copy keys.tar.gpg to your home directory
 #
 # Consider running with caffeinate to prevent computer sleep:
@@ -59,6 +58,8 @@ brew tap caskroom/cask
 brew tap homebrew/dupes
 brew tap homebrew/versions
 brew tap homebrew/homebrew-php
+
+brew cask install xquartz
 
 echo "Installing a few useful tools..."
 brew install ack
