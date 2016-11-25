@@ -67,7 +67,7 @@ brew install ffmpeg
 brew install gdbm
 brew install gettext
 brew install git
-brew install gnupg
+brew install gnupg2
 brew install gnutls
 brew install heroku-toolbelt
 brew install httpie
