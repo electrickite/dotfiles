@@ -159,8 +159,6 @@ git config --global user.name "$full_name"
 git config --global user.email "$email_address"
 git config --global include.path ~/.gitconfig_main
 
-cp ~/.dotfiles/support/dangerzone.mp3 ~/Music
-
 mkdir "$HOME/Sites"
 mkdir "$HOME/projects"
 
