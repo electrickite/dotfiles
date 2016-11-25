@@ -126,7 +126,8 @@ brew cask install skype
 brew cask install transmission
 brew cask install transmit
 
-ln -s /Applications/Sublime\ Text\ 2.app/Contents/SharedSupport/bin/subl /usr/local/bin/subl
+rm -f ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/User/Preferences.sublime-settings
+ln -s ~/.config/sublime-text-3/Packages/User/Preferences.sublime-settings ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/User/Preferences.sublime-settings
 
 echo "Installing updated Ruby..."
 ruby-install ruby $ruby_version
@@ -157,6 +158,8 @@ echo "Performing additional configurations..."
 git config --global user.name "$full_name"
 git config --global user.email "$email_address"
 git config --global include.path ~/.gitconfig_main
+
+cp ~/.dotfiles/support/dangerzone.mp3 ~/Music
 
 mkdir "$HOME/Sites"
 mkdir "$HOME/projects"
