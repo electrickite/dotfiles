@@ -106,7 +106,6 @@ npm install -g bower
 npm install -g gulp
 
 echo "Installing applications..."
-brew cask install box-sync
 brew cask install burn
 brew cask install disk-inventory-x
 brew cask install dropbox
