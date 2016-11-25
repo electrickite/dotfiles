@@ -142,10 +142,11 @@ cd "$HOME"
 
 if [ -f keys.tar.gpg ]; then
     echo "keys.tar.gpg found. Extracting..."
-    gpg -o - keys.tar.gpg | tar -xv --overwrite
+    gpg -o - keys.tar.gpg | tar -xv
     chmod 700 $HOME/.ssh
     chmod 600 $HOME/.ssh/id_rsa
     chmod 644 $HOME/.ssh/id_rsa.pub
+    rm -i keys.tar.gpg
 elif [ -d "$HOME/.ssh" ]; then
     echo "SSH key found."
 else
