@@ -1,4 +1,6 @@
 {
+  "font_face": "Hack",
+  "font_size": 12,
   "color_scheme": "Packages/Color Scheme - Default/Sunburst.tmTheme",
   "file_exclude_patterns":
   [

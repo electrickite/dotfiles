@@ -53,6 +53,7 @@ type -P brew &>/dev/null || { echo "brew command not found. Aborting..."; exit 1
 
 brew update
 brew tap caskroom/cask
+brew tap caskroom/fonts
 brew tap homebrew/dupes
 brew tap homebrew/versions
 brew tap homebrew/homebrew-php
@@ -110,8 +111,8 @@ brew cask install burn
 brew cask install disk-inventory-x
 brew cask install dropbox
 brew cask install firefox
+brew cask install font-hack
 brew cask install google-chrome
-brew cask install google-earth
 brew cask install hammerspoon
 brew cask install hex-fiend
 brew cask install iterm2
@@ -125,6 +126,10 @@ brew cask install skype
 brew cask install transmission
 brew cask install transmit
 
+# Configure Sublime Text
+echo "Starting Sublime Text"
+subl
+read -p "Press [Enter] to continue AFTER Sublime has started..."
 rm -f ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/User/Preferences.sublime-settings
 ln -s ~/.config/sublime-text-3/Packages/User/Preferences.sublime-settings ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/User/Preferences.sublime-settings
 
