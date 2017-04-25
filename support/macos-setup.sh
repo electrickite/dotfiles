@@ -8,7 +8,7 @@
 # If available, copy keys.tar.gpg to your home directory
 
 # Config
-ruby_version="2.3"
+ruby_version="2.4"
 
 
 echo "-- Mac setup script --"
