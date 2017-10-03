@@ -13,3 +13,7 @@ source /usr/share/chruby/auto.sh
 
 alias vi=vim
 alias be='bundle exec'
+
+if [ -f ~/.bashenv ]; then
+  source ~/.bashenv
+fi
