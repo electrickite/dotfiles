@@ -1,0 +1,28 @@
+source /usr/local/opt/chruby/share/chruby/chruby.sh
+source /usr/local/opt/chruby/share/chruby/auto.sh
+
+chruby 2.4
+
+alias listening='lsof -nP +c 15 | grep LISTEN'
+alias be='bundle exec'
+alias vi=vim
+
+webroot() {
+  ln -s "$1" "$HOME/Sites/webroot"
+}
+
+tunnel() {
+  ssh -NL $1 $2
+}
+
+tunnels() {
+  sudo -E ssh -F ~/.ssh/config -i ~/.ssh/id_rsa -NL $1 $2
+}
+
+docker-rmc() {
+  docker ps -a | awk '{ print $1,$2 }' | grep "$1" | awk '{print $1 }' | xargs docker rm
+}
+
+if [ -f ~/.bashenv ]; then
+  source ~/.bashenv
+fi

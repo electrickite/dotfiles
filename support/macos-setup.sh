@@ -45,6 +45,12 @@ for path in $HOME/.dotfiles/*; do
   fi
 done
 
+for path in $HOME/.dotfiles/os/mac/*; do
+  filename=$(basename "$path")
+  if [[ ! $filename =~ ^($exclude_files)$ ]]; then
+    ln -s "$path" "$HOME/$filename"
+  fi
+done
 
 echo "Installing Homebrew..."
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"

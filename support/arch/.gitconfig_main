@@ -1,5 +1,0 @@
-[alias]
-	mav = !play -q ~/.dotfiles/support/dangerzone.mp3 &
-	goose = !kill $(pgrep play)
-[push]
-	default = simple

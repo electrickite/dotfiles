@@ -1,3 +1,7 @@
-configstore/update-notifier-nodemon.json
-mc
-QtProject
+*
+
+# Include these files:
+!pianobar
+!sublime-text-3
+!user-dirs.dirs
+!user-dirs.locale

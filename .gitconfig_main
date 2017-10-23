@@ -1,5 +1,2 @@
-[alias]
-	mav = !afplay ~/.dotfiles/support/dangerzone.mp3 &
-	goose = !kill $(pgrep afplay)
 [push]
 	default = simple
