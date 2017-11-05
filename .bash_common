@@ -1,6 +1,3 @@
-source /usr/local/opt/chruby/share/chruby/chruby.sh
-source /usr/local/opt/chruby/share/chruby/auto.sh
-
 chruby 2.4
 
 alias listening='lsof -nP +c 15 | grep LISTEN'

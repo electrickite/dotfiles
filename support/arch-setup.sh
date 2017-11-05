@@ -66,11 +66,13 @@ cd "$HOME"
 
 if [ -f keys.tar.gpg ]; then
     echo "keys.tar.gpg found. Extracting..."
-    gpg -o --pinentry-mode loopback - keys.tar.gpg | tar -xv
+    gpg --pinentry-mode loopback keys.tar.gpg
+    rm -rf ~/.gnupg
+    tar -xf keys.tar
     chmod 700 $HOME/.ssh
     chmod 600 $HOME/.ssh/id_rsa
     chmod 644 $HOME/.ssh/id_rsa.pub
-    rm -i keys.tar.gpg
+    rm -i keys.ta*
 elif [ -d "$HOME/.ssh" ]; then
     echo "SSH key found."
 else
