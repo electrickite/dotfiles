@@ -3,8 +3,8 @@
 # Set up Arch Linux
 
 # Before running do the following:
+#  - Install and configure sudo
 #  - If available, copy keys.tar.gpg to your home directory
-
 
 echo "-- Arch setup script --"
 echo "WARNING: This script should only be used to configure new machines!"
@@ -45,9 +45,30 @@ for path in $HOME/.dotfiles/os/arch/*; do
 done
 
 echo "Installing packages..."
-sudo pacman -Syu --needed git openssh pinentry gnupg
+sudo pacman -Syu --needed \
+  git \
+  openssh \
+  pinentry \
+  gnupg \
+  curl \
+  wget \
+  rsync \
+  lynx \
+  vim \
+  tmux \
+  net-tools \
+  dnsutils \
+  exfat-utils \
+  dosfstools \
+  mlocate
 
 if ! type -P pacaur &>/dev/null; then
+  echo "Fetching current cower PGP key from PKGBUILD..."
+  curl -s https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=cower | grep validpgpkeys
+  read -p "Enter PGP to import [487EACC08557AD082088DABA1EB2638FF56C0C53] " cower_key
+  cower_key=${cower_key:-487EACC08557AD082088DABA1EB2638FF56C0C53}
+  gpg --receive-keys $cower_key
+
   echo "Installing pacaur..."
   mkdir aur-src
   cd aur-src
@@ -87,6 +108,7 @@ git config --global include.path ~/.gitconfig_main
 
 mkdir "$HOME/projects"
 
+sudo updatedb
 
 echo "Setup complete!"
 exit 0
