@@ -1,8 +1,11 @@
 *
 
 # Include these files:
-!pianobar
-!sublime-text-3
+!pianobar/
+!pianobar/*
+!sublime-text-3/
+!sublime-text-3/*
 !user-dirs.dirs
 !user-dirs.locale
 !environment.d
+!environment.d/*
