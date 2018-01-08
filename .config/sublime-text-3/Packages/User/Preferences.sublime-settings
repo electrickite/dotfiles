@@ -13,5 +13,6 @@
 		80
 	],
 	"tab_size": 2,
-	"translate_tabs_to_spaces": true
+	"translate_tabs_to_spaces": true,
+	"hot_exit": false
 }
