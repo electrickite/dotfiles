@@ -9,6 +9,7 @@ alias ls='ls --color=auto'
 PS1='[\u@\h \W]\$ '
 
 alias open=mimeo
+alias pacupdate='sudo pacman -Syu && pacaur -u --aur --devel --needed'
 
 source /usr/share/chruby/chruby.sh
 source /usr/share/chruby/auto.sh
