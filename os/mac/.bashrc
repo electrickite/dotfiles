@@ -22,6 +22,9 @@ export PATH="/usr/local/heroku/bin:$PATH"
 source /usr/local/opt/chruby/share/chruby/chruby.sh
 source /usr/local/opt/chruby/share/chruby/auto.sh
 
+export NVM_DIR="$HOME/.nvm"
+source /usr/local/opt/nvm/nvm.sh
+
 if [ -f ~/.bash_common ]; then
   source ~/.bash_common
 fi
