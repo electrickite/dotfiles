@@ -88,9 +88,9 @@ brew install libyaml
 brew install lynx
 brew install mariadb
 brew install mcrypt
-brew install n
 brew install node
 brew install nmap
+brew install nvm
 brew install openssl
 brew install pcre
 brew install php
@@ -107,6 +107,7 @@ brew install wget
 brew install zlib
 
 npm install -g gulp
+mkdir "$HOME/.nvm"
 
 echo "Installing applications..."
 brew cask install burn
