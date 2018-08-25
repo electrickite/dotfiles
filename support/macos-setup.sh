@@ -8,10 +8,11 @@
 # If available, copy keys.tar.gpg to your home directory
 
 # Config
-ruby_version="2.4"
+ruby_version="2.5"
 
 
 echo "-- Mac setup script --"
+echo "NOTICE:  Script must be run by an admin user"
 echo "WARNING: This script should only be used to configure new machines!"
 echo
 read -p "Press [Enter] to start setup..."
@@ -27,6 +28,7 @@ read email_address
 # Ensure XCode developer tools are installed
 echo "Installing XCode developer tools"
 sudo xcode-select --install
+sudo xcodebuild -license
 read -p "Press [Enter] to continue AFTER installation has finished..."
 
 if [[ ! -d "$HOME/.dotfiles" ]]; then
@@ -58,11 +60,7 @@ echo "Installing Homebrew..."
 type -P brew &>/dev/null || { echo "brew command not found. Aborting..."; exit 1; }
 
 brew update
-brew tap caskroom/cask
 brew tap caskroom/fonts
-brew tap homebrew/dupes
-brew tap homebrew/versions
-brew tap homebrew/homebrew-php
 
 echo "Installing a few useful tools..."
 brew install ack
@@ -76,7 +74,6 @@ brew install gettext
 brew install git
 brew install gnupg2
 brew install gnutls
-brew install heroku-toolbelt
 brew install httpie
 brew install imagemagick
 brew install libevent
@@ -91,13 +88,13 @@ brew install libyaml
 brew install lynx
 brew install mariadb
 brew install mcrypt
-brew install n
 brew install node
 brew install nmap
+brew install nvm
 brew install openssl
 brew install pcre
-brew install php-version
-brew install php56
+brew install php
+brew install php@5.6
 brew install phpunit
 brew install pianobar
 brew install postgresql
@@ -109,8 +106,8 @@ brew install tmux
 brew install wget
 brew install zlib
 
-npm install -g bower
 npm install -g gulp
+mkdir "$HOME/.nvm"
 
 echo "Installing applications..."
 brew cask install burn
@@ -125,10 +122,9 @@ brew cask install iterm2
 brew cask install keepassx
 brew cask install mysqlworkbench
 brew cask install paintbrush
-brew cask install pgadmin3
+brew cask install pgadmin4
 brew cask install postman
 brew cask install sublime-text
-brew cask install skype
 brew cask install transmission
 brew cask install transmit
 
