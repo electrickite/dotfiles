@@ -9,3 +9,9 @@
 !user-dirs.locale
 !environment.d
 !environment.d/*
+!sway/
+!sway/*
+!i3status/
+!i3status/*
+!termite/
+!termite/*
