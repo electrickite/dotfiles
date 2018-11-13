@@ -28,6 +28,7 @@ set $battery_status /sys/class/power_supply/BAT0/status
 #
 exec mako --max-visible 5 --default-timeout 10000
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec udiskie -qs
 exec --no-startup-id dropbox
 
 ### Output configuration
