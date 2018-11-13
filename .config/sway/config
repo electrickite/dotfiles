@@ -255,8 +255,8 @@ bar {
 #
 # Network Manager
 #
-bindsym $mod+n exec termite --name=swaynm --geometry=58x26 -e "nmtui"
-for_window [app_id="^swaynm$"] floating enable, sticky enable, border pixel 1
+bindsym $mod+n exec termite --name=swaynm -e "nmtui"
+for_window [app_id="^swaynm$"] floating enable, sticky enable, border pixel 1, resize set 640 480
 
 #
 # Hotkeys
