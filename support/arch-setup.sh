@@ -62,24 +62,17 @@ sudo pacman -Syu --needed \
   dosfstools \
   mlocate
 
-if ! type -P pacaur &>/dev/null; then
-  echo "Fetching current cower PGP key from PKGBUILD..."
-  curl -s https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=cower | grep validpgpkeys
-  read -p "Enter PGP to import [487EACC08557AD082088DABA1EB2638FF56C0C53] " cower_key
-  cower_key=${cower_key:-487EACC08557AD082088DABA1EB2638FF56C0C53}
-  gpg --receive-keys $cower_key
+if ! type -P aurman &>/dev/null; then
+  read -p "Enter aurman PGP key to import [465022E743D71E39] " aurman_key
+  aurman_key=${aurman_key:-465022E743D71E39}
+  gpg --receive-keys $aurman_key
 
-  echo "Installing pacaur..."
-  mkdir aur-src
-  cd aur-src
-  git clone https://aur.archlinux.org/cower.git
-  git clone https://aur.archlinux.org/pacaur.git
-  cd cower
+  echo "Installing aurman..."
+  git clone https://aur.archlinux.org/aurman.git aurman
+  cd aurman
   makepkg -si
-  cd ../pacaur
-  makepkg -si
-  cd ../..
-  rm -rf aur-src
+  cd ..
+  rm -rf aurman
 fi
 
 # Add SSH keys
