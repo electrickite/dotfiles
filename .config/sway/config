@@ -283,6 +283,9 @@ set $screenshot $(date +'%Y-%m-%d-%H%M%S_screenshot.png')
 bindsym Print exec grim "$(xdg-user-dir PICTURES)/$screenshot" && notify-send "Sceenshot saved" "$screenshot"
 bindsym $mod+Print exec slurp | grim -g - "$(xdg-user-dir PICTURES)/$screenshot" && notify-send "Sceenshot saved" "$screenshot"
 
+# Caffeine
+bindsym $mod+c exec 'if systemctl --user --quiet is-active caffeine.service; then systemctl --user stop caffeine.service; else systemctl --user start caffeine.service; fi'
+
 #
 # Application tweaks
 #
