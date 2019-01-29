@@ -1,4 +1,4 @@
-chruby 2.5
+chruby 2.6
 
 alias listening='lsof -nP +c 15 | grep LISTEN'
 alias be='bundle exec'
