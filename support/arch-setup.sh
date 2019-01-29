@@ -86,6 +86,8 @@ if [ -f keys.tar.gpg ]; then
     chmod 700 $HOME/.ssh
     chmod 600 $HOME/.ssh/id_rsa
     chmod 644 $HOME/.ssh/id_rsa.pub
+    echo "pinentry-program /usr/bin/pinentry" > $HOME/.gnupg/gpg-agent.conf
+    gpg-connect-agent reloadagent /bye
     rm -i keys.ta*
 elif [ -d "$HOME/.ssh" ]; then
     echo "SSH key found."
