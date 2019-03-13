@@ -32,6 +32,7 @@ exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec udiskie -qs
 exec --no-startup-id dropbox
 exec --no-startup-id batsignal
+exec nm-applet
 
 ### Output configuration
 #
@@ -258,8 +259,7 @@ bar {
 #
 # Network Manager
 #
-bindsym $mod+n exec termite --name=swaynm -e "nmtui"
-for_window [app_id="^swaynm$"] floating enable, sticky enable, border pixel 1, resize set 640 480
+bindsym $mod+n exec networkmanager_dmenu
 
 #
 # Hotkeys
