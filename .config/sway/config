@@ -20,7 +20,8 @@ set $term gnome-terminal
 set $menu j4-dmenu-desktop --dmenu="dmenu -i" --term=$term --no-generic
 
 # Idle behavior variables
-set $lock swaylock -c 000000
+#set $lock swaylock -c 000000
+set $lock dbus-send --type=method_call --dest=org.gnome.ScreenSaver /org/gnome/ScreenSaver org.gnome.ScreenSaver.Lock
 set $battery_status /sys/class/power_supply/BAT0/status
 
 #
@@ -47,7 +48,7 @@ output eDP-1 scale 2
 
 ### Idle configuration
 
-exec swayidle \
+exec swayidle -w \
     timeout 300 '$lock' \
     timeout 600 'swaymsg "output * dpms off"' \
        resume 'swaymsg "output * dpms on"' \
@@ -297,4 +298,4 @@ for_window [app_id="^file-roller$"] border none
 for_window [app_id="^org.gnome."] border none
 for_window [app_id="^baobab$"] border none
 
-include /etc/sway/config.d/*
+#include /etc/sway/config.d/*

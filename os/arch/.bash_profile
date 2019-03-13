@@ -10,7 +10,7 @@ if [ -z "$DISPLAY" ] && \
    [ "$XDG_SESSION_TYPE" != "wayland" ] && \
    [ -n "$(systemctl list-units --type=target --plain --no-pager --no-legend | grep multi-user.target)" ]
 then
-  eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
+  eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
 
   export XDG_SESSION_TYPE=wayland \
          _JAVA_AWT_WM_NONREPARENTING=1 \
@@ -18,4 +18,6 @@ then
 
   sway
   exit 0
+elif [ "$DESKTOP_SESSION" = "sway" ] || [ "$DESKTOP_SESSION" = "sway-run" ]; then
+  export _JAVA_AWT_WM_NONREPARENTING=1
 fi
