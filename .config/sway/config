@@ -20,8 +20,8 @@ set $term gnome-terminal
 set $menu j4-dmenu-desktop --dmenu="dmenu -i" --term=$term --no-generic
 
 # Idle behavior variables
-#set $lock swaylock -c 000000
-set $lock dbus-send --type=method_call --dest=org.gnome.ScreenSaver /org/gnome/ScreenSaver org.gnome.ScreenSaver.Lock
+set $lock swaylock -f -c 000000
+#set $lock dbus-send --type=method_call --dest=org.gnome.ScreenSaver /org/gnome/ScreenSaver org.gnome.ScreenSaver.Lock
 set $battery_status /sys/class/power_supply/BAT0/status
 
 #
