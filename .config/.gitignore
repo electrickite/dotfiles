@@ -13,8 +13,6 @@
 !sway/*
 !i3status/
 !i3status/*
-!termite/
-!termite/*
 !networkmanager-dmenu/
 !networkmanager-dmenu/*
 !bash/
