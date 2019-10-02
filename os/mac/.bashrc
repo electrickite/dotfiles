@@ -25,7 +25,7 @@ source /usr/local/opt/chruby/share/chruby/auto.sh
 export NVM_DIR="$HOME/.nvm"
 source /usr/local/opt/nvm/nvm.sh
 
-if [ -f ~/.bash_common ]; then
-  source ~/.bash_common
+if [ -f ~/.config/bash/common ]; then
+  source ~/.config/bash/common
 fi
 

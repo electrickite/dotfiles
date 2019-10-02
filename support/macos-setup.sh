@@ -161,6 +161,11 @@ else
     ssh-keygen -t rsa -b 2048 -C $email_address
 fi
 
+echo "Enabling Touch ID for sudo..."
+sudo sed -i '' -e '/pam_smartcard.so/i \
+auth sufficient pam_tid.so\
+' /etc/pam.d/sudo
+
 echo "Performing additional configurations..."
 git config --global user.name "$full_name"
 git config --global user.email "$email_address"
