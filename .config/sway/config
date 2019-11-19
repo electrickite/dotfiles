@@ -16,7 +16,7 @@ set $term gnome-terminal
 
 # Your preferred application launcher
 # Note: it's recommended that you pass the final command to sway
-set $menu rofi -show drun -modi "drun,run" -terminal $term -scroll-method 1 -hide-scrollbar -display-run Run -display-drun Launch -theme gruvbox-light
+set $menu rofi -show drun -modi "drun,run" -run-command "swaymsg exec -- {cmd}" -terminal $term -scroll-method 1 -hide-scrollbar -display-run Run -display-drun Launch -theme gruvbox-light
 
 # Background image
 set $bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png
@@ -26,14 +26,15 @@ set $lock swaylock -f -c 000000 -i $bg
 #set $lock dbus-send --type=method_call --dest=org.gnome.ScreenSaver /org/gnome/ScreenSaver org.gnome.ScreenSaver.Lock
 set $battery_status /sys/class/power_supply/BAT0/status
 
+
 #
 # Startup
 #
 exec mako --max-visible 5 --default-timeout 10000
-exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec udiskie -qs
-exec --no-startup-id nextcloud
-exec --no-startup-id batsignal
+exec nextcloud
+exec batsignal
 exec nm-applet
 
 ### Output configuration
@@ -57,7 +58,9 @@ exec swayidle -w \
        resume 'swaymsg "output * dpms on"' \
     timeout 900 '[ "$(cat $battery_status)" == Discharging ] && systemctl suspend' \
     timeout 3600 'systemctl suspend' \
-    before-sleep '$lock'
+    before-sleep '$lock' \
+    lock '$lock'
+#    idlehint 10
 
 # This will lock the screen after 5 minutes of inactivity, then turn off
 # the displays after 10 minutes, and turn your screens back on when resumed.
@@ -93,7 +96,7 @@ exec swayidle -w \
     bindsym $mod+Shift+q kill
 
     # start your launcher
-    bindsym $mod+d exec $menu
+    bindsym $mod+Space exec $menu
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -111,18 +114,18 @@ exec swayidle -w \
 # System menu mode
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (p) shutdown
 mode "$mode_system" {
-    bindsym l exec --no-startup-id $lock, mode "default"
-    bindsym e exec --no-startup-id swaymsg exit, mode "default"
-    bindsym s exec --no-startup-id systemctl suspend, mode "default"
-    bindsym h exec --no-startup-id systemctl hibernate, mode "default"
-    bindsym r exec --no-startup-id systemctl reboot, mode "default"
-    bindsym p exec --no-startup-id systemctl poweroff, mode "default"
+    bindsym l exec $lock, mode "default"
+    bindsym e exec swaymsg exit, mode "default"
+    bindsym s exec systemctl suspend, mode "default"
+    bindsym h exec systemctl hibernate, mode "default"
+    bindsym r exec systemctl reboot, mode "default"
+    bindsym p exec systemctl poweroff, mode "default"
 
     # back to normal: Enter or Escape
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
-bindsym $mod+Pause mode "$mode_system"
+bindsym $mod+Escape mode "$mode_system"
 
 #
 # Moving around:
@@ -151,6 +154,10 @@ bindsym $mod+Pause mode "$mode_system"
 #
 # Workspaces:
 #
+    # Cycle through active workspaces
+    bindsym Alt+Tab workspace next
+    bindsym Alt+Shift+Tab workspace prev
+
     # switch to workspace
     bindsym $mod+1 workspace 1
     bindsym $mod+2 workspace 2
@@ -190,13 +197,14 @@ bindsym $mod+Pause mode "$mode_system"
     bindsym $mod+e layout toggle split
 
     # Make the current focus fullscreen
+    bindsym $mod+F11 fullscreen
     bindsym $mod+f fullscreen
 
     # Toggle the current focus between tiling and floating mode
-    bindsym $mod+Shift+space floating toggle
+    bindsym $mod+Shift+t floating toggle
 
     # Swap focus between the tiling area and the floating area
-    bindsym $mod+space focus mode_toggle
+    bindsym $mod+t focus mode_toggle
 
     # move focus to the parent container
     bindsym $mod+a focus parent
