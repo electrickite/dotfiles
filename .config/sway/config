@@ -308,5 +308,6 @@ for_window [app_id="^file-roller$"] border none
 for_window [app_id="^org.gnome."] border none
 for_window [app_id="^baobab$"] border none
 for_window [app_id="^com.system76.FirmwareManager$"] border none
+for_window [app_id="nm-openconnect-auth-dialog"] floating enable
 
 #include /etc/sway/config.d/*
