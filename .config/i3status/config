@@ -46,7 +46,7 @@ path_exists OpenVPN {
 }
 
 path_exists Anyconnect {
-  path = /sys/class/net/vpn0/dev_id
+  path = /var/run/NetworkManager/system-connections/vpn0.nmconnection
   format = " %title"
   format_down = ""
 }
