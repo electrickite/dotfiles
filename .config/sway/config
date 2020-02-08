@@ -64,14 +64,18 @@ exec swayidle -w \
     timeout 900 '[ "$(cat $battery_status)" == Discharging ] && systemctl suspend' \
     timeout 3600 'systemctl suspend' \
     before-sleep '$lock' \
-    lock '$lock'
-#    idlehint 10
+    lock '$lock' \
+    idlehint 5
 
 # This will lock the screen after 5 minutes of inactivity, then turn off
 # the displays after 10 minutes, and turn your screens back on when resumed.
 # When on battery, it will suspend the computer after 15 minutes and will
 # suspend the computer after 1 hour regardless of power source.
 # It will also lock the screen before the computer goes to sleep.
+
+# Also: prevent idle while any application is fullscreen
+for_window [class="^.*"] inhibit_idle fullscreen
+for_window [app_id="^.*"] inhibit_idle fullscreen
 
 ### Input configuration
 #
@@ -300,7 +304,7 @@ bindsym Print exec grim "$(xdg-user-dir PICTURES)/$screenshot" && notify-send "S
 bindsym $mod+Print exec slurp | grim -g - "$(xdg-user-dir PICTURES)/$screenshot" && notify-send "Sceenshot saved" "$screenshot"
 
 # Caffeine
-bindsym $mod+c exec 'if systemctl --user --quiet is-active caffeine.service; then systemctl --user stop caffeine.service; else systemctl --user start caffeine.service; fi'
+bindsym $mod+c exec 'killall -q caffeinated || caffeinated -d'
 
 #
 # Application tweaks
@@ -315,6 +319,7 @@ for_window [app_id="^baobab$"] border none
 for_window [app_id="^evince$"] border none
 for_window [app_id="^com.system76.FirmwareManager$"] border none
 for_window [app_id="nm-openconnect-auth-dialog"] floating enable
+for_window [app_id="^qemu$"] floating enable
 for_window [class="KeePassXC"] floating enable
 
 #include /etc/sway/config.d/*
