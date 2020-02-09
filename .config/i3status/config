@@ -8,6 +8,9 @@
 
 general {
   colors = true
+  color_good = "#fbf1c7"
+  color_degraded = "#d79921"
+  color_bad = "#cc241d"
   interval = 5
   output_format = "i3bar"
 }
@@ -29,6 +32,7 @@ run_watch caffeine {
 }
 
 wireless _first_ {
+  color_degraded = "#f1fbc7"
   format_up = " %essid%quality"
   format_down = ""
 }

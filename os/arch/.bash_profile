@@ -15,6 +15,7 @@ then
 
   export XDG_SESSION_TYPE=wayland
   export _JAVA_AWT_WM_NONREPARENTING=1
+  export QT_QPA_PLATFORMTHEME=gtk2
   export SSH_AUTH_SOCK
 
   sway

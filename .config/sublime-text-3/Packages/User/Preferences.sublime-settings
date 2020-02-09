@@ -1,9 +1,10 @@
 {
-	"color_scheme": "Packages/Color Scheme - Default/Monokai.tmTheme",
+	"color_scheme": "Packages/gruvbox/gruvbox (Dark) (Hard).sublime-color-scheme",
 	"file_exclude_patterns":
 	[
 	],
 	"font_face": "Hack",
+	"font_size": 11,
 	"hot_exit": false,
 	"ignored_packages":
 	[
@@ -14,6 +15,6 @@
 		80
 	],
 	"tab_size": 2,
-	"theme": "Adaptive.sublime-theme",
+	"theme": "gruvbox.sublime-theme",
 	"translate_tabs_to_spaces": true
 }

@@ -13,7 +13,11 @@
 !sway/*
 !i3status/
 !i3status/*
+!mako/
+!mako/*
 !networkmanager-dmenu/
 !networkmanager-dmenu/*
 !bash/
 !bash/*
+!gtk-3.0/
+!gtk-3.0/settings.ini
