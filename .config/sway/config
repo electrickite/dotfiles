@@ -316,7 +316,8 @@ bindsym $mod+c exec 'killall -q caffeinated || caffeinated -d'
 # Application tweaks
 #
 for_window [app_id="nm-openconnect-auth-dialog"] floating enable
-for_window [app_id="^qemu$"] floating enable
+for_window [app_id="qemu"] floating enable
+for_window [app_id="desktopclient.nextcloud.com.nextcloud"] floating enable
 for_window [class="KeePassXC"] floating enable
 
 #include /etc/sway/config.d/*

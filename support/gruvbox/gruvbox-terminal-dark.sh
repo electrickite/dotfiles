@@ -8,8 +8,8 @@ background="rgb(29,32,33)" # Hard (bg0_h)
 #background="rgb(50,48,47)" # Soft (bg0_s)
 
 # Foreground color
-foreground="#d5c4a1" # fg2
-#foreground="#ebdbb2" # fg1
+#foreground="#d5c4a1" # fg2
+foreground="#ebdbb2" # fg1
 #foreground="#fbf1c7" # fg0
 
 # "Yellow" color

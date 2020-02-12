@@ -23,6 +23,11 @@ if [[ ! -d "$HOME/.dotfiles" ]]; then
   echo "Could not find $HOME/.dotfiles. Aborting..."; exit 1
 fi
 
+echo "Initializing dotfile git submodules..."
+cd "$HOME/.dotfiles"
+git submodule update --init --recursive
+cd $HOME
+
 echo "Linking config files..."
 rm -f ~/.bashrc ~/.bash_profile ~/.gitconfig
 rm -rf ~/.config
@@ -49,6 +54,10 @@ sudo pacman -Syu --needed \
   git \
   openssh \
   pinentry \
+  fzf \
+  ctags \
+  cmake \
+  python \
   gnupg \
   curl \
   wget \
