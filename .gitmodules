@@ -46,6 +46,9 @@
 [submodule ".vim/pack/plugins/start/vim-commentary"]
 	path = .vim/pack/plugins/start/vim-commentary
 	url = https://github.com/tpope/vim-commentary.git
-[submodule ".vim/pack/plugins/start/YouCompleteMe"]
-	path = .vim/pack/plugins/start/YouCompleteMe
-	url = https://github.com/ycm-core/YouCompleteMe.git
+[submodule ".vim/pack/plugins/start/vim-mucomplete"]
+	path = .vim/pack/plugins/start/vim-mucomplete
+	url = https://github.com/lifepillar/vim-mucomplete.git
+[submodule ".vim/pack/plugins/start/OmniCppComplete"]
+	path = .vim/pack/plugins/start/OmniCppComplete
+	url = https://github.com/vim-scripts/OmniCppComplete.git

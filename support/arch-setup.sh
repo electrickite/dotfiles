@@ -56,8 +56,6 @@ sudo pacman -Syu --needed \
   pinentry \
   fzf \
   ctags \
-  cmake \
-  python \
   gnupg \
   curl \
   wget \

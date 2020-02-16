@@ -1,7 +1,8 @@
 filetype plugin indent on
-set backspace=indent,eol,start
 syntax on
+set nocp
 set encoding=utf-8
+set backspace=indent,eol,start
 set number
 set cursorline
 set showmatch
@@ -13,7 +14,29 @@ set tabstop=2
 set softtabstop=2
 set expandtab
 
-let mapleader = ","
+set completeopt-=preview
+set completeopt+=menuone,noinsert,noselect
+set shortmess+=c
+set belloff+=ctrlg
+set tags+=~/.vim/systags
+let g:mucomplete#enable_auto_at_startup=0
+let g:mucomplete#chains = {
+    \ 'default' : ['path', 'omni', 'keyn', 'dict', 'uspl'],
+    \ 'vim'     : ['path', 'cmd', 'keyn'],
+    \ 'c'       : ['path', 'user', 'omni', 'keyn', 'dict', 'uspl'],
+    \ 'cpp'     : ['path', 'user', 'omni', 'keyn', 'dict', 'uspl']
+    \ }
+
+if has("autocmd") && exists("+omnifunc")
+  autocmd Filetype *
+          \	if &omnifunc == "" |
+          \		setlocal omnifunc=syntaxcomplete#Complete |
+          \	endif
+endif
+au FileType c setl completefunc=syntaxcomplete#Complete
+au FileType cpp setl completefunc=syntaxcomplete#Complete
+
+let asmsyntax="nasm"
 
 highlight LineNr term=bold cterm=NONE ctermfg=DarkGray ctermbg=NONE gui=NONE guifg=DarkGray guibg=NONE
 
@@ -42,8 +65,6 @@ let g:airline#extensions#tabline#formatter='unique_tail_improved'
 let g:airline#extensions#tabline#buffer_min_count=2
 let g:airline#extensions#whitespace#enabled=1
 
-let asmsyntax="nasm"
-
 " Show trailing whiitesace and tabs
 function! ToggleWhitespace()
   if &list
@@ -60,6 +81,8 @@ function! ToggleWhitespace()
     match ExtraWhitespace /\s\+$/
   endif
 endfunction
+
+let mapleader = ","
 
 map ; :Files<CR>
 nmap <F2> :NERDTreeFocus<CR>
