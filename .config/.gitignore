@@ -11,6 +11,8 @@
 !environment.d/*
 !sway/
 !sway/*
+!swaylock/
+!swaylock/*
 !i3status/
 !i3status/*
 !mako/
