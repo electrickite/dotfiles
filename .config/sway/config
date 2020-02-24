@@ -16,8 +16,8 @@ set $term gnome-terminal
 
 # dmenu-compatible command
 set $dmenu bemenu
-set $dmenuargs -i --list=12 --grab --nb='#1d2021' --nf='#bdae93' --fb='#3c3836' --ff='#fbf1c7' --tb='#3c3836' --tf='#bdae93' --hb='#282828' --hf='#fbf1c7'
-set $inlineargs -i --grab --nb='#3c3836' --nf='#bdae93' --fb='#3c3836' --ff='#fbf1c7' --tb='#3c3836' --tf='#bdae93' --hb='#3c3836' --hf='#fbf1c7'
+set $dmenuargs -i --list=12 --nb='#1d2021' --nf='#bdae93' --fb='#3c3836' --ff='#fbf1c7' --tb='#3c3836' --tf='#bdae93' --hb='#282828' --hf='#fbf1c7'
+set $inlineargs -i --nb='#3c3836' --nf='#bdae93' --fb='#3c3836' --ff='#fbf1c7' --tb='#3c3836' --tf='#bdae93' --hb='#3c3836' --hf='#fbf1c7'
 
 # Web browser
 set $browser firefox
