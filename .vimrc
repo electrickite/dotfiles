@@ -65,6 +65,7 @@ let g:gitgutter_override_sign_column_highlight=0
 let NERDTreeDirArrows=1
 let NERDTreeMinimalUI=1
 let NERDTreeAutoDeleteBuffer=1
+let NERDTreeQuitOnOpen=1
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
@@ -100,19 +101,36 @@ let mapleader = ","
 command Qb bp | sp | bn | bd
 
 " Key mappings and shortcuts
-map ; :Files<CR>
-nmap <F2> :NERDTreeFocus<CR>
-nmap <F3> :TagbarToggle<CR>
-nmap <F12> :!ctags --totals -R .<CR>
-nnoremap <Leader>t :NERDTreeFocus<CR>
-nnoremap <Leader>r :NERDTreeRefreshRoot<CR>
-nnoremap <Leader>w :call ToggleWhitespace()<CR>
+packadd vim-shortcut
+Shortcut show shortcut menu and run chosen shortcut
+  \ noremap <silent> <Leader><Leader> :Shortcuts<Return>
+Shortcut fallback to shortcut menu on partial entry
+  \ noremap <silent> <Leader> :Shortcuts<Return>
+
+Shortcut search for files
+  \ map ; :Files<CR>
+Shortcut switch to file tree
+  \ nmap <F2> :NERDTreeFocus<CR>
+Shortcut open current file in file tree
+  \ nmap <C-F2> :NERDTreeFind<CR>
+Shortcut open tag panel
+  \ nmap <F3> :TagbarOpenAutoClose<CR>
+Shortcut generate tag file for current directory
+  \ nmap <F12> :!ctags --totals -R .<CR>
+Shortcut switch to file tree
+  \ nnoremap <Leader>t :NERDTreeFocus<CR>
+Shortcut refresh file tree
+  \ nnoremap <Leader>r :NERDTreeRefreshRoot<CR>
+Shortcut show/hide whitespace
+  \ nnoremap <Leader>w :call ToggleWhitespace()<CR>
+Shortcut search within files
+  \ nnoremap <Leader>; :Ag<CR>
 
 " Airline buffer 'tab' navigation
-nnoremap <Leader><S-Tab> :bprevious<CR>
-nnoremap <Leader><Tab> :bnext<CR>
-nmap <leader>1 <Plug>AirlineSelectTab1
-nmap <leader>2 <Plug>AirlineSelectTab2
-nmap <leader>3 <Plug>AirlineSelectTab3
-nmap <leader>4 <Plug>AirlineSelectTab4
-nmap <leader>5 <Plug>AirlineSelectTab5
+Shortcut next buffer nnoremap <Leader><Tab> :bnext<CR>
+Shortcut previous buffer nnoremap <Leader><S-Tab> :bprevious<CR>
+Shortcut switch to buffer 1 nmap <leader>1 <Plug>AirlineSelectTab1
+Shortcut switch to buffer 2 nmap <leader>2 <Plug>AirlineSelectTab2
+Shortcut switch to buffer 3 nmap <leader>3 <Plug>AirlineSelectTab3
+Shortcut switch to buffer 4 nmap <leader>4 <Plug>AirlineSelectTab4
+Shortcut switch to buffer 5 nmap <leader>5 <Plug>AirlineSelectTab5

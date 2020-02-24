@@ -55,6 +55,7 @@ sudo pacman -Syu --needed \
   openssh \
   pinentry \
   fzf \
+  the_silver_searcher \
   ctags \
   gnupg \
   curl \

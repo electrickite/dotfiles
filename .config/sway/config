@@ -14,9 +14,17 @@ set $right l
 # Your preferred terminal emulator
 set $term gnome-terminal
 
+# dmenu-compatible command
+set $dmenu bemenu
+set $dmenuargs -i --list=12 --grab --nb='#1d2021' --nf='#bdae93' --fb='#3c3836' --ff='#fbf1c7' --tb='#3c3836' --tf='#bdae93' --hb='#282828' --hf='#fbf1c7'
+set $inlineargs -i --grab --nb='#3c3836' --nf='#bdae93' --fb='#3c3836' --ff='#fbf1c7' --tb='#3c3836' --tf='#bdae93' --hb='#3c3836' --hf='#fbf1c7'
+
+# Web browser
+set $browser firefox
+
 # Your preferred application launcher
 # Note: it's recommended that you pass the final command to sway
-set $menu rofi -show drun -modi "drun,run" -run-command "swaymsg exec -- {cmd}" -terminal $term -scroll-method 1 -hide-scrollbar -display-run Run -display-drun Launch -theme gruvbox-light
+set $menu j4-dmenu-desktop --dmenu="$dmenu $inlineargs --prompt=Run:" --term=$term --usage-log=$HOME/.cache/j4.cache --no-generic | xargs swaymsg exec --
 
 # Background image
 set $img ~/Pictures/bg.jpg
@@ -47,7 +55,7 @@ client.urgent           $bg-urgent    $bg-urgent   $text          $bar $bar
 
 default_border pixel 3
 default_floating_border pixel 3
-
+ 
 set $gnome-schema org.gnome.desktop.interface
 exec_always {
     gsettings set $gnome-schema gtk-theme 'Adwaita-dark'
@@ -69,6 +77,7 @@ exec batsignal
 exec nm-applet
 exec mkfifo $SWAYSOCK.wob && exec tail -f $SWAYSOCK.wob | wob
 exec light -Nr 2
+exec xrdb -load ~/.Xresources
 
 ### Output configuration
 #
@@ -111,8 +120,14 @@ for_window [app_id="^.*"] inhibit_idle fullscreen
     # kill focused window
     bindsym $mod+Shift+q kill
 
-    # start your launcher
+    # Multi-purpose launcher
     bindsym $mod+Space exec $menu
+    bindsym $mod+Shift+Space exec dmenu_path | $dmenu $inlineargs --prompt=Run: | xargs swaymsg exec -- $term --
+    bindsym $mod+Slash exec fd | $dmenu $dmenuargs --prompt=Find: | xargs -I{} swaymsg exec -- mimeo \\\"{}\\\"
+    bindsym $mod+n exec networkmanager_dmenu
+    bindsym $mod+equal exec = --dmenu=$dmenu -- $dmenuargs
+    bindsym $mod+Backspace exec $browser
+    bindsym $mod+Shift+Backspace exec echo "" | $dmenu $inlineargs --prompt=Search: | xargs -I{} swaymsg exec -- $browser --search \\\"{}\\\"
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -281,10 +296,6 @@ bar {
     }
 }
 
-#
-# Network Manager
-#
-bindsym $mod+n exec networkmanager_dmenu
 
 #
 # Hotkeys

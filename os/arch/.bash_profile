@@ -16,9 +16,16 @@ then
   export XDG_SESSION_TYPE=wayland
   export _JAVA_AWT_WM_NONREPARENTING=1
   export SSH_AUTH_SOCK
+  export BEMENU_BACKEND=wayland
+  export SDL_VIDEODRIVER=wayland
+  export MOZ_ENABLE_WAYLAND=1
 
+  # Read environment variables from environment.d
   set -a
-  source ~/.config/environment.d/*
+  for file in ~/.config/environment.d/*
+  do
+    source "$file"
+  done
   set +a
 
   sway
@@ -27,4 +34,7 @@ elif [ "$DESKTOP_SESSION" = "sway" ] || [ "$DESKTOP_SESSION" = "sway-run" ]; the
   eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
   export SSH_AUTH_SOCK
   export _JAVA_AWT_WM_NONREPARENTING=1
+  export BEMENU_BACKEND=wayland
+  export SDL_VIDEODRIVER=wayland
+  export MOZ_ENABLE_WAYLAND=1
 fi
