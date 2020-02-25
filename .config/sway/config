@@ -78,6 +78,7 @@ exec nm-applet
 exec mkfifo $SWAYSOCK.wob && exec tail -f $SWAYSOCK.wob | wob
 exec light -Nr 2
 exec xrdb -load ~/.Xresources
+exec $term -- bash --rcfile $HOME/.config/sway/bashrc -i
 
 ### Output configuration
 #

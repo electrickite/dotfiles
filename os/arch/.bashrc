@@ -6,7 +6,7 @@
 [[ $- != *i* ]] && return
 
 alias ls='ls --color=auto'
-PS1='[\u@\h \W]\$ '
+PS1='\e[1;32m[\u@\h \W]\$ \e[m'
 
 alias open=mimeo
 alias pacupdate='sudo pacman -Syu && aurman -Su --aur --devel --needed'
