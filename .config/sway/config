@@ -286,8 +286,8 @@ bar {
     separator_symbol "|"
 
     colors {
-        statusline #fbf1c7
-        background #3c3836
+        statusline $statusline
+        background $bar
         separator  #d65d0e
         focused_workspace  #fe8019 #d65d0e #fbf1c7
         active_workspace   #fb4934 #cc241d #ebdbb2
