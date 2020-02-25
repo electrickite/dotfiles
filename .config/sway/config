@@ -16,7 +16,7 @@ set $term gnome-terminal
 
 # dmenu-compatible command
 set $dmenu bemenu
-set $dmenuargs -i --list=12 --nb='#1d2021' --nf='#bdae93' --fb='#3c3836' --ff='#fbf1c7' --tb='#3c3836' --tf='#bdae93' --hb='#282828' --hf='#fbf1c7'
+set $dmenuargs -i --list=12 --nb='#282828' --nf='#bdae93' --fb='#3c3836' --ff='#fbf1c7' --tb='#3c3836' --tf='#bdae93' --hb='#32302f' --hf='#fbf1c7'
 set $inlineargs -i --nb='#3c3836' --nf='#bdae93' --fb='#3c3836' --ff='#fbf1c7' --tb='#3c3836' --tf='#bdae93' --hb='#3c3836' --hf='#fbf1c7'
 
 # Web browser
@@ -125,7 +125,7 @@ for_window [app_id="^.*"] inhibit_idle fullscreen
     bindsym $mod+Shift+Space exec dmenu_path | $dmenu $inlineargs --prompt=Run: | xargs swaymsg exec -- $term --
     bindsym $mod+Slash exec fd | $dmenu $dmenuargs --prompt=Find: | xargs -I{} swaymsg exec -- mimeo \\\"{}\\\"
     bindsym $mod+n exec networkmanager_dmenu
-    bindsym $mod+equal exec = --dmenu=$dmenu -- $dmenuargs
+    bindsym $mod+equal exec = --dmenu=$dmenu -- $dmenuargs --tf='#fbf1c7'
     bindsym $mod+Backspace exec $browser
     bindsym $mod+Shift+Backspace exec echo "" | $dmenu $inlineargs --prompt=Search: | xargs -I{} swaymsg exec -- $browser --search \\\"{}\\\"
 
