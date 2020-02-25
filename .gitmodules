@@ -52,6 +52,6 @@
 [submodule ".vim/pack/plugins/start/OmniCppComplete"]
 	path = .vim/pack/plugins/start/OmniCppComplete
 	url = https://github.com/vim-scripts/OmniCppComplete.git
-[submodule ".vim/pack/plugins/start/vim-shortcut"]
-	path = .vim/pack/plugins/start/vim-shortcut
+[submodule ".vim/pack/plugins/opt/vim-shortcut"]
+	path = .vim/pack/plugins/opt/vim-shortcut
 	url = https://github.com/sunaku/vim-shortcut.git
