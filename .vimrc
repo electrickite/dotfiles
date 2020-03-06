@@ -15,6 +15,7 @@ set showmatch
 set ruler
 set noshowmode
 set ttimeoutlen=10
+set spelllang=en_us
 
 " Default tab behavior
 set tabstop=2
