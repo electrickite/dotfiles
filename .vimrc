@@ -17,6 +17,12 @@ set noshowmode
 set ttimeoutlen=10
 set spelllang=en_us
 
+" Visual word wrapping defaults
+set wrap
+set linebreak
+set textwidth=0
+set wrapmargin=0
+
 " Default tab behavior
 set tabstop=2
 set softtabstop=2
@@ -96,11 +102,40 @@ function! ToggleWhitespace()
   endif
 endfunction
 
+" Set various word processor behaviors
+func! WordProcessor()
+  " movement changes
+  map <buffer> j gj
+  map <buffer> <Down> gj
+  map <buffer> k gk
+  map <buffer> <Up> gk
+  " formatting text
+  setlocal formatoptions=1
+  setlocal noexpandtab
+  setlocal wrap
+  setlocal linebreak
+  setlocal nolist
+  " spell check
+  setlocal spell
+  " Disable code editing features
+  setlocal noshowmatch
+  setlocal noruler
+  setlocal nocursorline
+  setlocal nonumber
+endfu
+
 " Set Leader key to ,
 let mapleader = ","
 
 " :Qb command will close current buffer
 command Qb bp | sp | bn | bd
+
+" :WP command set word processor options
+command! WP call WordProcessor()
+
+" :sc80 and :sc120 shortcuts to set column width
+command! Sc80 set columns=80
+command! Sc120 set columns=120
 
 " Key mappings and shortcuts
 packadd vim-shortcut
