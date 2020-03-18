@@ -67,7 +67,6 @@ echo "Installing new packages..."
 sudo apt-get install \
   git \
   openssh-client \
-  fzf \
   silversearcher-ag \
   exuberant-ctags \
   gnupg \
