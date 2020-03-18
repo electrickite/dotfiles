@@ -1,13 +1,13 @@
 #!/bin/bash
 
-# Set up Arch Linux
+# Set up Windows Subsystem for Linux (Ubuntu)
 
 # Before running do the following:
 #  - Install and configure sudo
 #  - If available, copy keys.tar.gpg to your home directory
 
-echo "-- Arch setup script --"
-echo "WARNING: This script should only be used to configure new machines!"
+echo "-- WSL (Ubuntu) setup script --"
+echo "WARNING: This script should only be used to configure new installs!"
 echo
 read -p "Press [Enter] to start setup..."
 
@@ -18,9 +18,16 @@ echo -n "Enter your name: "
 read full_name
 echo -n "Enter your email address: "
 read email_address
+echo -n "Enter your Windows username: "
+read win_user
 
 if [[ ! -d "$HOME/.dotfiles" ]]; then
   echo "Could not find $HOME/.dotfiles. Aborting..."; exit 1
+fi
+
+# WSL may not currently umask properly
+if [[ "$(umask)" = "0000" ]]; then
+  umask 0002
 fi
 
 echo "Initializing dotfile git submodules..."
@@ -29,7 +36,7 @@ git submodule update --init --recursive
 cd $HOME
 
 echo "Linking config files..."
-rm -f ~/.bashrc ~/.bash_profile ~/.gitconfig
+rm -f ~/.bashrc ~/.profile ~/.gitconfig
 rm -rf ~/.config
 
 exclude_files=".DS_Store|.git|.gitmodules|support|os"
@@ -42,21 +49,27 @@ for path in $HOME/.dotfiles/*; do
   fi
 done
 
-for path in $HOME/.dotfiles/os/arch/*; do
+for path in $HOME/.dotfiles/os/wsl/*; do
   filename=$(basename "$path")
   if [[ ! $filename =~ ^($exclude_files)$ ]]; then
     ln -s "$path" "$HOME/$filename"
   fi
 done
 
-echo "Installing packages..."
-sudo pacman -Syu --needed \
+echo "Configuring WSL..."
+sudo cp -n "$HOME/.dotfiles/support/wsl.conf" /etc
+
+echo "Updating packages..."
+sudo apt-get update
+sudo apt-get upgrade
+
+echo "Installing new packages..."
+sudo apt-get install \
   git \
-  openssh \
-  pinentry \
+  openssh-client \
   fzf \
-  the_silver_searcher \
-  ctags \
+  silversearcher-ag \
+  exuberant-ctags \
   gnupg \
   curl \
   wget \
@@ -65,27 +78,15 @@ sudo pacman -Syu --needed \
   vim \
   tmux \
   net-tools \
-  dnsutils \
-  exfat-utils \
-  dosfstools \
-  mlocate
+  dnsutils
 
-if ! type -P aurman &>/dev/null; then
-  read -p "Enter aurman PGP key to import [465022E743D71E39] " aurman_key
-  aurman_key=${aurman_key:-465022E743D71E39}
-  gpg --receive-keys $aurman_key
-
-  echo "Installing aurman..."
-  git clone https://aur.archlinux.org/aurman.git aurman
-  cd aurman
-  makepkg -si
-  cd ..
-  rm -rf aurman
-fi
-
-# Add SSH keys
 cd "$HOME"
 
+# Install FZF
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install --bin --no-key-bindings --no-completion --no-update-rc
+
+# Add SSH keys
 if [ -f keys.tar.gpg ]; then
     echo "keys.tar.gpg found. Extracting..."
     gpg --pinentry-mode loopback keys.tar.gpg
@@ -104,14 +105,16 @@ else
     ssh-keygen -t rsa -b 2048 -C $email_address
 fi
 
+echo "AddKeysToAgent  yes" >> ~/.ssh/config
+
 echo "Performing additional configuration..."
 git config --global user.name "$full_name"
 git config --global user.email "$email_address"
 git config --global include.path ~/.gitconfig_main
 
-mkdir "$HOME/projects"
-
-sudo updatedb
+mkdir -p "/mnt/c/Users/$win_user/projects"
+ln -sf "/mnt/c/Users/$win_user/projects" ~/projects
 
 echo "Setup complete!"
+echo "Please reboot Windows or restart the LxssManager service"
 exit 0

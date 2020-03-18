@@ -1,4 +1,6 @@
-chruby 2.6
+if command -v chruby; then
+  chruby 2.6
+fi
 
 alias listening='lsof -nP +c 15 | grep LISTEN'
 alias be='bundle exec'
