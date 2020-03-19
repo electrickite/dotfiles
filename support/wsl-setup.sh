@@ -35,6 +35,16 @@ cd "$HOME/.dotfiles"
 git submodule update --init --recursive
 cd $HOME
 
+echo "Configuring WSL..."
+sudo mkdir -p /mnt/c
+sudo cp -n "$HOME/.dotfiles/support/wsl.conf" /etc
+
+echo "C:\  /mnt/c  drvfs  defaults,rw,noatime,uid=1000,gid=1000,umask=2,fmask=113,metadata,case=off  0  0" | sudo tee -a /etc/fstab >/dev/null
+echo "//localhost/C\$/Windows/System32  /mnt/c/Windows/System32  drvfs  defaults,ro,noatime,uid=1000,gid=1000,fmask=000,umask=000,case=off  0  0" | sudo tee -a /etc/fstab >/dev/null
+echo "//localhost/C\$/Program\040Files  /mnt/c/Program\040Files  drvfs  defaults,ro,noatime,uid=1000,gid=1000,fmask=000,umask=000,case=off  0  0" | sudo tee -a /etc/fstab >/dev/null
+echo "//localhost/C\$/Program\040Files\040(x86)  /mnt/c/Program\040Files\040(x86)  drvfs  defaults,ro,noatime,uid=1000,gid=1000,fmask=000,umask=000,case=off  0  0" | sudo tee -a /etc/fstab >/dev/null
+echo "//localhost/C\$/Users/${win_user}/AppData  /mnt/c/Users/${win_user}/AppData  drvfs  defaults,ro,noatime,uid=1000,gid=1000,fmask=000,umask=000,case=off  0  0" | sudo tee -a /etc/fstab >/dev/null
+
 echo "Linking config files..."
 rm -f ~/.bashrc ~/.profile ~/.gitconfig
 rm -rf ~/.config
@@ -55,9 +65,6 @@ for path in $HOME/.dotfiles/os/wsl/*; do
     ln -s "$path" "$HOME/$filename"
   fi
 done
-
-echo "Configuring WSL..."
-sudo cp -n "$HOME/.dotfiles/support/wsl.conf" /etc
 
 echo "Updating packages..."
 sudo apt-get update
