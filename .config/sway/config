@@ -30,7 +30,7 @@ set $menu j4-dmenu-desktop --dmenu="$dmenu $inlineargs --prompt=Run:" --term=$te
 set $img ~/Pictures/bg.jpg
 
 # Idle behavior variables
-set $lock swaylock -f --image $img
+set $lock dbus-send --print-reply --dest=org.keepassxc.KeePassXC.MainWindow /keepassxc org.keepassxc.MainWindow.lockAllDatabases; swaylock -f --image $img
 #set $lock dbus-send --type=method_call --dest=org.gnome.ScreenSaver /org/gnome/ScreenSaver org.gnome.ScreenSaver.Lock
 set $battery_status /sys/class/power_supply/BAT0/status
 
@@ -91,7 +91,7 @@ seat * hide_cursor 8000
 ### Idle configuration
 
 exec swayidle -w \
-    timeout 300 '$lock' \
+    timeout 300 'loginctl lock-session' \
     timeout 600 'swaymsg "output * dpms off"' \
        resume 'swaymsg "output * dpms on"' \
     timeout 900 '[ "$(cat $battery_status)" == Discharging ] && systemctl suspend' \
@@ -146,7 +146,7 @@ for_window [app_id="^.*"] inhibit_idle fullscreen
 # System menu mode
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (p) shutdown
 mode "$mode_system" {
-    bindsym l exec $lock, mode "default"
+    bindsym l exec loginctl lock-session, mode "default"
     bindsym e exec swaymsg exit, mode "default"
     bindsym s exec systemctl suspend, mode "default"
     bindsym h exec systemctl hibernate, mode "default"
@@ -324,12 +324,15 @@ bindsym $mod+Print exec slurp | grim -g - "$(xdg-user-dir PICTURES)/$screenshot"
 # Caffeine
 bindsym $mod+c exec 'killall -q caffeinated || caffeinated -d'
 
+bindsym $mod+p exec "if ! pgrep keepassxc; then swaymsg exec keepassxc; fi"; [app_id="org.keepassxc.KeePassXC"] scratchpad show, move position center
+for_window [app_id="org.keepassxc.KeePassXC"] floating enable, resize set 900 680, move scratchpad, scratchpad show, move position center
+
 #
 # Application tweaks
 #
 for_window [app_id="nm-openconnect-auth-dialog"] floating enable
 for_window [app_id="qemu"] floating enable
 for_window [app_id="desktopclient.nextcloud.com.nextcloud"] floating enable
-for_window [class="KeePassXC"] floating enable
+#for_window [class="KeePassXC"] floating enable
 
 #include /etc/sway/config.d/*
