@@ -32,7 +32,7 @@ echo "Linking config files..."
 rm -f ~/.bashrc ~/.bash_profile ~/.gitconfig
 rm -rf ~/.config
 
-exclude_files=".DS_Store|.git|support|os"
+exclude_files=".DS_Store|.git|.gitmodules|support|os"
 GLOBIGNORE=".:.."
 
 for path in $HOME/.dotfiles/*; do
