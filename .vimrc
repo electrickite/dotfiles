@@ -85,6 +85,15 @@ let g:airline#extensions#tabline#formatter='unique_tail_improved'
 let g:airline#extensions#tabline#buffer_min_count=2
 let g:airline#extensions#whitespace#enabled=1
 
+" Jump to last known valid cursor position when editing a file
+augroup vimStartup
+  au!
+  autocmd BufReadPost *
+    \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
+    \ |   exe "normal! g`\""
+    \ | endif
+augroup END
+
 " Show trailing whiitesace and tabs
 function! ToggleWhitespace()
   if &list
