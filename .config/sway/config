@@ -44,6 +44,8 @@ set $bg-inactive   #3c3836
 set $bg-urgent     #cc241d
 set $text          #fbf1c7
 set $text-inactive #a89984
+set $osdfg         #ffebdbb2
+set $osdbg         #ff1d2021
 
 set $bar           #3c3836
 set $statusline    #e0e0e0
@@ -302,13 +304,13 @@ bar {
 # Hotkeys
 #
 # Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec pamixer -ui 5 && paplay $HOME/.config/sway/drip.ogg && pamixer --get-volume > $SWAYSOCK.wob
-bindsym XF86AudioLowerVolume exec pamixer -ud 5 && paplay $HOME/.config/sway/drip.ogg && pamixer --get-volume > $SWAYSOCK.wob
-bindsym XF86AudioMute exec pamixer --toggle-mute && ( pamixer --get-mute && echo 0 > $SWAYSOCK.wob ) || pamixer --get-volume > $SWAYSOCK.wob
+bindsym XF86AudioRaiseVolume exec pamixer -ui 5 && paplay $HOME/.config/sway/drip.ogg && pamixer --get-volume | sed 's/$/ \\$osdbg \\$osdfg \\$osdfg/' > $SWAYSOCK.wob
+bindsym XF86AudioLowerVolume exec pamixer -ud 5 && paplay $HOME/.config/sway/drip.ogg && pamixer --get-volume | sed 's/$/ \\$osdbg \\$osdfg \\$osdfg/' > $SWAYSOCK.wob
+bindsym XF86AudioMute exec pamixer --toggle-mute && ( pamixer --get-mute && echo 0 > $SWAYSOCK.wob ) || pamixer --get-volume | sed 's/$/ \\$osdbg \\$osdfg \\$osdfg/' > $SWAYSOCK.wob
 
 # Sreen brightness controls
-bindsym XF86MonBrightnessUp exec light -A 5 && light -G | cut -d'.' -f1 > $SWAYSOCK.wob
-bindsym XF86MonBrightnessDown exec light -U 5 && light -G | cut -d'.' -f1 > $SWAYSOCK.wob
+bindsym XF86MonBrightnessUp exec light -A 5 && light -G | cut -d'.' -f1 | sed 's/$/ \\$osdbg \\$osdfg \\$osdfg/' > $SWAYSOCK.wob
+bindsym XF86MonBrightnessDown exec light -U 5 && light -G | cut -d'.' -f1 | sed 's/$/ \\$osdbg \\$osdfg \\$osdfg/' > $SWAYSOCK.wob
 
 # Media player controls
 bindsym XF86AudioPlay exec playerctl play
