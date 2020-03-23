@@ -1,4 +1,4 @@
-if command -v chruby; then
+if command -v chruby >/dev/null; then
   chruby 2.6
 fi
 

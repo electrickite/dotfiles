@@ -78,7 +78,7 @@ exec nextcloud
 exec batsignal
 exec nm-applet
 exec mkfifo $SWAYSOCK.wob && exec tail -f $SWAYSOCK.wob | wob
-exec light -Nr 2
+exec light -N 1
 exec xrdb -load ~/.Xresources
 exec $term -- bash --rcfile $HOME/.config/sway/bashrc -i
 
@@ -309,8 +309,8 @@ bindsym XF86AudioLowerVolume exec pamixer -ud 5 && paplay $HOME/.config/sway/dri
 bindsym XF86AudioMute exec pamixer --toggle-mute && ( pamixer --get-mute && echo 0 > $SWAYSOCK.wob ) || pamixer --get-volume | sed 's/$/ \\$osdbg \\$osdfg \\$osdfg/' > $SWAYSOCK.wob
 
 # Sreen brightness controls
-bindsym XF86MonBrightnessUp exec light -A 5 && light -G | cut -d'.' -f1 | sed 's/$/ \\$osdbg \\$osdfg \\$osdfg/' > $SWAYSOCK.wob
-bindsym XF86MonBrightnessDown exec light -U 5 && light -G | cut -d'.' -f1 | sed 's/$/ \\$osdbg \\$osdfg \\$osdfg/' > $SWAYSOCK.wob
+bindsym XF86MonBrightnessUp exec light -T 1.4 && light -G | cut -d'.' -f1 | sed 's/$/ \\$osdbg \\$osdfg \\$osdfg/' > $SWAYSOCK.wob
+bindsym XF86MonBrightnessDown exec light -T 0.72 && light -G | cut -d'.' -f1 | sed 's/$/ \\$osdbg \\$osdfg \\$osdfg/' > $SWAYSOCK.wob
 
 # Media player controls
 bindsym XF86AudioPlay exec playerctl play
@@ -335,6 +335,5 @@ for_window [app_id="org.keepassxc.KeePassXC"] floating enable, resize set 900 68
 for_window [app_id="nm-openconnect-auth-dialog"] floating enable
 for_window [app_id="qemu"] floating enable
 for_window [app_id="desktopclient.nextcloud.com.nextcloud"] floating enable
-#for_window [class="KeePassXC"] floating enable
 
 #include /etc/sway/config.d/*
