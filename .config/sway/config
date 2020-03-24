@@ -50,7 +50,7 @@ set $osdbg         #ff1d2021
 set $bar           #3c3836
 set $statusline    #e0e0e0
 
-client.focused          $bg           $bg          $text          $bg $bg
+client.focused          $bg           $bg-inactive $text          $bg $bg
 client.unfocused        $bg-inactive  $bg-inactive $text-inactive $bar $bar
 client.focused_inactive $bg-inactive  $bg-inactive $text-inactive $bar $bar
 client.urgent           $bg-urgent    $bg-urgent   $text          $bar $bar
@@ -335,5 +335,6 @@ for_window [app_id="org.keepassxc.KeePassXC"] floating enable, resize set 900 68
 for_window [app_id="nm-openconnect-auth-dialog"] floating enable
 for_window [app_id="qemu"] floating enable
 for_window [app_id="desktopclient.nextcloud.com.nextcloud"] floating enable
+for_window [app_id="libreoffice-.*"] border normal 3
 
 #include /etc/sway/config.d/*
