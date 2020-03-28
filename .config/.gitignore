@@ -23,3 +23,5 @@
 !bash/*
 !gtk-3.0/
 !gtk-3.0/settings.ini
+!gtk-2.0/
+!gtk-2.0/light.gtkrc
