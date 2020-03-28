@@ -24,7 +24,7 @@ set $browser firefox
 
 # Your preferred application launcher
 # Note: it's recommended that you pass the final command to sway
-set $menu j4-dmenu-desktop --dmenu="$dmenu $inlineargs --prompt=Run:" --term=$term --usage-log=$HOME/.cache/j4.cache --no-generic | xargs swaymsg exec --
+set $menu j4-dmenu-desktop --dmenu="$dmenu $inlineargs --prompt=Run:" --term=$term --usage-log=$HOME/.cache/j4.cache --no-generic
 
 # Background image
 set $img ~/Pictures/bg.jpg
