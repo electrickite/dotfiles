@@ -1,54 +1,65 @@
 # Read `man 5 sway` for a complete reference.
 
-### Variables
 #
-# Logo key. Use Mod1 for Alt.
-set $mod Mod4
+# Variables
+#
+set {
+    # Logo key. Use Mod1 for Alt.
+    $mod Mod4
 
-# Home row direction keys, like vim
-set $left h
-set $down j
-set $up k
-set $right l
+    # Home row direction keys, like vim
+    $left h
+    $down j
+    $up k
+    $right l
 
-# Your preferred terminal emulator
-set $term gnome-terminal
+    # Preferred terminal emulator
+    $term gnome-terminal
 
-# dmenu-compatible command
-set $dmenu bemenu
-set $dmenuargs -i --list=12 --nb='#282828' --nf='#bdae93' --fb='#3c3836' --ff='#fbf1c7' --tb='#3c3836' --tf='#bdae93' --hb='#32302f' --hf='#fbf1c7'
-set $inlineargs -i --nb='#3c3836' --nf='#bdae93' --fb='#3c3836' --ff='#fbf1c7' --tb='#3c3836' --tf='#bdae93' --hb='#3c3836' --hf='#fbf1c7'
+    # dmenu-compatible command
+    $dmenu bemenu
+    $dmenuargs -i --list=12 --nb='#282828' --nf='#bdae93' --fb='#3c3836' --ff='#fbf1c7' --tb='#3c3836' --tf='#bdae93' --hb='#32302f' --hf='#fbf1c7'
+    $inlineargs -i --nb='#3c3836' --nf='#bdae93' --fb='#3c3836' --ff='#fbf1c7' --tb='#3c3836' --tf='#bdae93' --hb='#3c3836' --hf='#fbf1c7'
 
-# Web browser
-set $browser firefox
+    # Web browser
+    $browser firefox
 
-# Your preferred application launcher
-# Note: it's recommended that you pass the final command to sway
-set $menu j4-dmenu-desktop --dmenu="$dmenu $inlineargs --prompt=Run:" --term=$term --usage-log=$HOME/.cache/j4.cache --no-generic
+    # Application launcher
+    # Note: it's recommended that you pass the final command to sway
+    $menu j4-dmenu-desktop --dmenu="$dmenu $inlineargs --prompt=Run:" --term=$term --usage-log=$HOME/.cache/j4.cache --no-generic
 
-# Background image
-set $img ~/Pictures/bg.jpg
+    # Background image
+    $img ~/Pictures/bg.jpg
 
-# Idle behavior variables
-set $lock dbus-send --print-reply --dest=org.keepassxc.KeePassXC.MainWindow /keepassxc org.keepassxc.MainWindow.lockAllDatabases; swaylock -f --image $img
-#set $lock dbus-send --type=method_call --dest=org.gnome.ScreenSaver /org/gnome/ScreenSaver org.gnome.ScreenSaver.Lock
-set $battery_status /sys/class/power_supply/BAT0/status
+    # Screen lock
+    $lock dbus-send --print-reply --dest=org.keepassxc.KeePassXC.MainWindow /keepassxc org.keepassxc.MainWindow.lockAllDatabases; swaylock -f --image $img
+    #$lock dbus-send --type=method_call --dest=org.gnome.ScreenSaver /org/gnome/ScreenSaver org.gnome.ScreenSaver.Lock
 
-## Appearance
+    # Misc
+    $screenshot $(date +'%Y-%m-%d-%H%M%S_screenshot.png')
+    $battery_status /sys/class/power_supply/BAT0/status
+    $wob_fifo $XDG_RUNTIME_DIR/wob.sock
+}
+
+#
+# Appearance
+#
 gaps outer 0
 gaps inner 10
 smart_gaps on
 
-set $bg            #d65d0e
-set $bg-inactive   #3c3836
-set $bg-urgent     #cc241d
-set $text          #fbf1c7
-set $text-inactive #a89984
-set $osdfg         #ffebdbb2
-set $osdbg         #ff1d2021
+set {
+    $bg            #d65d0e
+    $bg-inactive   #3c3836
+    $bg-urgent     #cc241d
+    $text          #fbf1c7
+    $text-inactive #a89984
+    $osdfg         #ffebdbb2
+    $osdbg         #ff1d2021
 
-set $bar           #3c3836
-set $statusline    #e0e0e0
+    $bar           #3c3836
+    $statusline    #e0e0e0
+}
 
 client.focused          $bg           $bg-inactive $text          $bg $bg
 client.unfocused        $bg-inactive  $bg-inactive $text-inactive $bar $bar
@@ -57,225 +68,222 @@ client.urgent           $bg-urgent    $bg-urgent   $text          $bar $bar
 
 default_border pixel 3
 default_floating_border pixel 3
- 
-set $gnome-schema org.gnome.desktop.interface
-exec_always {
-    gsettings set $gnome-schema gtk-theme 'Adwaita-dark'
-    gsettings set $gnome-schema icon-theme 'Papirus-Dark'
-}
 
-
+#
+# Input/Output configuration
+#
 # Include host-specific configuration
 include ~/.config/sway/$(hostname)/*
 
-#
-# Startup
-#
-#exec mako
-exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec udiskie -qans
-exec nextcloud
-exec batsignal
-exec nm-applet
-exec mkfifo $SWAYSOCK.wob && exec tail -f $SWAYSOCK.wob | wob
-exec light -N 1
-exec xrdb -load ~/.Xresources
-exec $term -- bash --rcfile $HOME/.config/sway/bashrc -i
-
-### Output configuration
-#
 # Default wallpaper (more resolutions are available in __DATADIR__/backgrounds/sway/)
 output * bg $img fill
 
-### Cursor configuration
+# Cursor configuration
 seat * hide_cursor 8000
 
-### Idle configuration
-
+#
+# Idle configuration
+#
+# This will lock the screen after 8 minutes of inactivity, then turn off
+# the displays after 10 minutes, and turn your screens back on when resumed.
+# When on battery, it will suspend the computer after 20 minutes and will
+# suspend the computer after 1 hour regardless of power source.
+# It will also lock the screen before the computer goes to sleep.
 exec swayidle -w \
-    timeout 300 'loginctl lock-session' \
+    timeout 480 'loginctl lock-session' \
     timeout 600 'swaymsg "output * dpms off"' \
        resume 'swaymsg "output * dpms on"' \
-    timeout 900 '[ "$(cat $battery_status)" == Discharging ] && systemctl suspend' \
+    timeout 1200 '[ "$(cat $battery_status)" == Discharging ] && systemctl suspend' \
     timeout 3600 'systemctl suspend' \
     before-sleep '$lock' \
     lock '$lock' \
     idlehint 5
 
-# This will lock the screen after 5 minutes of inactivity, then turn off
-# the displays after 10 minutes, and turn your screens back on when resumed.
-# When on battery, it will suspend the computer after 15 minutes and will
-# suspend the computer after 1 hour regardless of power source.
-# It will also lock the screen before the computer goes to sleep.
-
 # Also: prevent idle while any application is fullscreen
-for_window [class="^.*"] inhibit_idle fullscreen
-for_window [app_id="^.*"] inhibit_idle fullscreen
-
+for_window {
+    [class="^.*"] inhibit_idle fullscreen
+    [app_id="^.*"] inhibit_idle fullscreen
+}
 
 ### Key bindings
 #
 # Basics:
 #
+bindsym {
     # start a terminal
-    bindsym $mod+Return exec $term
+    $mod+Return exec $term
 
     # kill focused window
-    bindsym $mod+Shift+q kill
+    $mod+Shift+q kill
 
     # Multi-purpose launcher
-    bindsym $mod+Space exec $menu
-    bindsym $mod+Shift+Space exec dmenu_path | $dmenu $inlineargs --prompt=Run: | xargs swaymsg exec -- $term --
-    bindsym $mod+Slash exec fd | $dmenu $dmenuargs --prompt=Find: | xargs -I{} swaymsg exec -- mimeo \\\"{}\\\"
-    bindsym $mod+n exec networkmanager_dmenu
-    bindsym $mod+equal exec = --dmenu=$dmenu -- $dmenuargs --tf='#fbf1c7'
-    bindsym $mod+Backspace exec $browser
-    bindsym $mod+Shift+Backspace exec echo "" | $dmenu $inlineargs --prompt=Search: | xargs -I{} swaymsg exec -- $browser --search \\\"{}\\\"
-
-    # Drag floating windows by holding down $mod and left mouse button.
-    # Resize them with right mouse button + $mod.
-    # Despite the name, also works for non-floating windows.
-    # Change normal to inverse to use left mouse button for resizing and right
-    # mouse button for dragging.
-    floating_modifier $mod normal
+    $mod+Space exec $menu
+    $mod+Shift+Space exec dmenu_path | $dmenu $inlineargs --prompt=Run: | xargs swaymsg exec -- $term --
+    $mod+Slash exec fd | $dmenu $dmenuargs --prompt=Find: | xargs -I{} swaymsg exec -- mimeo \\\"{}\\\"
+    $mod+n exec networkmanager_dmenu
+    $mod+equal exec = --dmenu=$dmenu -- $dmenuargs --tf='#fbf1c7'
+    $mod+Backspace exec $browser
+    $mod+Shift+Backspace exec echo "" | $dmenu $inlineargs --prompt=Search: | xargs -I{} swaymsg exec -- $browser --search \\\"{}\\\"
 
     # reload the configuration file
-    bindsym $mod+Shift+c reload
+    $mod+Shift+c reload
+}
+# Drag floating windows by holding down $mod and left mouse button.
+# Resize them with right mouse button + $mod.
+# Despite the name, also works for non-floating windows.
+# Change normal to inverse to use left mouse button for resizing and right
+# mouse button for dragging.
+floating_modifier $mod normal
 
-    # exit sway (logs you out of your Wayland session)
-    bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you want to log off? This will end your user session.' -b 'Yes, exit sway' 'swaymsg exit'
-
+#
 # System menu mode
+#
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (p) shutdown
 mode "$mode_system" {
-    bindsym l exec loginctl lock-session, mode "default"
-    bindsym e exec swaymsg exit, mode "default"
-    bindsym s exec systemctl suspend, mode "default"
-    bindsym h exec systemctl hibernate, mode "default"
-    bindsym r exec systemctl reboot, mode "default"
-    bindsym p exec systemctl poweroff, mode "default"
+  bindsym {
+    l exec loginctl lock-session, mode "default"
+    e exec swaymsg exit, mode "default"
+    s exec systemctl suspend, mode "default"
+    h exec systemctl hibernate, mode "default"
+    r exec systemctl reboot, mode "default"
+    p exec systemctl poweroff, mode "default"
 
     # back to normal: Enter or Escape
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
+    Return mode "default"
+    Escape mode "default"
+  }
 }
 bindsym $mod+Escape mode "$mode_system"
 
 #
 # Moving around:
 #
+bindsym {
     # Move your focus around
-    bindsym $mod+$left focus left
-    bindsym $mod+$down focus down
-    bindsym $mod+$up focus up
-    bindsym $mod+$right focus right
+    $mod+$left focus left
+    $mod+$down focus down
+    $mod+$up focus up
+    $mod+$right focus right
     # or use $mod+[up|down|left|right]
-    bindsym $mod+Left focus left
-    bindsym $mod+Down focus down
-    bindsym $mod+Up focus up
-    bindsym $mod+Right focus right
+    $mod+Left focus left
+    $mod+Down focus down
+    $mod+Up focus up
+    $mod+Right focus right
 
     # _move_ the focused window with the same, but add Shift
-    bindsym $mod+Shift+$left move left
-    bindsym $mod+Shift+$down move down
-    bindsym $mod+Shift+$up move up
-    bindsym $mod+Shift+$right move right
+    $mod+Shift+$left move left
+    $mod+Shift+$down move down
+    $mod+Shift+$up move up
+    $mod+Shift+$right move right
     # ditto, with arrow keys
-    bindsym $mod+Shift+Left move left
-    bindsym $mod+Shift+Down move down
-    bindsym $mod+Shift+Up move up
-    bindsym $mod+Shift+Right move right
+    $mod+Shift+Left move left
+    $mod+Shift+Down move down
+    $mod+Shift+Up move up
+    $mod+Shift+Right move right
+}
+
 #
 # Workspaces:
 #
+bindsym {
     # Cycle through active workspaces
-    bindsym Alt+Tab workspace next
-    bindsym Alt+Shift+Tab workspace prev
+    Alt+Tab workspace next
+    Alt+Shift+Tab workspace prev
 
     # switch to workspace
-    bindsym $mod+1 workspace 1
-    bindsym $mod+2 workspace 2
-    bindsym $mod+3 workspace 3
-    bindsym $mod+4 workspace 4
-    bindsym $mod+5 workspace 5
-    bindsym $mod+6 workspace 6
-    bindsym $mod+7 workspace 7
-    bindsym $mod+8 workspace 8
-    bindsym $mod+9 workspace 9
-    bindsym $mod+0 workspace 10
+    $mod+1 workspace 1
+    $mod+2 workspace 2
+    $mod+3 workspace 3
+    $mod+4 workspace 4
+    $mod+5 workspace 5
+    $mod+6 workspace 6
+    $mod+7 workspace 7
+    $mod+8 workspace 8
+    $mod+9 workspace 9
+    $mod+0 workspace 10
     # move focused container to workspace
-    bindsym $mod+Shift+1 move container to workspace 1
-    bindsym $mod+Shift+2 move container to workspace 2
-    bindsym $mod+Shift+3 move container to workspace 3
-    bindsym $mod+Shift+4 move container to workspace 4
-    bindsym $mod+Shift+5 move container to workspace 5
-    bindsym $mod+Shift+6 move container to workspace 6
-    bindsym $mod+Shift+7 move container to workspace 7
-    bindsym $mod+Shift+8 move container to workspace 8
-    bindsym $mod+Shift+9 move container to workspace 9
-    bindsym $mod+Shift+0 move container to workspace 10
+    $mod+Shift+1 move container to workspace 1
+    $mod+Shift+2 move container to workspace 2
+    $mod+Shift+3 move container to workspace 3
+    $mod+Shift+4 move container to workspace 4
+    $mod+Shift+5 move container to workspace 5
+    $mod+Shift+6 move container to workspace 6
+    $mod+Shift+7 move container to workspace 7
+    $mod+Shift+8 move container to workspace 8
+    $mod+Shift+9 move container to workspace 9
+    $mod+Shift+0 move container to workspace 10
     # Note: workspaces can have any name you want, not just numbers.
     # We just use 1-10 as the default.
+}
+
 #
 # Layout stuff:
 #
+bindsym {
     # You can "split" the current object of your focus with
     # $mod+b or $mod+v, for horizontal and vertical splits
     # respectively.
-    bindsym $mod+b splith
-    bindsym $mod+v splitv
+    $mod+b splith
+    $mod+v splitv
 
     # Switch the current container between different layout styles
-    bindsym $mod+s layout stacking
-    bindsym $mod+w layout tabbed
-    bindsym $mod+e layout toggle split
+    $mod+s layout stacking
+    $mod+w layout tabbed
+    $mod+e layout toggle split
 
     # Make the current focus fullscreen
-    bindsym $mod+F11 fullscreen
-    bindsym $mod+f fullscreen
+    $mod+F11 fullscreen
+    $mod+f fullscreen
 
     # Toggle the current focus between tiling and floating mode
-    bindsym $mod+Shift+t floating toggle
+    $mod+Shift+t floating toggle
 
     # Swap focus between the tiling area and the floating area
-    bindsym $mod+t focus mode_toggle
+    $mod+t focus mode_toggle
 
     # move focus to the parent container
-    bindsym $mod+a focus parent
+    $mod+a focus parent
+}
+
 #
 # Scratchpad:
 #
+bindsym {
     # Sway has a "scratchpad", which is a bag of holding for windows.
     # You can send windows there and get them back later.
 
     # Move the currently focused window to the scratchpad
-    bindsym $mod+Shift+minus move scratchpad
+    $mod+Shift+minus move scratchpad
 
     # Show the next scratchpad window or hide the focused scratchpad window.
     # If there are multiple scratchpad windows, this command cycles through them.
-    bindsym $mod+minus scratchpad show
+    $mod+minus scratchpad show
+}
+
 #
 # Resizing containers:
 #
 mode "resize" {
+  bindsym {
     # left will shrink the containers width
     # right will grow the containers width
     # up will shrink the containers height
     # down will grow the containers height
-    bindsym $left resize shrink width 10px
-    bindsym $down resize grow height 10px
-    bindsym $up resize shrink height 10px
-    bindsym $right resize grow width 10px
+    $left resize shrink width 10px
+    $down resize grow height 10px
+    $up resize shrink height 10px
+    $right resize grow width 10px
 
     # ditto, with arrow keys
-    bindsym Left resize shrink width 10px
-    bindsym Down resize grow height 10px
-    bindsym Up resize shrink height 10px
-    bindsym Right resize grow width 10px
+    Left resize shrink width 10px
+    Down resize grow height 10px
+    Up resize shrink height 10px
+    Right resize grow width 10px
 
     # return to default mode
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
+    Return mode "default"
+    Escape mode "default"
+  }
 }
 bindsym $mod+r mode "resize"
 
@@ -303,40 +311,64 @@ bar {
 #
 # Hotkeys
 #
-# Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec pamixer -ui 5 && paplay $HOME/.config/sway/drip.ogg && pamixer --get-volume | sed 's/$/ \\$osdbg \\$osdfg \\$osdfg/' > $SWAYSOCK.wob
-bindsym XF86AudioLowerVolume exec pamixer -ud 5 && paplay $HOME/.config/sway/drip.ogg && pamixer --get-volume | sed 's/$/ \\$osdbg \\$osdfg \\$osdfg/' > $SWAYSOCK.wob
-bindsym XF86AudioMute exec pamixer --toggle-mute && ( pamixer --get-mute && echo 0 > $SWAYSOCK.wob ) || pamixer --get-volume | sed 's/$/ \\$osdbg \\$osdfg \\$osdfg/' > $SWAYSOCK.wob
+bindsym {
+    # Pulse Audio controls
+    XF86AudioRaiseVolume exec pamixer -ui 5 && paplay $HOME/.config/sway/drip.ogg && pamixer --get-volume | sed 's/$/ \\$osdbg \\$osdfg \\$osdfg/' > $wob_fifo
+    XF86AudioLowerVolume exec pamixer -ud 5 && paplay $HOME/.config/sway/drip.ogg && pamixer --get-volume | sed 's/$/ \\$osdbg \\$osdfg \\$osdfg/' > $wob_fifo
+    XF86AudioMute exec pamixer --toggle-mute && ( pamixer --get-mute && echo 0 > $SWAYSOCK.wob ) || pamixer --get-volume | sed 's/$/ \\$osdbg \\$osdfg \\$osdfg/' > $wob_fifo
 
-# Sreen brightness controls
-bindsym XF86MonBrightnessUp exec light -T 1.4 && light -G | cut -d'.' -f1 | sed 's/$/ \\$osdbg \\$osdfg \\$osdfg/' > $SWAYSOCK.wob
-bindsym XF86MonBrightnessDown exec light -T 0.72 && light -G | cut -d'.' -f1 | sed 's/$/ \\$osdbg \\$osdfg \\$osdfg/' > $SWAYSOCK.wob
+    # Sreen brightness controls
+    XF86MonBrightnessUp exec light -T 1.4 && light -G | cut -d'.' -f1 | sed 's/$/ \\$osdbg \\$osdfg \\$osdfg/' > $wob_fifo
+    XF86MonBrightnessDown exec light -T 0.72 && light -G | cut -d'.' -f1 | sed 's/$/ \\$osdbg \\$osdfg \\$osdfg/' > $wob_fifo
 
-# Media player controls
-bindsym XF86AudioPlay exec playerctl play
-bindsym XF86AudioPause exec playerctl pause
-bindsym XF86AudioNext exec playerctl next
-bindsym XF86AudioPrev exec playerctl previous
+    # Media player controls
+    XF86AudioPlay exec playerctl play
+    XF86AudioPause exec playerctl pause
+    XF86AudioNext exec playerctl next
+    XF86AudioPrev exec playerctl previous
 
-# Screenshots
-set $screenshot $(date +'%Y-%m-%d-%H%M%S_screenshot.png')
-bindsym Print exec grim "$(xdg-user-dir PICTURES)/$screenshot" && notify-send "Sceenshot saved" "$screenshot"
-bindsym $mod+Print exec slurp | grim -g - "$(xdg-user-dir PICTURES)/$screenshot" && notify-send "Sceenshot saved" "$screenshot"
+    # Screenshots
+    Print exec grim "$(xdg-user-dir PICTURES)/$screenshot" && notify-send "Sceenshot saved" "$screenshot"
+    $mod+Print exec slurp | grim -g - "$(xdg-user-dir PICTURES)/$screenshot" && notify-send "Sceenshot saved" "$screenshot"
 
-# Caffeine
-bindsym $mod+c exec 'killall -q caffeinated || caffeinated -d'
+    # Caffeine
+    $mod+c exec 'killall -q caffeinated || caffeinated -d'
 
-bindsym $mod+p exec "if ! pgrep -x keepassxc; then swaymsg exec keepassxc; fi"; [app_id="org.keepassxc.KeePassXC"] scratchpad show, move position center
-for_window [app_id="org.keepassxc.KeePassXC"] floating enable, resize set 900 680, move scratchpad, scratchpad show, move position center
+    # KeepassXC
+    $mod+p exec "if ! pgrep -x keepassxc; then swaymsg exec keepassxc; fi"; [app_id="org.keepassxc.KeePassXC"] scratchpad show, move position center
+}
 
 #
 # Application tweaks
 #
-for_window [app_id="nm-openconnect-auth-dialog"] floating enable
-for_window [app_id="qemu"] floating enable
-for_window [app_id="desktopclient.nextcloud.com.nextcloud"] floating enable
-for_window [app_id="libreoffice-.*"] border normal 3
+for_window {
+    [app_id="nm-openconnect-auth-dialog"] floating enable
+    [app_id="qemu"] floating enable
+    [app_id="desktopclient.nextcloud.com.nextcloud"] floating enable
+    [app_id="libreoffice-.*"] border normal 3
+    [app_id="org.keepassxc.KeePassXC"] floating enable, resize set 900 680, move scratchpad, scratchpad show, move position center
+}
 
+
+#
+# Startup commands
+#
+
+# Configure environment
+set $gnome-schema org.gnome.desktop.interface
+exec {
+    light -N 1
+    xrdb -load ~/.Xresources
+}
+exec_always {
+    gsettings set $gnome-schema gtk-theme 'Adwaita-dark'
+    gsettings set $gnome-schema icon-theme 'Papirus-Dark'
+}
+
+# Start sway-session systemd target
 exec "systemctl --user import-environment; systemctl --user start sway-session.target"
+
+# Autostart applications
+exec $term -- bash --rcfile $HOME/.config/sway/bashrc -i
 
 #include /etc/sway/config.d/*

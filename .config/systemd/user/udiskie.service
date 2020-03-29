@@ -1,0 +1,13 @@
+[Unit]
+Description=Automounter for removable media
+Documentation=man:udiskie(1)
+PartOf=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=udiskie -qans
+Restart=on-failure
+RestartSec=1
+
+[Install]
+WantedBy=sway-session.target
