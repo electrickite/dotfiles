@@ -96,8 +96,8 @@ exec swayidle -w \
     timeout 1200 '[ "$(cat $battery_status)" == Discharging ] && systemctl suspend' \
     timeout 3600 'systemctl suspend' \
     before-sleep '$lock' \
-    lock '$lock' \
-    idlehint 5
+    lock '$lock'
+#    idlehint 5
 
 # Also: prevent idle while any application is fullscreen
 for_window {
