@@ -74,12 +74,12 @@
 
 
   <!-- Global Settings -->
-  <style name="text"			foreground="light0" background="dark0"/>
+  <style name="text"			foreground="light0" background="dark0_hard"/>
   <style name="selection"		foreground="light0" background="dark4"/>
   <style name="cursor"			foreground="light1"/>
   <style name="secondary-cursor"	foreground="light1"/>
   <style name="current-line"		background="dark1"/>
-  <style name="line-numbers"		foreground="dark4" background="dark0_hard"/>
+  <style name="line-numbers"		foreground="dark4" background="dark0"/>
   <style name="draw-spaces"		foreground="light2"/>
   <style name="background-pattern"	background="#2e2c2b"/>
 
