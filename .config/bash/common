@@ -1,3 +1,5 @@
+set -o vi
+
 if command -v chruby >/dev/null; then
   chruby 2.6
 fi
