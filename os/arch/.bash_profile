@@ -8,8 +8,7 @@
 # If we are in a login shell, start sway
 if [ -z "$DISPLAY" ] && \
    [ $(tty) = "/dev/tty1" ] && \
-   [ "$XDG_SESSION_TYPE" != "wayland" ] && \
-   [ -n "$(systemctl list-units --type=target --plain --no-pager --no-legend | grep multi-user.target)" ]
+   [ "$XDG_SESSION_TYPE" != "wayland" ]
 then
   eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
 
@@ -28,7 +27,7 @@ then
   done
   set +a
 
-  sway
+  exec sway
   exit 0
 elif [ "$DESKTOP_SESSION" = "sway" ] || [ "$DESKTOP_SESSION" = "sway-run" ]; then
   eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)

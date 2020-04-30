@@ -1,0 +1,10 @@
+[Unit]
+Description=Socket for Wayland overlay bar
+Documentation=man:wob(1)
+PartOf=graphical-session.target
+
+[Socket]
+ListenFIFO=%t/wob.sock
+
+[Install]
+WantedBy=sway-session.target

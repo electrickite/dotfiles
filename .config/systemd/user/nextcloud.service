@@ -1,0 +1,13 @@
+[Unit]
+Description=File synchronization desktop utility
+Documentation=man:nextcloud(1)
+PartOf=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=nextcloud
+Restart=on-failure
+RestartSec=1
+
+[Install]
+WantedBy=sway-session.target
