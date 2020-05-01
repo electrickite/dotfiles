@@ -113,6 +113,24 @@ if [[ ! "$PATH" == *${HOME}/.fzf/bin* ]]; then
   export PATH="${PATH:+${PATH}:}${HOME}/.fzf/bin"
 fi
 
+# Fix /etc/resolv.conf for VPN.
+fixvpn() {
+   [ -s /run/resolvconf/resolv.conf -a -L /etc/resolv.conf ] && sudo cp --remove-destination /run/resolvconf/resolv.conf /etc/resolv.conf
+   local sudo="sudo"
+   if [ -w /etc/resolv.conf ]; then sudo=""; fi
+   $sudo ed -s /etc/resolv.conf <<'EOF'
+H
+a
+#EOF
+.
+kx
+g/^nameserver /d
+.-1r !/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe -Command '$x = Get-NetAdapter | Group-Object -AsHashtable -Property ifIndex; Get-DnsClientServerAddress -AddressFamily ipv4 | where {$x[$_.InterfaceIndex].Status -eq "Up"} | Select-Object -ExpandProperty ServerAddresses | foreach {"nameserver " + $_}' | sed 's/\r//g'
+'xd
+wq
+EOF
+}
+
 if [ -f ~/.config/bash/common ]; then
   . ~/.config/bash/common
 fi
