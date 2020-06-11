@@ -127,7 +127,7 @@ bindsym {
     $mod+Shift+Backspace exec echo "" | $dmenu $inlineargs --prompt=Search: | xargs -I{} swaymsg exec -- $browser --search \\\"{}\\\"
 
     # reload the configuration file
-    $mod+Shift+c reload
+    $mod+Shift+c reload, exec "systemctl --user restart kanshi.service"
 }
 # Drag floating windows by holding down $mod and left mouse button.
 # Resize them with right mouse button + $mod.

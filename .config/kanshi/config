@@ -1,9 +1,12 @@
-profile {
+profile internal {
   output eDP-1 enable scale 2
 }
 
-profile {
-  output eDP-1 enable scale 2 transform 0 position 0,0
-  output "Dell Inc. DELL P2217H 668VC72A49HU" enable transform 0 position 1600,0
+profile docked {
+  output eDP-1 enable scale 2 transform normal position 0,0
+  output "Dell Inc. DELL P2217H 668VC72A49HU" enable transform normal position 1600,0
   output "Dell Inc. DELL P2217H 4RDG967O3GEB" enable transform 270 position 3520,-540
+  exec swaymsg workspace 1, move workspace to eDP-1
+  exec swaymsg workspace 2, move workspace to output '"Dell Inc. DELL P2217H 668VC72A49HU"'
+  exec swaymsg workspace 3, move workspace to output '"Dell Inc. DELL P2217H 4RDG967O3GEB"'
 }
