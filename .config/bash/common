@@ -1,5 +1,8 @@
 set -o vi
 
+export EDITOR=vim
+export VISUAL=$EDITOR
+
 if command -v chruby >/dev/null; then
   chruby 2.6
 fi
