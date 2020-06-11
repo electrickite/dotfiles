@@ -119,7 +119,7 @@ bindsym {
 
     # Multi-purpose launcher
     $mod+Space exec $menu
-    $mod+Shift+Space exec dmenu_path | $dmenu $inlineargs --prompt=Run: | xargs swaymsg exec -- $term --
+    $mod+Shift+Space exec bemenu-run $inlineargs --prompt=Run: --no-exec | xargs swaymsg exec -- $term --
     $mod+Slash exec fd | $dmenu $dmenuargs --prompt=Find: | xargs -I{} swaymsg exec -- mimeo \\\"{}\\\"
     $mod+n exec networkmanager_dmenu
     $mod+equal exec = --dmenu=$dmenu -- $dmenuargs --tf='#fbf1c7'

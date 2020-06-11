@@ -1,0 +1,9 @@
+profile {
+  output eDP-1 enable scale 2
+}
+
+profile {
+  output eDP-1 enable scale 2 position 0,0
+  output DP-4 enable position 1600,0
+  output DP-3 enable transform 270 position 3520,-540
+}

@@ -17,6 +17,8 @@
 !i3status/*
 !mako/
 !mako/*
+!kanshi/
+!kanshi/*
 !networkmanager-dmenu/
 !networkmanager-dmenu/*
 !bash/
