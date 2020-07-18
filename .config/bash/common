@@ -4,7 +4,7 @@ export EDITOR=vim
 export VISUAL=$EDITOR
 
 if command -v chruby >/dev/null; then
-  chruby 2.6
+  chruby 2.7
 fi
 
 alias listening='lsof -nP +c 15 | grep LISTEN'
