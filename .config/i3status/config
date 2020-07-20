@@ -22,6 +22,7 @@ order += "wireless _first_"
 order += "ethernet _first_"
 order += "cpu_usage"
 order += "battery all"
+order += "battery pbp"
 order += "volume master"
 order += "time"
 
@@ -63,12 +64,27 @@ cpu_usage {
 
 battery all {
   format = "%status %percentage (%remaining)"
-  format_down = "No battery"
+  format_down = ""
   hide_seconds = true
   last_full_capacity = true
   integer_battery_capacity = true
   low_threshold = 15
   threshold_type = "percentage"
+  status_chr = 
+  status_bat = 
+  status_unk = 
+  status_full = 
+}
+
+battery pbp {
+  format = "%status %percentage"
+  format_down = ""
+  hide_seconds = true
+  last_full_capacity = true
+  integer_battery_capacity = true
+  low_threshold = 15
+  threshold_type = "percentage"
+  path = "/sys/class/power_supply/cw2015-battery/uevent"
   status_chr = 
   status_bat = 
   status_unk = 
