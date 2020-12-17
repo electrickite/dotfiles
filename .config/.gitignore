@@ -10,7 +10,7 @@
 !environment.d
 !environment.d/*
 !sway/
-!sway/*
+!sway/**
 !swaylock/
 !swaylock/*
 !i3status/
