@@ -80,6 +80,7 @@ output * bg $img fill
 
 # Cursor configuration
 seat * hide_cursor 8000
+seat * xcursor_theme default 32
 
 #
 # Idle configuration
