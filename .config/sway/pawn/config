@@ -1,0 +1,15 @@
+### Input configuration
+
+input "9610:30:HAILUCK_CO.,LTD_USB_KEYBOARD_Touchpad" {
+  pointer_accel 0.4
+  dwt enabled
+  tap enabled
+  drag enabled
+  natural_scroll enabled
+  scroll_method two_finger
+  middle_emulation enabled
+  tap_button_map lrm
+}
+
+# You can get the names of your inputs by running: swaymsg -t get_inputs
+# Read `man 5 sway-input` for more information about this section.
