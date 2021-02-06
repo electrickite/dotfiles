@@ -120,12 +120,14 @@ bindsym {
 
     # Multi-purpose launcher
     $mod+Space exec $menu
-    $mod+Shift+Space exec bemenu-run $inlineargs --prompt=Run: --no-exec | xargs swaymsg exec -- $term --
+    $mod+Shift+Space exec bemenu-run $inlineargs --prompt=Run: --no-exec | xargs -r swaymsg exec -- $term --
     $mod+Slash exec fd | $dmenu $dmenuargs --prompt=Find: | xargs -I{} swaymsg exec -- mimeo \\\"{}\\\"
     $mod+n exec networkmanager_dmenu
     $mod+equal exec = --dmenu=$dmenu -- $dmenuargs --tf='#fbf1c7'
     $mod+Backspace exec $browser
+    $mod+backslash exec $browser
     $mod+Shift+Backspace exec echo "" | $dmenu $inlineargs --prompt=Search: | xargs -I{} swaymsg exec -- $browser --search \\\"{}\\\"
+    $mod+Shift+backslash exec echo "" | $dmenu $inlineargs --prompt=Search: | xargs -I{} swaymsg exec -- $browser --search \\\"{}\\\"
 
     # reload the configuration file
     $mod+Shift+c reload, exec "systemctl --user restart kanshi.service"
