@@ -1,4 +1,4 @@
-input "2:7:SynPS/2_Synaptics_TouchPad" {
+input "1739:52710:DLL0945:00_06CB:CDE6_Touchpad" {
     dwt enabled
     tap enabled
     drag enabled
