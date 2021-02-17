@@ -373,6 +373,7 @@ exec {
 exec_always {
     gsettings set $gnome-schema gtk-theme 'Adwaita-dark'
     gsettings set $gnome-schema icon-theme 'Papirus-Dark'
+    gsettings set org.gnome.desktop.interface cursor-size 32
 }
 
 # Start sway-session systemd target
