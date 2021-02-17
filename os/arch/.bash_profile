@@ -12,7 +12,6 @@ if [ -z "$DISPLAY" ] && \
 then
   eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
 
-  export XDG_SESSION_TYPE=wayland
   export _JAVA_AWT_WM_NONREPARENTING=1
   export SSH_AUTH_SOCK
   export BEMENU_BACKEND=wayland
