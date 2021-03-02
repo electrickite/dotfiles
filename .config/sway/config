@@ -343,9 +343,11 @@ bindsym {
     # KeepassXC
     $mod+p exec "if ! pgrep -x keepassxc; then swaymsg exec keepassxc; fi"; [app_id="org.keepassxc.KeePassXC"] scratchpad show, move position center
 
-    # Display Scaling
+    # Display Power and Scaling
     $mod+o exec systemctl --user restart kanshi
     $mod+Shift+o output * scale 1
+    $mod+i output * dpms on
+    $mod+Shift+i output * dpms off
 }
 
 #
