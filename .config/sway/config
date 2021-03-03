@@ -98,8 +98,8 @@ exec swayidle -w \
     timeout 3600 'systemctl suspend' \
     before-sleep '$lock' \
     lock '$lock' \
-    after-resume 'swaymsg "output * dpms on"'
-#    idlehint 5
+    after-resume 'swaymsg "output * dpms on"' \
+    idlehint 5
 
 # Also: prevent idle while any application is fullscreen
 for_window {
