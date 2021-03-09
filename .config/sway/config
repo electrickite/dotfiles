@@ -142,7 +142,7 @@ floating_modifier $mod normal
 #
 # System menu mode
 #
-set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (p) shutdown
+set $mode_system System Mode (leshrp)
 mode "$mode_system" {
   bindsym {
     l exec loginctl lock-session, mode "default"
@@ -268,7 +268,7 @@ bindsym {
 #
 # Resizing containers:
 #
-mode "resize" {
+mode "Resize" {
   bindsym {
     # left will shrink the containers width
     # right will grow the containers width
@@ -290,7 +290,7 @@ mode "resize" {
     Escape mode "default"
   }
 }
-bindsym $mod+r mode "resize"
+bindsym $mod+r mode "Resize"
 
 #
 # Status Bar:
@@ -382,6 +382,6 @@ exec_always {
 exec "systemctl --user import-environment; systemctl --user start sway-session.target"
 
 # Autostart applications
-exec $term -- bash --rcfile $HOME/.config/sway/bashrc -i
+exec $term -- bash --rcfile ~/.config/sway/bashrc -i
 
 #include /etc/sway/config.d/*
