@@ -70,18 +70,8 @@ sudo pacman -Syu --needed \
   dosfstools \
   mlocate
 
-if ! type -P aurman &>/dev/null; then
-  read -p "Enter aurman PGP key to import [465022E743D71E39] " aurman_key
-  aurman_key=${aurman_key:-465022E743D71E39}
-  gpg --receive-keys $aurman_key
-
-  echo "Installing aurman..."
-  git clone https://aur.archlinux.org/aurman.git aurman
-  cd aurman
-  makepkg -si
-  cd ..
-  rm -rf aurman
-fi
+echo "Generating ctags..."
+ctags -f ~/.vim/systags $(pacman -Qlq glibc | grep /usr/include/)
 
 # Add SSH keys
 cd "$HOME"
@@ -102,6 +92,21 @@ elif [ -d "$HOME/.ssh" ]; then
 else
     echo "No SSH keys file found. Generating new key..."
     ssh-keygen -t rsa -b 2048 -C $email_address
+fi
+
+# Install aurman
+if ! type -P aurman &>/dev/null; then
+  read -p "Enter aurman PGP key to import [465022E743D71E39] " aurman_key
+  aurman_key=${aurman_key:-465022E743D71E39}
+  gpg --receive-keys $aurman_key
+
+  echo "Installing aurman..."
+  cd ~
+  git clone https://aur.archlinux.org/aurman.git aurman-build
+  cd aurman-build
+  makepkg -si
+  cd ~
+  rm -rf aurman-build
 fi
 
 echo "Performing additional configuration..."
