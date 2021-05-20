@@ -68,7 +68,8 @@ sudo pacman -Syu --needed \
   dnsutils \
   exfat-utils \
   dosfstools \
-  mlocate
+  mlocate \
+  python-setuptools
 
 echo "Generating ctags..."
 ctags -f ~/.vim/systags $(pacman -Qlq glibc | grep /usr/include/)
