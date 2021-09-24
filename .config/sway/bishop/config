@@ -1,4 +1,4 @@
-input "1739:52710:DLL0945:00_06CB:CDE6_Touchpad" {
+input "2362:628:PIXA3854:00_093A:0274_Touchpad" {
     dwt enabled
     tap enabled
     drag enabled
