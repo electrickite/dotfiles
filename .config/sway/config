@@ -18,8 +18,8 @@ set {
 
     # dmenu-compatible command
     $dmenu bemenu
-    $dmenuargs -i --list=12 --nb='#282828' --nf='#bdae93' --fb='#3c3836' --ff='#fbf1c7' --tb='#3c3836' --tf='#bdae93' --hb='#32302f' --hf='#fbf1c7'
-    $inlineargs -i --nb='#3c3836' --nf='#bdae93' --fb='#3c3836' --ff='#fbf1c7' --tb='#3c3836' --tf='#bdae93' --hb='#3c3836' --hf='#fbf1c7'
+    $dmenuargs -i --list=12 --nb='#282828' --nf='#bdae93' --fb='#3c3836' --ff='#fbf1c7' --tb='#3c3836' --tf='#bdae93' --hb='#32302f' --hf='#fbf1c7' --fn='Hack Nerd Font 10'
+    $inlineargs -i --nb='#3c3836' --nf='#bdae93' --fb='#3c3836' --ff='#fbf1c7' --tb='#3c3836' --tf='#bdae93' --hb='#3c3836' --hf='#fbf1c7' --fn='Hack Nerd Font 10'
 
     # Web browser
     $browser firefox
@@ -140,25 +140,10 @@ bindsym {
 floating_modifier $mod normal
 
 #
-# System menu mode
+# System menu
 #
-set $mode_system System Mode (leshrp)
-mode "$mode_system" {
-  bindsym {
-    l exec loginctl lock-session, mode "default"
-    e exec swaymsg exit, mode "default"
-    s exec systemctl suspend, mode "default"
-    h exec systemctl hibernate, mode "default"
-    r exec systemctl reboot, mode "default"
-    p exec systemctl poweroff, mode "default"
-
-    # back to normal: Enter or Escape
-    Return mode "default"
-    Escape mode "default"
-  }
-}
-bindsym $mod+Escape mode "$mode_system"
-bindsym XF86PowerOff mode "$mode_system"
+set $system_menu ~/.config/sway/system-menu
+bindsym $mod+Escape exec "$system_menu | $dmenu $dmenuargs --prompt=System: | $system_menu"
 
 #
 # Moving around:
@@ -297,7 +282,7 @@ bindsym $mod+r mode "Resize"
 #
 # Read `man 5 sway-bar` for more information about this section.
 bar {
-    #swaybar_command waybar
+    swaybar_command waybar
     position top
     status_command i3status
     separator_symbol "|"
@@ -355,8 +340,9 @@ bindsym {
 #
 for_window {
     [app_id="nm-openconnect-auth-dialog"] floating enable
+    [app_id="nm-connection-editor"] floating enable
     [app_id="qemu"] floating enable
-    [app_id="desktopclient.nextcloud.com.nextcloud"] floating enable
+    [app_id="com.nextcloud.desktopclient.nextcloud" title="Nextcloud Settings"] floating enable
     [app_id="libreoffice-.*"] border normal 3
     [app_id="org.keepassxc.KeePassXC"] floating enable, resize set 900 680, move scratchpad, scratchpad show, move position center
 }

@@ -1,0 +1,40 @@
+#!/bin/bash
+
+if [ -p /dev/stdin ]; then
+    read command
+else
+    command=$1
+fi
+
+if [ -z "$command" ]; then
+    cat <<EOF
+Lock
+Exit
+Suspend
+Hibernate
+Reboot
+Poweroff
+EOF
+    exit 0
+fi
+
+case "$command" in
+    Lock)
+        loginctl lock-session
+        ;;
+    Exit)
+        swaymsg exit
+        ;;
+    Suspend)
+        systemctl suspend
+        ;;
+    Hibernate)
+        systemctl hibernate
+        ;;
+    Reboot)
+        systemctl reboot
+        ;;
+    Poweroff)
+        systemctl poweroff
+        ;;
+esac
