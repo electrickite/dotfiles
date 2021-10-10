@@ -323,7 +323,7 @@ bindsym {
     $mod+Print exec slurp | grim -g - "$(xdg-user-dir PICTURES)/$screenshot" && notify-send "Sceenshot saved" "$screenshot"
 
     # Caffeine
-    $mod+c exec 'killall -q caffeinated || caffeinated -d'
+    #$mod+c exec 'killall -q caffeinated || caffeinated -d'
 
     # KeepassXC
     $mod+p exec "if ! pgrep -x keepassxc; then swaymsg exec keepassxc; fi"; [app_id="org.keepassxc.KeePassXC"] scratchpad show, move position center
