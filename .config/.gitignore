@@ -26,6 +26,7 @@
 !waybar/
 !waybar/*
 !starship.toml
+!libinput-gestures.conf
 !gtk-3.0/
 !gtk-3.0/settings.ini
 !gtk-2.0/
