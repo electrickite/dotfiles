@@ -1,0 +1,111 @@
+{
+    "layer": "bottom",
+    "position": "top",
+
+    "modules-left": [
+        "sway/workspaces",
+        "custom/arrow6",
+        "sway/window",
+        "sway/mode"
+    ],
+    "modules-right": [
+        "tray",
+        "idle_inhibitor",
+        "custom/arrow4",
+        "network",
+        "custom/arrow3",
+        "pulseaudio",
+        "custom/arrow7",
+        "battery",
+        "custom/arrow5",
+        "cpu",
+        "memory",
+        "custom/arrow1",
+        "clock",
+        "custom/arrow2"
+    ],
+    "sway/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": false,
+        "format": "{value}"
+    },
+    "sway/mode": {
+        "format": "<span style=\"italic\">{}</span>"
+    },
+    "tray": {
+        "spacing": 14
+    },
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": "﯈"
+        }
+    },
+    "clock": {
+        "format": "{:%h %d %I:%M%p}",
+        "tooltip-format": "{:%a, %h %d %Y | %I:%M%p}"
+    },
+    "cpu": {
+        "format": "{usage}% ",
+        "on-click": "gnome-terminal -e htop"
+    },
+    "memory": {
+        "format": "{}% ",
+        "on-click": "gnome-terminal -e htop"
+    },
+    "battery": {
+        "interval": 60,
+        "states": {
+            "warning": 15,
+            "critical": 5
+        },
+        "format": "{capacity}% ",
+        "format-charging": "{capacity}% ⚡{icon}",
+        "format-discharging": "{capacity}% {icon}",
+        "format-icons": ["", "", "", "", ""]
+    },
+    "network": {
+        "format": "{ifname}",
+        "format-wifi": "{essid} ",
+        "format-ethernet": "{ifname} ",
+        "format-disconnected": "⚠",
+        "tooltip-format": "{ifname} | {ipaddr}/{cidr}",
+        "tooltip-format-wifi": "{ifname} | {ipaddr}/{cidr} | {frequency}MHz {signalStrength}%"
+    },
+    "pulseaudio": {
+        "scroll-step": 5,
+        "format": "{volume}% {icon}",
+        "format-bluetooth": "{volume}% {icon}",
+        "format-muted": "",
+        "format-icons": {
+            "headphones": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", ""]
+        },
+        "on-click": "pavucontrol"
+    },
+    "custom/arrow1": {
+        "format": ""
+    },
+    "custom/arrow3": {
+        "format": ""
+    },
+    "custom/arrow4": {
+        "format": ""
+    },
+    "custom/arrow5": {
+        "format": ""
+    },
+    "custom/arrow6": {
+        "format": ""
+    },
+    "custom/arrow2": {
+        "format": ""
+    },
+    "custom/arrow7": {
+        "format": ""
+    }
+}

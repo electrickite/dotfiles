@@ -1,0 +1,107 @@
+* {
+    border: none;
+    border-radius: 0;
+    font-family: Hack Nerd Font;
+    font-size: 10pt;
+    min-height: 0;
+}
+
+window#waybar {
+    background-color: #3c3836;
+    color: #e0e0e0;
+}
+
+/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
+#workspaces button {
+    padding: 0 5px;
+    background: #504945;
+    color: #bdae93;
+}
+
+#workspaces button.focused {
+    color: #fbf1c7;
+}
+
+#mode {
+    background: #282828;
+    color: #d05c5c;
+}
+
+#window {
+    color: #bdae93;
+}
+
+#clock, #battery, #cpu, #memory, #backlight, #network, #pulseaudio, #custom-mpd, #tray, #mode, #idle_inhibitor, #window {
+    padding: 0 14px 0 8px;
+    margin: 0;
+}
+#tray {
+    padding: 0 8px;
+}
+
+#clock {
+    color: #282828;
+    background: #a89984;
+    padding-right: 7px;
+}
+
+@keyframes blink {
+    to {
+        background-color: #ffffff;
+        color: black;
+    }
+}
+
+#cpu, #memory {
+    background: #7c6f64;
+}
+
+#battery {
+    background: #665c54;
+}
+#battery.discharging.warning {
+    color: #fb4934;
+}
+#battery.discharging.critical {
+    color: #cc241d;
+}
+
+#pulseaudio, #network {
+    background: #504945;
+}
+
+#custom-arrow1 {
+    font-size: 17px;
+    color: #a89984;
+    background: #7c6f64;
+}
+#custom-arrow2 {
+    font-size: 17px;
+    color: #d65d0e;
+    background: #a89984;
+}
+#custom-arrow3 {
+    font-size: 17px;
+    background: #4e4e4e;
+    color: #949494
+}
+#custom-arrow4 {
+    font-size: 17px;
+    color: #4e4e4e;
+    background: #3a3a3a
+}
+#custom-arrow5 {
+    font-size: 17px;
+    color: #7c6f64;
+    background: #665c54;
+}
+#custom-arrow6 {
+    font-size: 17px;
+    color: #4a4a4a;
+    background: transparent;
+}
+#custom-arrow7 {
+    font-size: 17px;
+    color: #665c54;
+    background: #504945;
+}

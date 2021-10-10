@@ -23,6 +23,9 @@
 !networkmanager-dmenu/*
 !bash/
 !bash/*
+!waybar/
+!waybar/*
+!starship.toml
 !gtk-3.0/
 !gtk-3.0/settings.ini
 !gtk-2.0/

@@ -1,0 +1,15 @@
+[character]
+success_symbol = "[\\$](bold green)"
+error_symbol = "[✗](bold red)"
+
+[directory]
+truncation_symbol = "…/"
+
+[hostname]
+format = "[$hostname]($style):"
+ssh_only = false
+style = "bold yellow"
+
+[username]
+format = "[$user]($style)@"
+show_always = true
