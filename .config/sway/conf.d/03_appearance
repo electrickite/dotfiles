@@ -1,0 +1,34 @@
+#
+# Appearance
+#
+gaps outer 0
+gaps inner 10
+smart_gaps on
+
+set {
+    $bg            #d65d0e
+    $bg-inactive   #3c3836
+    $bg-urgent     #cc241d
+    $text          #fbf1c7
+    $text-inactive #a89984
+    $osdfg         #ffebdbb2
+    $osdbg         #ff1d2021
+
+    $bar           #3c3836
+    $statusline    #e0e0e0
+}
+
+client.focused          $bg           $bg-inactive $text          $bg $bg
+client.unfocused        $bg-inactive  $bg-inactive $text-inactive $bar $bar
+client.focused_inactive $bg-inactive  $bg-inactive $text-inactive $bar $bar
+client.urgent           $bg-urgent    $bg-urgent   $text          $bar $bar
+
+default_border pixel 3
+default_floating_border pixel 3
+
+# Default wallpaper (more resolutions are available in __DATADIR__/backgrounds/sway/)
+output * bg $img fill
+
+# Cursor configuration
+seat * hide_cursor 8000
+seat * xcursor_theme default 32

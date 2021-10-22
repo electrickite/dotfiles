@@ -26,7 +26,7 @@ then
   done
   set +a
 
-  exec sway
+  exec systemd-cat --identifier=sway sway
   exit 0
 elif [ "$DESKTOP_SESSION" = "sway" ] || [ "$DESKTOP_SESSION" = "sway-run" ]; then
   eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)

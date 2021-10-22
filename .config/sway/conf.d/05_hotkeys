@@ -1,0 +1,269 @@
+### Key bindings
+
+# Drag floating windows by holding down $mod and left mouse button.
+# Resize them with right mouse button + $mod.
+# Despite the name, also works for non-floating windows.
+# Change normal to inverse to use left mouse button for resizing and right
+# mouse button for dragging.
+floating_modifier $mod normal
+
+#
+# Launchers
+#
+
+## Launch // Show all hotkeys // <Super> <Shift> ? ##
+bindsym $mod+Shift+Slash exec $sway_bin/keylist $sway_config/05_hotkeys | $dmenu $dmenuargs --prompt=Keys:
+
+## Launch // Terminal // <Super> Return ##
+bindsym $mod+Return exec $term
+
+## Launch // Application Launcher // <Super> Space ##
+bindsym $mod+Space exec $menu
+
+## Launch // Command Launcher // <Shift> <Super> Space ##
+bindsym $mod+Shift+Space exec bemenu-run $inlineargs --prompt=Run: --no-exec | xargs -r swaymsg exec -- $term --
+
+## Launch // Find and open files // <Super> / ##
+bindsym $mod+Slash exec fd | $dmenu $dmenuargs --prompt=Find: | xargs -I{} swaymsg exec -- mimeo \\\"{}\\\"
+
+## Launch // Calculator menu // <Super> = ##
+bindsym $mod+equal exec = --dmenu=$dmenu -- $dmenuargs --tf='#fbf1c7'
+
+## Launch // Calculator GUI // <Super> <Shift> = ##
+bindsym $mod+Shift+equal exec gnome-calculator
+bindsym XF86Calculator exec gnome-calculator
+
+## Launch // Launch web browser // <Super> Backspace ##
+bindsym $mod+Backspace exec $browser
+bindsym $mod+backslash exec $browser
+bindsym XF86HomePage exec $browser
+
+## Launch // Web search // <Super> <Shift> Backspace ##
+bindsym $mod+Shift+Backspace exec echo "" | $dmenu $inlineargs --prompt=Search: | xargs -I{} swaymsg exec -- $browser --search \\\"{}\\\"
+bindsym $mod+Shift+backslash exec echo "" | $dmenu $inlineargs --prompt=Search: | xargs -I{} swaymsg exec -- $browser --search \\\"{}\\\"
+bindsym XF86Search exec echo "" | $dmenu $inlineargs --prompt=Search: | xargs -I{} swaymsg exec -- $browser --search \\\"{}\\\"
+
+## Launch // Emoji type dialog // <Alt> E ##
+bindsym $alt+e exec $sway_bin/unicode list | $dmenu $dmenuargs --prompt=Type: | $sway_bin/unicode insert
+
+## Launch // Emoji copy dialog // <Alt> <Shift> E ##
+bindsym $alt+Shift+e exec $sway_bin/unicode list | $dmenu $dmenuargs --prompt=Copy: | $sway_bin/unicode copy
+
+## Launch // Email // <XF86Mail> ##
+bindsym XF86Mail exec geary
+
+## Launch // Clipboard manager // <Super> Y ##
+bindsym $mod+y exec clipman pick -t $dmenu --tool-args="$dmenuargs"
+
+## Launch // Password manager // <Super> P ##
+bindsym $mod+p exec "if ! pgrep -x keepassxc; then swaymsg exec keepassxc; fi"; [app_id="org.keepassxc.KeePassXC"] scratchpad show, move position center
+
+
+#
+# System management
+#
+
+## System // Exit focused application // <Super> <Shift> Q ##
+bindsym $mod+Shift+q kill
+
+## System // Manage network connections // <Super> N ##
+bindsym $mod+n exec networkmanager_dmenu
+
+## System // System Menu // <Super> Escape ##
+set $system_menu $sway_bin/system-menu
+bindsym $mod+Escape exec "$system_menu | $dmenu $dmenuargs --prompt=System: | $system_menu"
+
+## System // Copy wayland clipboard to PRIAMRY // <Shift> <Alt> S ##
+bindsym Shift+$alt+s exec wl-paste | xclip -selection clipboard | notify-send "PRIMARY Clipboard synced with Wayland"
+
+## System // Reload sway config // <Super> <Shift> C ##
+bindsym $mod+Shift+c reload, exec "systemctl --user restart kanshi.service"
+
+#
+# Navigation
+#
+
+## Navigate // Focus window // <Super> ↑↓←→ ##
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+## Navigate // Cycle through workspaces // <Alt> Tab ##
+bindsym Alt+Tab workspace next
+
+## Navigate // Cycle backward through workspaces // <Alt> <Shift> Tab ##
+bindsym Alt+Shift+Tab workspace prev
+
+## Navigate // Workspaces 1-10 // <Super> 0..9 ##
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+
+#
+# Modify
+#
+
+## Navigate // Container position // <Super> <Shift> ↑↓←→ ##
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+## Navigate // Move container to workspace // <Super> <Shift> 0..9 ##
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
+
+## Modify // Move container and focus workspace // <Super> <Alt> 0..9 ##
+bindsym $mod+$alt+1 move container to workspace 1; workspace 1
+bindsym $mod+$alt+2 move container to workspace 2; workspace 2
+bindsym $mod+$alt+3 move container to workspace 3; workspace 3
+bindsym $mod+$alt+4 move container to workspace 4; workspace 4
+bindsym $mod+$alt+5 move container to workspace 5; workspace 5
+bindsym $mod+$alt+6 move container to workspace 6; workspace 6
+bindsym $mod+$alt+7 move container to workspace 7; workspace 7
+bindsym $mod+$alt+8 move container to workspace 8; workspace 8
+bindsym $mod+$alt+9 move container to workspace 9; workspace 9
+bindsym $mod+$alt+0 move container to workspace 10; workspace 10
+
+## Modify // Split horizontal // <Super> B ##
+bindsym $mod+b splith
+
+## Modify // Split vertical // <Super> V ##
+bindsym $mod+v splitv
+
+## Modify // Window Layout stacking // <Super> S ##
+bindsym $mod+s layout stacking
+
+## Modify // Window Layout tabbed // <Super> W ##
+bindsym $mod+w layout tabbed
+
+## Modify // Window Layout toggle split // <Super> E ##
+bindsym $mod+e layout toggle split
+
+## Modify // Fullscreen toggle // <Super> F ##
+bindsym $mod+F11 fullscreen
+bindsym $mod+f fullscreen
+
+## Modify // Window Floating Toggle // <Super> <Shift> T ##
+bindsym $mod+Shift+t floating toggle
+
+## Modify // Tile/Float Focus Toggle // <Super> T ##
+bindsym $mod+t focus mode_toggle
+
+## Modify // Focus parent container // <Super> A ##
+bindsym $mod+a focus parent
+
+#
+# Scratchpad:
+#
+
+## Scratchpad // Move window to scratchpad // <Super> <Shift> - ##
+bindsym $mod+Shift+minus move scratchpad
+
+## Scratchpad // Cycle through windows in scratchpad // <Super> - ##
+bindsym $mod+minus scratchpad show
+
+#
+# Resizing containers:
+#
+## Resize // Enter Resize Mode // <Super> R ##
+mode "Resize" {
+  bindsym {
+    ## Resize // Resize Window (resize mode) // ↑↓←→ ##
+    $left resize shrink width 10px
+    $down resize grow height 10px
+    $up resize shrink height 10px
+    $right resize grow width 10px
+    Left resize shrink width 10px
+    Down resize grow height 10px
+    Up resize shrink height 10px
+    Right resize grow width 10px
+
+    ## Resize // Exit resize mode // Escape or Enter ##
+    Return mode "default"
+    Escape mode "default"
+  }
+}
+bindsym $mod+r mode "Resize"
+
+#
+# Hotkeys
+#
+
+## Screenshot // Screenshot active display // <Print> ##
+bindsym Print exec /usr/share/sway/scripts/grimshot --notify save output - | swappy -f -
+
+## Screenshot // Screenshot current window // <Super> Print ##
+bindsym $mod+Print exec /usr/share/sway/scripts/grimshot --notify save active - | swappy -f -
+
+## Screenshot // Screenshot selected region // <Super> <Shift> Print ##
+bindsym $mod+Shift+Print exec /usr/share/sway/scripts/grimshot --notify save area - | swappy -f -
+
+## Notifications // Dismiss notification // <Alt> <Space> ##
+bindsym $alt+space exec makoctl dismiss
+## Notifications // Dismiss all notifications // <Shift> <Alt> <Space> ##
+bindsym Shift+$alt+space exec makoctl dismiss --all
+
+    # Pulse Audio controls
+## Media // Volume up // <XF86AudioRaiseVolume> ##
+bindsym --locked XF86AudioRaiseVolume exec pamixer -ui 5 && paplay $sway_dir/drip.ogg && pamixer --get-volume | sed 's/$/ \\$osdbg \\$osdfg \\$osdfg/' > $wob_fifo
+
+## Media // Volume down // <XF86AudioLowerVolume> ##
+bindsym --locked XF86AudioLowerVolume exec pamixer -ud 5 && paplay $sway_dir/drip.ogg && pamixer --get-volume | sed 's/$/ \\$osdbg \\$osdfg \\$osdfg/' > $wob_fifo
+
+## Media // Volume mute // <XF86AudioMute> ##
+bindsym --locked XF86AudioMute exec pamixer --toggle-mute && ( pamixer --get-mute && echo 0 > $SWAYSOCK.wob ) || pamixer --get-volume | sed 's/$/ \\$osdbg \\$osdfg \\$osdfg/' > $wob_fifo
+
+## Media // Play media // <XF86AudioPlay> ##
+bindsym --locked XF86AudioPlay exec playerctl play-pause
+
+## Media // Plause media // <XF86AudioPlause> ##
+bindsym --locked XF86AudioPause exec playerctl pause
+
+## Media // Next Track // <XF86AudioNext> ##
+bindsym --locked XF86AudioNext exec playerctl next
+
+## Media // Previous Track // <XF86AudioPrev> ##
+bindsym --locked XF86AudioPrev exec playerctl previous
+
+## Display // Display brightness up // <XF86MonBrightnessUp> ##
+bindsym --locked XF86MonBrightnessUp exec light -T 1.4 && light -G | cut -d'.' -f1 | sed 's/$/ \\$osdbg \\$osdfg \\$osdfg/' > $wob_fifo
+
+## Display // Display brightness down // <XF86MonBrightnessDown> ##
+bindsym --locked XF86MonBrightnessDown exec light -T 0.72 && light -G | cut -d'.' -f1 | sed 's/$/ \\$osdbg \\$osdfg \\$osdfg/' > $wob_fifo
+
+## Display // Reset display settings // <Super> O ##
+bindsym $mod+o exec systemctl --user restart kanshi
+
+## Display // Set output scale to 1 // <Super> <Shift> O ##
+bindsym $mod+Shift+o output * scale 1
+
+## Display // Display on // <Super> I ##
+bindsym --locked $mod+i output * dpms on
+
+## Display // Display off // <Super> <Shift> I ##
+bindsym --locked $mod+Shift+i output * dpms off

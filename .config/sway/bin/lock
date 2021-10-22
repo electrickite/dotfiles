@@ -1,0 +1,3 @@
+#!/bin/sh
+dbus-send --print-reply --dest=org.keepassxc.KeePassXC.MainWindow /keepassxc org.keepassxc.MainWindow.lockAllDatabases >/dev/null 2>&1
+exec swaylock -f --image "$HOME/Pictures/bg.jpg"

@@ -1,0 +1,37 @@
+#
+# Startup commands
+#
+
+# Configure environment
+set $gnome-schema org.gnome.desktop.interface
+exec {
+    light -N 1
+    xrdb -load ~/.Xresources
+}
+exec_always {
+    gsettings set $gnome-schema gtk-theme 'Adwaita-dark'
+    gsettings set $gnome-schema icon-theme 'Papirus-Dark'
+    gsettings set org.gtk.Settings.FileChooser window-size '(1100,700)'
+    gsettings set org.gnome.desktop.interface cursor-size 32
+}
+
+# Start sway-session systemd target
+exec "systemctl --user import-environment; \
+      systemctl --user start sway-session.target"
+
+# Note this is a bit of a hack related to an xdg-desktop-portal bug
+# https://github.com/flatpak/xdg-desktop-portal/issues/636
+exec "sleep 10; \
+      hash dbus-update-activation-environment 2>/dev/null; \
+      dbus-update-activation-environment --all"
+
+# Prevent idle while any application is fullscreen
+for_window {
+    [class="^.*"] inhibit_idle fullscreen
+    [app_id="^.*"] inhibit_idle fullscreen
+}
+
+
+# Autostart applications
+exec wl-paste -t text --watch $sway_bin/myclipman.sh
+exec $term -- bash --rcfile $sway_dir/bashrc -i

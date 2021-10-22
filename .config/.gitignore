@@ -11,6 +11,7 @@
 !environment.d/*
 !sway/
 !sway/**
+sway/config.d/99_*
 !swaylock/
 !swaylock/*
 !i3status/
@@ -25,6 +26,9 @@
 !bash/*
 !waybar/
 !waybar/*
+!xdg-desktop-portal-wlr/
+!xdg-desktop-portal-wlr/*
+!swappy/config
 !starship.toml
 !libinput-gestures.conf
 !gtk-3.0/

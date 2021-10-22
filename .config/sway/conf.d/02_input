@@ -1,0 +1,10 @@
+### Input configuration (man 5 sway-input / swaymsg -t get_inputs)
+input type:touchpad {
+    dwt disabled
+    tap enabled
+    drag enabled
+    natural_scroll enabled
+    scroll_method two_finger
+    middle_emulation enabled
+    tap_button_map lrm
+}

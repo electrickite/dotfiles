@@ -1,0 +1,26 @@
+#!/bin/sh
+emoji_file=~/.config/sway/emoji
+
+case "$1" in
+  copy|insert)
+    if [ -p /dev/stdin ]; then
+      read chosen
+    else
+      chosen="$2"
+    fi
+
+    [ -z "$chosen" ] && exit 1
+    chosen=$(echo "$chosen" | sed 's/ .*//')
+    ;;
+  *)
+    cut -d ';' -f1 "$emoji_file"
+    exit 0
+esac
+
+echo "$chosen" | tr -d '\n' | wl-copy
+if [ -x "$(command -v wtype)" ] && [ "$1" = "insert" ]; then
+  wtype "$chosen"
+else
+  notify-send "'$chosen' copied to clipboard."
+fi
+

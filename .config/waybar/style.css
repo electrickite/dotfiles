@@ -41,6 +41,7 @@ window#waybar {
 
 #clock {
     color: #282828;
+    font-weight: 600;
     background: #a89984;
     padding-right: 7px;
 }
