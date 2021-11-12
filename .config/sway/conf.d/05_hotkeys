@@ -21,7 +21,7 @@ bindsym $mod+Return exec $term
 bindsym $mod+Space exec $menu
 
 ## Launch // Command Launcher // <Shift> <Super> Space ##
-bindsym $mod+Shift+Space exec bemenu-run $inlineargs --prompt=Run: --no-exec | xargs -r swaymsg exec -- $term --
+bindsym $mod+Shift+Space exec bemenu-run $inlineargs --prompt=Run: --no-exec | xargs -r swaymsg exec -- $term -- delay -q 0.1 --
 
 ## Launch // Find and open files // <Super> / ##
 bindsym $mod+Slash exec fd | $dmenu $dmenuargs --prompt=Find: | xargs -I{} swaymsg exec -- mimeo \\\"{}\\\"

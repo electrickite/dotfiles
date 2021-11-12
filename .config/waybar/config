@@ -33,7 +33,8 @@
         "format": "<span style=\"italic\">{}</span>"
     },
     "tray": {
-        "spacing": 14
+        "spacing": 14,
+        "icon-size": 16
     },
     "idle_inhibitor": {
         "format": "{icon}",

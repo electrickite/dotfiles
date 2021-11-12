@@ -12,19 +12,14 @@ if [ -z "$DISPLAY" ] && \
 then
   eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
 
-  export _JAVA_AWT_WM_NONREPARENTING=1
   export SSH_AUTH_SOCK
+  export _JAVA_AWT_WM_NONREPARENTING=1
   export BEMENU_BACKEND=wayland
   export SDL_VIDEODRIVER=wayland
-  export MOZ_ENABLE_WAYLAND=1
+  export XDG_CURRENT_DESKTOP=sway
 
   # Read environment variables from environment.d
-  set -a
-  for file in ~/.config/environment.d/*
-  do
-    source "$file"
-  done
-  set +a
+  eval $(sed -e '/^$/d' -e '/^\s*#/d' -e 's/^/export /' $HOME/.config/environment.d/*.conf)
 
   exec systemd-cat --identifier=sway sway
   exit 0
@@ -34,5 +29,5 @@ elif [ "$DESKTOP_SESSION" = "sway" ] || [ "$DESKTOP_SESSION" = "sway-run" ]; the
   export _JAVA_AWT_WM_NONREPARENTING=1
   export BEMENU_BACKEND=wayland
   export SDL_VIDEODRIVER=wayland
-  export MOZ_ENABLE_WAYLAND=1
+  export XDG_CURRENT_DESKTOP=sway
 fi

@@ -8,12 +8,15 @@
 source /usr/share/bash-completion/bash_completion
 
 alias ls='ls --color=auto'
-alias open=mimeo
 alias pacupdate='sudo pacman -Syu && aurman -Syu --devel'
 alias todo=todo.sh
 alias gmni=amfora
 _completion_loader todo.sh
 complete -F _todo todo
+
+open() {
+  swaymsg exec -- xdg-open \"$(realpath "$1")\"
+}
 
 # Starship prompt
 eval "$(starship init bash)"
