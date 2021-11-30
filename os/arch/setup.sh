@@ -216,6 +216,7 @@ if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
     glow-bin \
     j4-dmenu-desktop \
     libinput-gestures \
+    libsixel \
     menu-calc \
     mkinitcpio-colors-git
     nerd-fonts-hack \
