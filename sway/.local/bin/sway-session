@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# Start gnome-keyring
+eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
+export SSH_AUTH_SOCK
+
+# Set sway environment variables
+source "$HOME/.config/sway/env"
+
+# Read environment variables from environment.d
+eval $(sed -e '/^$/d' -e '/^\s*#/d' -e 's/^/export /' $HOME/.config/environment.d/*.conf)
+
+# Start sway, sending output to systemd journal
+exec systemd-cat --identifier=sway sway

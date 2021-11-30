@@ -1,0 +1,13 @@
+[Unit]
+Description=Fast, lightweight and minimalistic Wayland terminal emulator
+Documentation=man:foot(1)
+PartOf=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=foot --server
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=sway-session.target

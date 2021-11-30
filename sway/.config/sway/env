@@ -1,0 +1,4 @@
+export _JAVA_AWT_WM_NONREPARENTING=1
+export BEMENU_BACKEND=wayland
+export SDL_VIDEODRIVER=wayland
+export XDG_CURRENT_DESKTOP=sway

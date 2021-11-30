@@ -1,0 +1,48 @@
+#
+# Variables
+#
+set {
+    # Logo key. Use Mod1 for Alt.
+    $mod Mod4
+    $alt Mod1
+
+    # Home row direction keys, like vim
+    $left h
+    $down j
+    $up k
+    $right l
+
+    # Paths
+    $sway_dir ~/.config/sway
+    $sway_config ~/.config/sway/conf.d
+    $sway_bin ~/.config/sway/bin
+    $local_bin ~/.local/bin
+
+    # Preferred terminal emulator
+    $term footclient
+    $term_standalone foot
+
+    # dmenu-compatible command
+    $dmenu bemenu
+    $dmenuargs -i --list=12 --nb='#282828' --nf='#bdae93' --fb='#3c3836' --ff='#fbf1c7' --tb='#3c3836' --tf='#bdae93' --hb='#32302f' --hf='#fbf1c7' --fn='Hack Nerd Font 10'
+    $inlineargs -i --nb='#3c3836' --nf='#bdae93' --fb='#3c3836' --ff='#fbf1c7' --tb='#3c3836' --tf='#bdae93' --hb='#3c3836' --hf='#fbf1c7' --fn='Hack Nerd Font 10'
+
+    # Web browser
+    $browser firefox
+
+    # Application launcher
+    # Note: it's recommended that you pass the final command to sway
+    $menu j4-dmenu-desktop --dmenu="$dmenu $inlineargs --prompt=Run:" --term="$term" --usage-log=$HOME/.cache/j4.cache --no-generic
+
+    # Background image
+    $img ~/Pictures/bg.jpg
+
+    # Screen lock
+    $lock dbus-send --print-reply --dest=org.keepassxc.KeePassXC.MainWindow /keepassxc org.keepassxc.MainWindow.lockAllDatabases; swaylock -f --image $img
+    #$lock dbus-send --type=method_call --dest=org.gnome.ScreenSaver /org/gnome/ScreenSaver org.gnome.ScreenSaver.Lock
+
+    # Misc
+    $screenshot $(date +'%Y-%m-%d-%H%M%S_screenshot.png')
+    $battery_status /sys/class/power_supply/BAT0/status
+    $wob_fifo $XDG_RUNTIME_DIR/wob.sock
+}

@@ -1,0 +1,7 @@
+[Added Associations]
+text/plain=org.gnome.gedit.desktop;
+application/x-ms-dos-executable=wine.desktop;
+inode/directory=lf.desktop;
+
+[Default Applications]
+text/plain=org.gnome.gedit.desktop

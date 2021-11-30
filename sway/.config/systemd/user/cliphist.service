@@ -1,0 +1,13 @@
+[Unit]
+Description=Wayland clipboard history service
+Documentation=man:wl-paste(1)
+PartOf=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=wl-paste --watch "%h/.local/bin/clipstore"
+Restart=on-failure
+RestartSec=4
+
+[Install]
+WantedBy=sway-session.target

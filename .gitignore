@@ -1,12 +1,2 @@
-# OSX hidden files
-.DS_Store
-.AppleDouble
-.LSOverride
-Icon
-._*
-.Spotlight-V100
-.Trashes
-
-# Windows hidden files
-Thumbs.db
-ehthumbs.db
+sway/.config/sway/conf.d/99_*
+systemd/user/*.wants

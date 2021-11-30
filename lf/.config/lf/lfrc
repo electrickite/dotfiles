@@ -1,0 +1,290 @@
+# interpreter for shell commands
+set shell sh
+
+# set '-eu' options for shell commands
+# These options are used to have safer shell commands. Option '-e' is used to
+# exit on error and option '-u' is used to give error for unset variables.
+# Option '-f' disables pathname expansion which can be useful when $f, $fs, and
+# $fx variables contain names with '*' or '?' characters. However, this option
+# is used selectively within individual commands as it can be limiting at
+# times.
+set shellopts '-eu'
+
+# set internal field separator (IFS) to "\n" for shell commands
+# This is useful to automatically split file names in $fs and $fx properly
+# since default file separator used in these variables (i.e. 'filesep' option)
+# is newline. You need to consider the values of these options and create your
+# commands accordingly.
+set ifs "\n"
+
+# leave some space at the top and the bottom of the screen
+set scrolloff 10
+
+set autoquit
+set drawbox
+set mouse
+set ignorecase
+set icons
+set incsearch
+set info size
+
+set previewer lfp
+
+# define a custom 'open' command
+# This command is called when current file is not a directory.
+cmd open ${{
+    case $(file --mime-type $f -b) in
+        application/x-tar|application/x-gtar|application/gzip|application/x-bzip2|application/x-rar|application/zip|application/x-iso9660-image|application/x-xz)
+            if [ -n "${LFCD+set}" ]; then
+                mntdir="$f-archivemount"
+                [ ! -d "$mntdir" ] && {
+                    mkdir "$mntdir"
+                    archivemount "$f" "$mntdir"
+                    echo "$mntdir" >> "/tmp/__lf_archivemount_$id"
+                }
+                lf -remote "send $id cd \"$mntdir\""
+                lf -remote "send $id reload"
+            else
+                for f in $fx; do $OPENER "$f" > /dev/null 2> /dev/null & done
+            fi
+            ;;
+        text/*|*/json)
+            $EDITOR "$f"
+            ;;
+        *)
+            for f in $fx; do
+                $OPENER "$f" > /dev/null 2> /dev/null &
+            done
+            ;;
+    esac
+}}
+
+# define a custom 'rename' command without prompt for overwrite
+# cmd rename %[ -e $1 ] && printf "file exists" || mv $f $1
+# map r push :rename<space>
+
+cmd trash ${{
+  clear
+  for file in $fs; do
+    trash-put "$file"
+  done
+}}
+
+cmd trash_clear %trash_empty
+
+cmd trash_restore ${{
+  clear
+  trash-restore
+}}
+
+cmd mkdir %mkdir -p "$(echo $* | tr ' ' '\ ')"
+
+cmd mkfile ${{
+  $EDITOR $1
+}}
+
+cmd sudomkfile ${{
+  sudo $EDITOR $1
+}}
+
+cmd setwallpaper %swaymsg output "*" background "$f" stretch
+
+cmd chmod ${{
+  clear
+  for file in "$fx"; do chmod $1 $file; done
+  lf -remote 'send reload'
+}}
+
+cmd fzf_jump ${{
+    res="$(find . | fzf --reverse --header='Jump to location' | sed 's/\\/\\\\/g;s/"/\\"/g')"
+    if [ -d "$res" ]; then
+        cmd="cd"
+    else 
+        cmd="select"
+    fi
+    lf -remote "send $id $cmd \"$res\""
+}}
+
+cmd git_branch ${{
+    git branch | fzf | xargs git checkout 
+    pwd_shell=$(pwd)
+    lf -remote "send $id updir"
+    lf -remote "send $id cd \"$pwd_shell\""
+}}
+
+cmd git_pull !{{clear; git pull || true}}
+cmd git_status !{{clear; git status}}
+cmd git_log !{{clear; git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit}}
+
+cmd on-cd &{{
+    # display git repository status in your prompt
+    source /usr/share/git/completion/git-prompt.sh
+    GIT_PS1_SHOWDIRTYSTATE=auto
+    GIT_PS1_SHOWSTASHSTATE=auto
+    GIT_PS1_SHOWUNTRACKEDFILES=auto
+    GIT_PS1_SHOWUPSTREAM=auto
+    GIT_PS1_COMPRESSSPARSESTATE=auto
+    git=$(__git_ps1 " [GIT BRANCH:> %s]") || true
+    fmt="\033[32;1m%u@%h\033[0m:\033[34;1m%w\033[0m\033[33;1m$git\033[0m"
+    lf -remote "send $id set promptfmt \"$fmt\""
+    printf "\033]0; lf $(pwd | sed "s|$HOME|~|")\007" > /dev/tty
+}}
+
+# extract the current file with the right command
+# (xkcd link: https://xkcd.com/1168/)
+cmd extract ${{
+    clear
+    set -f
+    case $f in
+        *.tar.bz|*.tar.bz2|*.tbz|*.tbz2) tar xjvf $f;;
+        *.tar.gz|*.tgz) tar xzvf $f;;
+        *.tar.xz|*.txz) tar xJvf $f;;
+        *.zip) unzip $f;;
+        *.rar) unrar x $f;;
+        *.7z) 7z x $f;;
+        *) echo "Unsupported format";;
+    esac
+}}
+
+# compress current file or selected files with tar and gunzip
+cmd tar ${{
+    clear
+    set -f
+    mkdir $1
+    cp -r $fx $1
+    tar czf $1.tar.gz $1
+    rm -rf $1
+}}
+
+# compress current file or selected files with zip
+cmd zip ${{
+    clear
+    set -f
+    mkdir $1
+    cp -r $fx $1
+    zip -r $1.zip $1
+    rm -rf $1
+}}
+
+cmd paste &{{
+    load=$(lf -remote 'load')
+    mode=$(echo "$load" | sed -n '1p')
+    list=$(echo "$load" | sed '1d')
+    if [ $mode = 'copy' ]; then
+        rsync -av --progress $list . \
+        | stdbuf -i0 -o0 -e0 tr '\r' '\n' \
+        | while read line; do
+            lf -remote "send $id echo $line"
+        done
+    elif [ $mode = 'move' ]; then
+        mv -n $list .
+    fi
+    lf -remote 'send load'
+    lf -remote 'send clear'
+}}
+
+cmd copy_path $wl-copy "$fx"
+
+cmd drag &{{
+    dragon-drag-and-drop -a -x $fx
+}}
+
+cmd bulkrename $edir -a
+
+cmd open-with %"$@" $fx
+
+cmd recol ${{
+    w=${1:-$(tput cols)}
+    if [ $w -le 80 ]; then
+        lf -remote "send $id set ratios 1:2"
+    elif [ $w -le 160 ]; then
+        lf -remote "send $id set ratios 1:2:3"
+    else
+        lf -remote "send $id set ratios 1:2:3:5"
+    fi
+}}
+
+# y (select for copy) and P to paste soft-link
+# d (select for cut) and P to paste hard-link
+cmd link %{{
+    set -- $(cat ~/.local/share/lf/files)
+    mode="$1"
+    shift
+    if [ "$#" -lt 1 ]; then
+        lf -remote "send $id echo no files to link"
+        exit 0
+    fi
+    case "$mode" in
+        # symbolically copy mode is indicating a soft link
+        copy) ln -sr -t . -- "$@";;
+        # while a move mode is indicating a hard link
+        move) ln -t . -- "$@";;
+    esac
+    rm ~/.local/share/lf/files
+    lf -remote "send clear"
+}}
+
+# Key bindings
+map <esc> quit
+
+cmap <tab> cmd-menu-complete
+cmap <backtab> cmd-menu-complete-back
+
+map i $LESSOPEN='| ~/.config/lf/lf-preview.sh %s' less -R $f
+map f fzf_jump
+
+# use enter for shell commands
+map <enter> shell
+
+# Ctrl+Z puts lf into background
+map <c-z> $ kill -STOP $PPID
+
+map ` push :open-with<space>
+
+map <delete> delete
+map <backspace> trash
+map <backspace2> trash
+
+# execute current file (must be executable)
+map x $$f
+map X !$f
+
+map Y copy_path
+
+map P :link
+
+# dedicated keys for file opener actions
+#map o &mimeopen $f
+#map O $mimeopen --ask $f
+
+map a push :mkdir<space>
+map R bulkrename
+
+map gb git_branch
+map gp git_pull
+map gs git_status
+map gl git_log
+
+# Mouse bindings
+#map <m-1>     open
+#map <m-2>     updir
+map <m-up>    up
+map <m-down>  down
+
+
+# Startup commands
+%{{
+    [ $LF_LEVEL -eq 1 ] || echo "Warning: lf running in a nested instance!"
+    printf "\033]0; lf $(pwd | sed "s|$HOME|~|")\007" > /dev/tty
+}}
+&{{
+    # Wait for server connection
+    # See https://github.com/gokcehan/lf/issues/495
+    while [ -n "$(lf -remote "send $id sync" 2>&1)" ]; do sleep 0.3; done
+
+    w=${LFCOL:-100}
+    if [ $w -le 80 -o $w -gt 160 ]; then
+        lf -remote "send $id recol $w"
+    fi
+    lf -remote "send $id on-cd"
+}}

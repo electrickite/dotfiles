@@ -1,4 +1,0 @@
-user = user@example.com
-password = my_password
-autostart_station = 942069160718981856
-event_command = /Users/username/.config/pianobar/eventcmd.sh
