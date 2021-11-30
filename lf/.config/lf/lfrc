@@ -230,7 +230,7 @@ map <esc> quit
 cmap <tab> cmd-menu-complete
 cmap <backtab> cmd-menu-complete-back
 
-map i $LESSOPEN='| ~/.config/lf/lf-preview.sh %s' less -R $f
+map i $LESSOPEN='| lfp %s' less -R $f
 map f fzf_jump
 
 # use enter for shell commands
