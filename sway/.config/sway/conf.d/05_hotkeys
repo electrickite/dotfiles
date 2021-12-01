@@ -59,11 +59,13 @@ bindsym XF86Mail exec geary
 bindsym $mod+y exec cliphist list | $dmenu $dmenuargs --prompt=Copy: | cliphist decode | wl-copy
 
 ## Launch // Clipboard history type // <Super> <Shift> Y ##
-bindsym $mod+Shift+y exec cliphist list | $dmenu $dmenuargs --prompt=Copy: | cliphist decode | xargs wtype
+bindsym $mod+Shift+y exec cliphist list | $dmenu $dmenuargs --prompt=Type: | cliphist decode | xargs wtype
 
 ## Launch // Password manager // <Super> P ##
-bindsym $mod+p exec "if ! pgrep -x keepassxc; then swaymsg exec keepassxc; fi"; [app_id="org.keepassxc.KeePassXC"] scratchpad show, move position center
+bindsym $mod+p exec passmenu $dmenuargs --prompt=Password:
 
+## Launch // Password manager (type) // <Super> <Shift> P ##
+bindsym $mod+Shift+p exec passmenu --type $dmenuargs --prompt=Password:
 
 #
 # System management

@@ -174,7 +174,8 @@ if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
     otf-font-awesome \
     p7zip \
     pamixer \
-    papirus-icon-theme
+    papirus-icon-theme \
+    pass \
     pavucontrol \
     perl-image-exiftool \
     playerctl \
@@ -290,7 +291,6 @@ if [ "$desktop" = "y" -o "$desktop" = "Y" ]; then
     gvfs-smb \
     hunspell \
     hunspell-en_US \
-    keepassxc \
     libreoffice-fresh \
     linux-zen-docs \
     lsof \
@@ -302,6 +302,7 @@ if [ "$desktop" = "y" -o "$desktop" = "Y" ]; then
     nmap \
     ntfs-3g \
     openbsd-netcat \
+    pwgen \
     simple-scan \
     sushi \
     xdg-user-dirs-gtk \

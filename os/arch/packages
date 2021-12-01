@@ -5,6 +5,7 @@ env
 foot
 git
 gtk
+gpg
 httpd
 i3status
 kanshi
@@ -12,6 +13,7 @@ lf
 libinput-gestures
 mako
 networkmanager-dmenu
+pass
 starship
 sublime-text-3
 swappy

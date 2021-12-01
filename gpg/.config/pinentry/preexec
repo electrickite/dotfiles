@@ -1,0 +1,4 @@
+if [ -n "$WAYLAND_DISPLAY" -o -n "$DISPLAY" ]; then
+  test -e /usr/bin/pinentry-gnome3 &&
+    exec /usr/bin/pinentry-gnome3 "$@"
+fi
