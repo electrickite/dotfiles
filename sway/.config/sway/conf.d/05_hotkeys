@@ -27,7 +27,7 @@ bindsym $mod+Space exec $menu
 bindsym $mod+Shift+Space exec bemenu-run $inlineargs --prompt=Run: --no-exec | xargs -r swaymsg exec -- $term -e delay -q 0.1 --
 
 ## Launch // Find and open files // <Super> / ##
-bindsym $mod+Slash exec fd | $dmenu $dmenuargs --prompt=Find: | xargs -I{} swaymsg exec -- mimeo \\\"{}\\\"
+bindsym $mod+Slash exec fd | $dmenu $dmenuargs --prompt=Find: | xargs -I{} swaymsg exec -- xdg-open \\\"{}\\\"
 
 ## Launch // Calculator menu // <Super> = ##
 bindsym $mod+equal exec = --dmenu=$dmenu -- $dmenuargs --tf='#fbf1c7'
