@@ -4,6 +4,7 @@
 
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 
+export PATH="$HOME/.local/bin:$PATH"
 
 # If we are in a login shell, start sway
 if [ -z "$WAYLAND_DISPLAY" -a $(tty) = "/dev/tty1" -a "$XDG_SESSION_TYPE" != "wayland" ]; then

@@ -129,6 +129,10 @@ git config --global user.name "$full_name"
 git config --global user.email "$email_address"
 git config --global include.path ~/.gitconfig_main
 
+# Apply TERMINAL patch to xdg-open
+sudo cp $(which xdg-open) /usr/local/bin/
+sudo patch -u /usr/local/bin/xdg-open -i ~/.dotfiles/os/arch/xdg-open.patch 
+
 echo -n "Install graphical environment? [yN] "
 read graphical
 if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then

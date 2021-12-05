@@ -5,8 +5,6 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-export PATH="$HOME/.local/bin:$PATH"
-
 source /usr/share/bash-completion/bash_completion
 
 LF_ICONS=""
@@ -14,25 +12,9 @@ lfcd() {
   if [ -z "$LF_ICONS" ]; then
     source "$HOME/.config/lf/icons"
   fi
-  w=$(tput cols)
   tmp="$(mktemp)"
-  fid="$(mktemp)"
 
-  LFCD=1 LFCOL="$w" LF_ICONS="$LF_ICONS" lf -command '$printf $id > '"$fid"'' -last-dir-path="$tmp" "$@"
-
-  if [ -f "$fid" ]; then
-    id="$(cat "$fid")"
-    rm -f "$fid"
-    archivemount_dir="/tmp/__lf_archivemount_$id"
-    if [ -f "$archivemount_dir" ]; then
-      cat "$archivemount_dir" |
-        while read -r line; do
-          umount "$line"
-          rmdir "$line"
-        done
-      rm -f "$archivemount_dir"
-    fi
-  fi
+  LFCD=1 LF_ICONS="$LF_ICONS" lf-launch -last-dir-path="$tmp" "$@"
 
   if [ -f "$tmp" ]; then
     dir="$(cat "$tmp")"
