@@ -5,3 +5,4 @@ inode/directory=lf.desktop;
 
 [Default Applications]
 text/plain=org.gnome.gedit.desktop
+inode/directory=lf.desktop;
