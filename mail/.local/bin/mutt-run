@@ -13,4 +13,6 @@ for file in ~/.config/imapnotify/*.conf; do
 done
 
 cd ~/Downloads
+echo -e '\033]2;'mutt'\007'
+
 exec mutt
