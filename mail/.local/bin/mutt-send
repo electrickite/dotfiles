@@ -1,0 +1,19 @@
+#!/bin/sh
+# msmtp wrapper to send mail from mutt
+
+# Put the message, send to stdin, in a variable
+message="$(cat -)"
+
+# First argument is account name
+# All other arguments passed as email addresses to msmtp
+account="$1"
+shift
+
+clean_headers(){
+  # In the headers, delete any lines starting with markdown
+  cat - | sed '0,/^$/{/^markdown/Id;}'
+}
+
+echo "$message" | sed '/^$/q' | grep -q -i 'markdown: true' \
+  && echo "$message" | clean_headers | html2multipart | msmtp --account="$account" "$@" \
+  || echo "$message" | clean_headers | msmtp --account="$account" "$@"

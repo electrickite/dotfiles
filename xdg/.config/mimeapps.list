@@ -1,8 +1,27 @@
 [Added Associations]
 text/plain=org.gnome.gedit.desktop;
 application/x-ms-dos-executable=wine.desktop;
-inode/directory=lf.desktop;
 
 [Default Applications]
 text/plain=org.gnome.gedit.desktop
 inode/directory=lf.desktop;
+text/html=firefox.desktop
+
+application/vnd.oasis.opendocument.text=libreoffice-writer.desktop
+application/vnd.oasis.opendocument.text-template=libreoffice-writer.desktop
+application/vnd.oasis.opendocument.text-web=libreoffice-writer.desktop
+application/vnd.oasis.opendocument.text-master=libreoffice-writer.desktop
+application/vnd.oasis.opendocument.text-master-template=libreoffice-writer.desktop
+application/msword=libreoffice-writer.desktop
+application/vnd.ms-word;application/x-doc=libreoffice-writer.desktop
+application/vnd.wordperfect=libreoffice-writer.desktop
+application/wordperfect=libreoffice-writer.desktop
+application/vnd.openxmlformats-officedocument.wordprocessingml.document=libreoffice-writer.desktop
+application/vnd.ms-word.document.macroEnabled.12=libreoffice-writer.desktop
+application/vnd.openxmlformats-officedocument.wordprocessingml.template=libreoffice-writer.desktop
+application/vnd.ms-word.template.macroEnabled.12=libreoffice-writer.desktop
+application/vnd.ms-works=libreoffice-writer.desktop
+application/vnd.oasis.opendocument.text-flat-xml=libreoffice-writer.desktop
+application/macwriteii=libreoffice-writer.desktop
+application/x-iwork-pages-sffpages=libreoffice-writer.desktop
+application/x-mswrite=libreoffice-writer.desktop

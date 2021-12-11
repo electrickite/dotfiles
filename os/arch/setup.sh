@@ -73,7 +73,7 @@ sudo pacman -Syu --needed \
 echo "Creating XDG directories..."
 mkdir -pv ~/.config/systemd/user
 mkdir -pv ~/.local
-mkdir -pv ~/.local/{state,bin}
+mkdir -pv ~/.local/{state,bin,share}
 xdg-user-dirs-update --force
 
 echo "Initializing dotfile git submodules..."
@@ -164,6 +164,7 @@ if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
     imagemagick \
     jq \
     kanshi \
+    lf \
     libertinus-font \
     libnotify \
     libsecret \
@@ -276,7 +277,6 @@ if [ "$desktop" = "y" -o "$desktop" = "Y" ]; then
     ext4magic \
     file-roller \
     firefox \
-    geary \
     gedit \
     gnome-calculator \
     gnome-calendar \
@@ -295,17 +295,30 @@ if [ "$desktop" = "y" -o "$desktop" = "Y" ]; then
     gvfs-smb \
     hunspell \
     hunspell-en_US \
+    isync \
+    khard \
     libreoffice-fresh \
     linux-zen-docs \
     lsof \
     minicom \
     mpv \
+    msmtp \
+    msmtp-mta \
+    mutt \
     nautilus \
     nautilus-sendto \
     nextcloud-client \
     nmap \
+    notmuch \
+    notmuch-mutt \
     ntfs-3g \
     openbsd-netcat \
+    pandoc \
+    perl \
+    perl-curses-ui \
+    perl-html-parser \
+    perl-mime-tools \
+    perl-term-readkey \
     pwgen \
     simple-scan \
     sushi \
@@ -313,7 +326,23 @@ if [ "$desktop" = "y" -o "$desktop" = "Y" ]; then
     seahorse \
     transmission-gtk \
     tree \
+    vdirsyncer \
     xchm
+
+  aurman -Syu \
+    extract_url \
+    pass-attr \
+    perl-uri-find \
+    urlview
+
+  mkdir -pv ~/.mail/personal
+  mkdir -pv ~/.local/state/mutt
+  mkdir -pv ~/.local/state/msmtp
+  mkdir -pv ~/.contacts
+  mkdir -pv ~/.cache/vdirsyncer/status/
+
+  echo "-- " >> ~/.config/mutt/sig
+  echo "$full_name" >> ~/.config/mutt/sig
 fi
 
 echo -n "Install extra applications? [yN] "

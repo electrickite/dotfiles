@@ -1,0 +1,13 @@
+#!/bin/sh
+# Dynamic mutt configuration
+
+if [ -n "$MUTT_MBSYNC" ]; then
+  echo 'macro index q "<sync-mailbox><shell-escape>systemctl --user --no-block start mbsync.service<enter><quit>"  "Sync mailbox and quit"'
+  echo 'macro pager Q "<sync-mailbox><shell-escape>systemctl --user --no-block start mbsync.service<enter><quit>"  "Sync mailbox and quit"'
+  echo 'macro index O "<shell-escape>mbsync $my_account<enter>"  "run mbsync to sync all mail"'
+  echo 'macro index o "<shell-escape>mbsync $my_account:INBOX<enter>"  "run mbsync to sync inbox"'
+fi
+
+if [ -n "$MUTT_COLORS" ]; then
+  echo "source \"\$my_config_dir/${MUTT_COLORS}\""
+fi

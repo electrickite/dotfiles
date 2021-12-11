@@ -1,0 +1,6 @@
+[Unit]
+Description=CardDAV and CalDAV synchronization service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/vdirsyncer sync

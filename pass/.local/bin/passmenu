@@ -10,7 +10,7 @@ fi
 
 if [[ -n $WAYLAND_DISPLAY ]]; then
 	dmenu=bemenu
-	xdotool="xargs wtype"
+	xdotool="xargs -0 wtype"
 elif [[ -n $DISPLAY ]]; then
 	dmenu=dmenu
 	xdotool="xdotool type --clearmodifiers --file -"

@@ -1,0 +1,8 @@
+text/html; lynx -stdin -assume_charset=%{charset} -display_charset=utf-8 -collapse_br_tags -force_html -dump; nametemplate=%s.html; copiousoutput
+text/*; lfp -q %s %t; copiousoutput
+application/*; lfp %s %t; copiousoutput
+audio/*; lfp %s %t; copiousoutput
+image/*; lfp %s %t; copiousoutput
+video/*; lfp %s %t; copiousoutput
+
+# vim:filetype=mailcap

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=mutt
+Comment=Launches the mutt email client
+Icon=email
+Terminal=true
+Exec=delay -q 0.1 -- mutt-run
+Categories=ConsoleOnly;System;Network;Email;

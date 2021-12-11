@@ -1,31 +1,105 @@
 #!/bin/bash
-
 ## File preview script for the lf file manager
-
-function FIND_OPENER() {
-  echo -e "Mime Type: $(file --mime-type "$1" -b)\nDefault Opener: $(xdg-mime query default "$(xdg-mime query filetype "$1")")\n---\n"
-}
+## Usage: lfp <file-path> [mime-type]
 
 shopt -s nocasematch
 
-case "$1" in
-*.tgz | *.tar.gz) tar tf "$1" ;;
-*.tar.bz2 | *.tbz2) tar tjf "$1" ;;
-*.tar.txz | *.txz) xz --list "$1" ;;
-*.tar) tar tf "$1" ;;
-*.zip | *.jar | *.war | *.ear | *.oxt) unzip -l "$1" ;;
-*.rar) unrar l "$1" ;;
-*.7z) 7z l "$1" ;;
-*.[1-8]) man "$1" | col -b ;;
-*.o) nm "$1" | less ;;
-*.iso) FIND_OPENER "$1" && iso-info --no-header -l "$1" ;;
-*.odt | *.ods | *.odp | *.sxw) FIND_OPENER "$1" && odt2txt "$1" ;;
-*.pdf) FIND_OPENER "$1" && pdftotext "$1" - ;;
-*.docx) FIND_OPENER "$1" && docx2txt "$1" - ;;
-*.doc) FIND_OPENER "$1" && antiword "$1" ;;
-*.csv) cat "$1" | sed s/,/\\n/g ;;
-*.md) FIND_OPENER "$1" && glow -s dark "$1" ;;
-*.png | *.jpg | *.jpeg | *.bmp | *.tiff | *.gif) FIND_OPENER "$1" && exiftool "$1" ;;
-*.wav | *.mp3 | *.flac | *.m4a | *.wma | *.ape | *.ac3 | *.og[agx] | *.spx | *.opus | *.as[fx]) FIND_OPENER "$1" && exiftool "$1" ;;
-*) FIND_OPENER "$1" && (highlight -O ansi --force "$1" 2>/dev/null || echo -e "\033[7mNo preview available\033[0m") ;;
-esac
+quiet=""
+function FIND_OPENER() {
+  if [[ -z "$quiet" ]]; then
+    mime=$(xdg-mime query filetype "$1")
+    echo -e "Mime Type: ${mime}\nDefault Opener: $(xdg-mime query default "$mime")\n---\n"
+  fi
+}
+
+function open_preview() {
+  case "$2" in
+    tgz) tar tf "$1" ;;
+    tbz) tar tjf "$1" ;;
+    txz) xz --list "$1" ;;
+    tar) tar tf "$1" ;;
+    zip) unzip -l "$1" ;;
+    rar) unrar l "$1" ;;
+    7z) 7z l "$1" ;;
+    man) man "$1" | col -b ;;
+    obj) nm "$1" ;;
+    iso) FIND_OPENER "$1" && iso-info --no-header -l "$1" ;;
+    odt) FIND_OPENER "$1" && odt2txt "$1" ;;
+    pdf) FIND_OPENER "$1" && pdftotext "$1" - ;;
+    docx) FIND_OPENER "$1" && docx2txt "$1" - ;;
+    doc) FIND_OPENER "$1" && antiword "$1" ;;
+    csv) cat "$1" | sed s/,/\\n/g ;;
+    html) FIND_OPENER "$1" && lynx -display_charset=utf-8 -collapse_br_tags -force_html -dump "$1" ;;
+    md) FIND_OPENER "$1" && glow -s dark "$1" ;;
+    image) FIND_OPENER "$1" && exiftool "$1" ;;
+    audio) FIND_OPENER "$1" && exiftool "$1" ;;
+    *) FIND_OPENER "$1" && (highlight -O ansi --force "$1" 2>/dev/null || echo -e "\033[7mNo preview available\033[0m") ;;
+  esac
+}
+
+function file_extension() {
+  case "$1" in
+    *.tgz | *.tar.gz) open_preview "$1" tgz ;;
+    *.tar.bz2 | *.tbz2) open_preview "$1" tbz ;;
+    *.tar.txz | *.txz) open_preview "$1" txz ;;
+    *.tar) open_preview "$1" tar ;;
+    *.zip | *.jar | *.war | *.ear | *.oxt) open_preview "$1" zip ;;
+    *.rar) open_preview "$1" rar ;;
+    *.7z) open_preview "$1" 7z ;;
+    *.[1-8]) open_preview "$1" man ;;
+    *.o) open_preview "$1" obj ;;
+    *.iso) open_preview "$1" iso ;;
+    *.odt | *.ods | *.odp | *.sxw) open_preview "$1" odt ;;
+    *.pdf) open_preview "$1" pdf ;;
+    *.docx) open_preview "$1" docx ;;
+    *.doc) open_preview "$1" doc ;;
+    *.csv) open_preview "$1" csv ;;
+    *.html | *.htm) open_preview "$1" html ;;
+    *.md) open_preview "$1" md ;;
+    *.png | *.jpg | *.jpeg | *.bmp | *.tiff | *.gif) open_preview "$1" image ;;
+    *.wav | *.mp3 | *.flac | *.m4a | *.wma | *.ape | *.ac3 | *.og[agx] | *.spx | *.opus | *.as[fx]) open_preview "$1" audio ;;
+    *) open_preview "$1" other ;;
+  esac
+}
+
+function mime_type() {
+  case "$2" in
+    application/gzip) open_preview "$1" tgz ;;
+    application/x-bzip2) open_preview "$1" tbz ;;
+    application/x-xz) open_preview "$1" txz ;;
+    application/x-tar) open_preview "$1" tar ;;
+    application/x-compressed | application/x-zip-compressed | application/zip | application/x-zip) open_preview "$1" zip ;;
+    application/x-rar-compressed) open_preview "$1" rar ;;
+    application/x-7z-compressed) open_preview "$1" 7z ;;
+    text/troff) open_preview "$1" man ;;
+    application/x-object) open_preview "$1" obj ;;
+    application/x-iso9660-image) open_preview "$1" iso ;;
+    application/vnd.oasis.opendocument.*) open_preview "$1" odt ;;
+    application/pdf) open_preview "$1" pdf ;;
+    application/vnd.openxmlformats-officedocument.wordprocessingml.*) open_preview "$1" docx ;;
+    application/msword) open_preview "$1" doc ;;
+    text/csv) open_preview "$1" csv ;;
+    text/html) open_preview "$1" html ;;
+    text/markdown) open_preview "$1" md ;;
+    image/*) open_preview "$1" image ;;
+    audio/*) open_preview "$1" audio ;;
+    *) open_preview "$1" other ;;
+  esac
+}
+
+if [[ $# -ge 1 && "$1" = "-q" ]]; then
+  quiet=1
+  shift
+fi
+
+if [[ $# -eq 0 ]]; then
+  echo "No file specified" >&2
+  exit 1
+elif ! [[ -f "$1" ]]; then
+  echo "No such file or directory" >&2
+  exit 2
+elif [[ $# -gt 1 && ! "$2" =~ ^[0-9]+$ ]]; then
+  mime_type "$1" "$2"
+else
+  file_extension "$1"
+fi

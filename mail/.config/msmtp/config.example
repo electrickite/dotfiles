@@ -1,0 +1,22 @@
+# MSMTP user configuration file
+
+# Set default values for all following accounts.
+defaults
+auth           on
+tls            on
+tls_trust_file /etc/ssl/certs/ca-certificates.crt
+logfile        ~/.local/state/msmtp/msmtp.log
+
+# Accounts
+account      personal
+host         mail.example.com
+port         587
+from         john@example.com
+auth         on
+user         john
+passwordeval pass mail/personal
+
+# Set a default account
+account default : personal
+
+# vim:filetype=msmtp

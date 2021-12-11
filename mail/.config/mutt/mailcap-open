@@ -1,0 +1,13 @@
+# If running in a graphical session
+text/html; mutt_bgrun $BROWSER %s; test=test -n "$DISPLAY"
+application/*; mutt_bgrun xdg-open %s; test=test -n "$DISPLAY"
+audio/*; mutt_bgrun xdg-open %s; test=test -n "$DISPLAY"
+image/*; mutt_bgrun xdg-open %s; test=test -n "$DISPLAY"
+text/*; mutt_bgrun xdg-open %s; test=test -n "$DISPLAY"
+video/*; mutt_bgrun xdg-open %s; test=test -n "$DISPLAY"
+
+# If running without a graphical display
+application/json; $EDITOR %s
+text/*; $EDITOR %s
+
+# vim:filetype=mailcap

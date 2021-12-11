@@ -1,0 +1,8 @@
+set my_account = personal
+set realname = "John Doe"
+set from = "john@example.com"
+
+set folder = ~/.mail/$my_account
+mailboxes +Inbox +Drafts +Sent +Trash +Junk +Notes +Archive
+
+# vim:filetype=muttrc

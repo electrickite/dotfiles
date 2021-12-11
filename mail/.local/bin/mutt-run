@@ -1,0 +1,16 @@
+#!/bin/sh
+
+export MUTT_MBSYNC=1
+if [ "$TERM" != "linux" ]; then
+  export MUTT_COLORS=gruvbox
+fi
+
+systemctl --user --no-block start mbsync.service
+systemctl --user --no-block start mbsync.timer
+for file in ~/.config/imapnotify/*.conf; do
+  account=$(basename "${file%.*}")
+  systemctl --user --no-block start "goimapnotify@${account}.service"
+done
+
+cd ~/Downloads
+exec mutt

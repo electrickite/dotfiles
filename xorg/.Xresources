@@ -6,7 +6,7 @@ Xft.dpi: 96
 ! soft contrast: *background: #32302f
 *foreground: #ebdbb2
 ! Black + DarkGrey
-*color0:  #282828
+*color0:  #1d2021
 *color8:  #928374
 ! DarkRed + Red
 *color1:  #cc241d

@@ -33,6 +33,7 @@ open() {
 
 alias ls='ls --color=auto'
 alias lf=lfcd
+alias mutt=mutt-run
 alias ll='ls -lAh --group-dirs first'
 alias grep='grep --color=auto'
 alias ip='ip --color=auto'

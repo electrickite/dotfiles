@@ -1,0 +1,88 @@
+# Config variables
+set my_config_dir = "~/.config/mutt"
+
+# Inport account information
+source "$my_config_dir/account"
+
+# Paths
+set header_cache = ~/.cache/mutt
+set tmpdir = ~/.local/state/mutt
+set mailcap_path = $my_config_dir/mailcap
+set signature = $my_config_dir/sig
+
+# Maildir configuration
+set mbox_type = Maildir
+set spoolfile = +Inbox
+set record = +Sent
+set postponed = +Drafts
+set trash = +Trash
+
+# Basic options
+set wait_key = no
+set timeout = 3
+set mail_check = 0
+set delete
+unset confirmappend
+set quit
+unset mark_old
+set pipe_decode
+set thorough_search
+
+set new_mail_command = "notify-send 'New email' 'Inbox: %n new, %u unread'"
+
+# Sidebar
+set sidebar_visible = yes
+set sidebar_divider_char = '│'
+set sidebar_width = 20
+
+# Mail index
+set sort = threads
+set sort_aux = reverse-last-date-received
+set index_format = "[%Z]  %D  %-20.20F  %s"
+set date_format="%y-%m-%d %I:%M%p"
+set uncollapse_jump
+set sort_re
+set reply_regexp = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
+
+# Sending mail
+set sendmail = "mutt-send $my_account"
+set envelope_from
+set sig_dashes
+set edit_headers
+set fast_reply
+set askcc
+set fcc_attach
+unset mime_forward
+set forward_format = "Fwd: %s"
+set forward_decode
+set attribution = "On %d, %n wrote:"
+set reply_to
+set reverse_name
+set include
+set forward_quote
+
+# Send HTML mail
+# Adds custom header used to convert markdown to html
+set edit_headers = yes
+my_hdr Markdown: false
+
+# Pager options
+set pager_index_lines = 7
+set pager_context = 3
+set pager_stop
+set menu_scroll
+unset markers
+auto_view text/html
+set quote_regexp = "^( {0,4}[>|:#%]| {0,4}[a-z0-9]+[>|]+)+"
+alternative_order text/plain text/enriched text/html
+
+# Editor
+set editor = "vim -c 'set spell'"
+
+# Address book
+set query_command = "khard email --parsable --search-in-source-files -- %s"
+
+source "$my_config_dir/keybindings"
+source "$my_config_dir/dynamic|"
+
+# vim:filetype=muttrc
