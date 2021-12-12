@@ -20,7 +20,6 @@ set trash = +Trash
 # Basic options
 set wait_key = no
 set timeout = 3
-set mail_check = 0
 set delete
 unset confirmappend
 set quit
