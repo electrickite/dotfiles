@@ -14,6 +14,10 @@ floating_modifier $mod normal
 ## Launch // Show all hotkeys // <Super> <Shift> ? ##
 bindsym $mod+Shift+Slash exec $sway_bin/keylist $sway_config/05_hotkeys | $dmenu $dmenuargs --prompt=Keys:
 
+## Launch // Launcher menu // <Super> M ##
+bindsym $mod+m exec $sway_bin/sway-menu | $dmenu $dmenuargs --list=13 --prompt=Launch: | $sway_bin/sway-menu
+bindsym $mod+grave exec $sway_bin/sway-menu | $dmenu $dmenuargs --list=13 --prompt=Launch: | $sway_bin/sway-menu
+
 ## Launch // Terminal // <Super> Return ##
 bindsym $mod+Return exec $term
 
@@ -27,7 +31,7 @@ bindsym $mod+Space exec $menu
 bindsym $mod+Shift+Space exec bemenu-run $inlineargs --prompt=Run: --no-exec | xargs -r swaymsg exec -- $TERMINAL
 
 ## Launch // Find and open files // <Super> / ##
-bindsym $mod+Slash exec fd | $dmenu $dmenuargs --prompt=Find: | xargs -I{} swaymsg exec -- xdg-open \\\"{}\\\"
+bindsym $mod+Slash exec fd | $dmenu $dmenuargs --prompt=Find: | xargs -r -I{} swaymsg exec -- xdg-open \\\"{}\\\"
 
 ## Launch // Calculator menu // <Super> = ##
 bindsym $mod+equal exec = --dmenu=$dmenu -- $dmenuargs --tf='#fbf1c7'
@@ -42,9 +46,9 @@ bindsym $mod+backslash exec $browser
 bindsym XF86HomePage exec $browser
 
 ## Launch // Web search // <Super> <Shift> Backspace ##
-bindsym $mod+Shift+Backspace exec echo "" | $dmenu $inlineargs --prompt=Search: | xargs -I{} swaymsg exec -- $browser --search \\\"{}\\\"
-bindsym $mod+Shift+backslash exec echo "" | $dmenu $inlineargs --prompt=Search: | xargs -I{} swaymsg exec -- $browser --search \\\"{}\\\"
-bindsym XF86Search exec echo "" | $dmenu $inlineargs --prompt=Search: | xargs -I{} swaymsg exec -- $browser --search \\\"{}\\\"
+bindsym $mod+Shift+Backspace exec echo "" | $dmenu $inlineargs --prompt=Search: | xargs -r -I{} swaymsg exec -- $browser --search \\\"{}\\\"
+bindsym $mod+Shift+backslash exec echo "" | $dmenu $inlineargs --prompt=Search: | xargs -r -I{} swaymsg exec -- $browser --search \\\"{}\\\"
+bindsym XF86Search exec echo "" | $dmenu $inlineargs --prompt=Search: | xargs -r -I{} swaymsg exec -- $browser --search \\\"{}\\\"
 
 ## Launch // Emoji type dialog // <Alt> E ##
 bindsym $alt+e exec $sway_bin/unicode list | $dmenu $dmenuargs --prompt=Type: | $sway_bin/unicode insert
@@ -53,13 +57,13 @@ bindsym $alt+e exec $sway_bin/unicode list | $dmenu $dmenuargs --prompt=Type: | 
 bindsym $alt+Shift+e exec $sway_bin/unicode list | $dmenu $dmenuargs --prompt=Copy: | $sway_bin/unicode copy
 
 ## Launch // Email // <XF86Mail> ##
-bindsym XF86Mail exec geary
+bindsym XF86Mail exec $TERMINAL mutt
 
 ## Launch // Clipboard history copy // <Super> Y ##
 bindsym $mod+y exec cliphist list | $dmenu $dmenuargs --prompt=Copy: | cliphist decode | wl-copy
 
 ## Launch // Clipboard history type // <Super> <Shift> Y ##
-bindsym $mod+Shift+y exec cliphist list | $dmenu $dmenuargs --prompt=Type: | cliphist decode | xargs wtype
+bindsym $mod+Shift+y exec cliphist list | $dmenu $dmenuargs --prompt=Type: | cliphist decode | xargs -r -0 wtype
 
 ## Launch // Password manager // <Super> P ##
 bindsym $mod+p exec passmenu $dmenuargs --prompt=Password:

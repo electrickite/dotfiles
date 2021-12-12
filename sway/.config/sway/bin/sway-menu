@@ -1,0 +1,44 @@
+#!/bin/sh
+# Sway launcher menu
+
+type="wtype -M logo"
+
+if [ -p /dev/stdin ]; then
+    read cmd
+else
+    cmd="$1"
+fi
+
+if [ -z "$cmd" ]; then
+  cat <<EOF
+Terminal
+Desktop Application
+Terminal Binary
+System Menu
+Network Connections
+Find Files
+Passwords
+Clipboard History
+Web Search
+Emoji
+Calculator
+Show Hotkeys
+Reload Sway Config
+EOF
+fi
+
+case "$cmd" in
+  "Terminal") $type -P "return" ;;
+  "Desktop Application") $type -P space ;;
+  "Terminal Binary") $type -M shift -P space ;;
+  "System Menu") $type -P escape ;;
+  "Network Connections") $type n ;;
+  "Find Files") $type / ;;
+  "Passwords") $type p ;;
+  "Clipboard History") $type y ;;
+  "Web Search") $type -M shift -P backspace ;;
+  "Calculator") $type = ;;
+  "Emoji") wtype -M alt e ;;
+  "Show Hotkeys") $type -M shift / ;;
+  "Reload Sway Config") $type -M shift c ;;
+esac
