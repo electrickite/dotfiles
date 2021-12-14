@@ -1,8 +1,8 @@
 IMAPAccount personal
 Host mail.example.com
 Port 993
-User myuser
-PassCmd "pass login/mail | head -n1"
+UserCmd "secret-attr user mail-account personal"
+PassCmd "secret-tool lookup mail-account personal"
 SSLType IMAPS
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 

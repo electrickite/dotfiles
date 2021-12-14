@@ -14,7 +14,7 @@ port         587
 from         john@example.com
 auth         on
 user         john
-passwordeval pass mail/personal
+#password from secret service
 
 # Set a default account
 account default : personal

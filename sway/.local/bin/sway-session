@@ -1,8 +1,5 @@
 #!/bin/sh
-
-# Start gnome-keyring
-eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
-export SSH_AUTH_SOCK
+# Starts a sway wm session
 
 # Set sway environment variables
 source "$HOME/.config/sway/env"

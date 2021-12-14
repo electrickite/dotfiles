@@ -13,6 +13,6 @@ fileext = ".vcf"
 
 [storage contacts_remote]
 type = "carddav"
-url = "https://example.com/"
-username = "myuser"
-password.fetch = ["command", "pass", "line", "my/password"]
+url.fetch = ["command", "secret-attr", "url", "vdir-account", "personal"]
+username.fetch = ["command", "secret-attr", "username", "vdir-account", "personal"]
+password.fetch = ["command", "secret-tool", "lookup", "vdir-account", "personal"]
