@@ -1,0 +1,7 @@
+#!/bin/sh
+
+if [ -n "$DISPLAY" ]; then
+  nohup xdg-open "$@" > /dev/null 2>&1 & disown
+else
+  $BROWSER "$@"
+fi

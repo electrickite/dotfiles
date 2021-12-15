@@ -1,3 +1,3 @@
-COMMAND xdg-open %s
+COMMAND mutt_urlview %s
 RAW_RESERVED
 IGNORE_EMPTY_TAGS

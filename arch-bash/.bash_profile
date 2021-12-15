@@ -5,6 +5,7 @@
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 
 export PATH="$HOME/.local/bin:$PATH"
+export BROWSER=lynx
 
 # Start gnome-keyring-daemon if present
 if hash gnome-keyring-daemon 2>/dev/null; then
