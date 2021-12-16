@@ -242,10 +242,10 @@ bindsym Shift+$alt+space exec makoctl dismiss --all
 
     # Pulse Audio controls
 ## Media // Volume up // <XF86AudioRaiseVolume> ##
-bindsym --locked XF86AudioRaiseVolume exec pamixer -ui 5 && paplay $sway_dir/drip.ogg && pamixer --get-volume | sed 's/$/ \\$osdbg \\$osdfg \\$osdfg/' > $wob_fifo
+bindsym --locked XF86AudioRaiseVolume exec pamixer -ui 5 && pw-play $sway_dir/drip.ogg && pamixer --get-volume | sed 's/$/ \\$osdbg \\$osdfg \\$osdfg/' > $wob_fifo
 
 ## Media // Volume down // <XF86AudioLowerVolume> ##
-bindsym --locked XF86AudioLowerVolume exec pamixer -ud 5 && paplay $sway_dir/drip.ogg && pamixer --get-volume | sed 's/$/ \\$osdbg \\$osdfg \\$osdfg/' > $wob_fifo
+bindsym --locked XF86AudioLowerVolume exec pamixer -ud 5 && pw-play $sway_dir/drip.ogg && pamixer --get-volume | sed 's/$/ \\$osdbg \\$osdfg \\$osdfg/' > $wob_fifo
 
 ## Media // Volume mute // <XF86AudioMute> ##
 bindsym --locked XF86AudioMute exec pamixer --toggle-mute && ( pamixer --get-mute && echo 0 > $SWAYSOCK.wob ) || pamixer --get-volume | sed 's/$/ \\$osdbg \\$osdfg \\$osdfg/' > $wob_fifo

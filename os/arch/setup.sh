@@ -159,6 +159,7 @@ if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
     go \
     grim \
     gsfonts \
+    helvum \
     highlight \
     htop \
     imagemagick \
@@ -183,6 +184,10 @@ if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
     pass \
     pavucontrol \
     perl-image-exiftool \
+    pipewire \
+    pipewire-alsa \
+    pipewire-pulse \
+    pipewire-jack \
     playerctl \
     polkit-gnome \
     scdoc \
@@ -204,6 +209,7 @@ if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
     udisks2 \
     unrar \
     waybar \
+    wireplumber \
     wl-clipboard \
     wtype \
     xdg-desktop-portal-wlr \
@@ -279,9 +285,7 @@ if [ "$desktop" = "y" -o "$desktop" = "Y" ]; then
     firefox \
     gedit \
     gnome-calculator \
-    gnome-calendar \
     gnome-characters \
-    gnome-contacts \
     gnome-dictionary \
     gnome-disk-utility \
     gnome-font-viewer \
