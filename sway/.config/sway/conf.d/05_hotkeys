@@ -66,10 +66,10 @@ bindsym $mod+y exec cliphist list | $dmenu $dmenuargs --prompt=Copy: | cliphist 
 bindsym $mod+Shift+y exec cliphist list | $dmenu $dmenuargs --prompt=Type: | cliphist decode | xargs -r -0 wtype
 
 ## Launch // Password manager // <Super> P ##
-bindsym $mod+p exec passmenu $dmenuargs --prompt=Password:
+bindsym $mod+p exec passmenu $inlineargs --prompt=Password:
 
 ## Launch // Password manager (type) // <Super> <Shift> P ##
-bindsym $mod+Shift+p exec passmenu --type $dmenuargs --prompt=Password:
+bindsym $mod+Shift+p exec passmenu --type $inlineargs --prompt=Password:
 
 #
 # System management
@@ -83,7 +83,7 @@ bindsym $mod+n exec networkmanager_dmenu
 
 ## System // System Menu // <Super> Escape ##
 set $system_menu $sway_bin/system-menu
-bindsym $mod+Escape exec "$system_menu | $dmenu $dmenuargs --prompt=System: | $system_menu"
+bindsym $mod+Escape exec "$system_menu | $dmenu $inlineargs --prompt=System: | $system_menu"
 
 ## System // Copy wayland clipboard to PRIAMRY // <Shift> <Alt> S ##
 bindsym Shift+$alt+s exec wl-paste | xclip -selection clipboard | notify-send "PRIMARY Clipboard synced with Wayland"
