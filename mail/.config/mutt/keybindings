@@ -97,17 +97,12 @@ bind editor ^T    complete
 # Call urlview to open links
 macro index,pager gx "<enter-command> set my_pdsave=\$pipe_decode<enter>\
 <enter-command>unset pipe_decode<enter>\
-<pipe-message>extract_url | urlview<enter>\
-<enter-command>set pipe_decode=\$my_pdsave<enter>" "call urlview to open links"
-
-macro pager U "<enter-command> set my_pdsave=\$pipe_decode<enter>\
-<enter-command>unset pipe_decode<enter>\
-<pipe-message>extract_url | urlview<enter>\
+<pipe-message>extract_url 2>/dev/null | urlview<enter>\
 <enter-command>set pipe_decode=\$my_pdsave<enter>" "call urlview to open links"
 
 macro attach,compose gx "<enter-command> set my_pdsave=\$pipe_decode<enter>\
 <enter-command>unset pipe_decode<enter>\
-<pipe-entry>extract_url | urlview<enter>\
+<pipe-entry>extract_url 2>/dev/null | urlview<enter>\
 <enter-command>set pipe_decode=\$my_pdsave<enter>" "call urlview to open links"
 
 # Open attachments in external viewers using o key
