@@ -100,6 +100,8 @@ if [ -f keys.tar.gpg ]; then
     chmod 600 $HOME/.ssh/id_rsa
     chmod 644 $HOME/.ssh/id_rsa.pub
     echo "pinentry-program /usr/bin/pinentry" > $HOME/.gnupg/gpg-agent.conf
+    echo "max-cache-ttl 28800" >> $HOME/.gnupg/gpg-agent.conf
+    echo "default-cache-ttl 28800" >> $HOME/.gnupg/gpg-agent.conf
     gpg-connect-agent reloadagent /bye
     rm -i keys.ta*
 elif [ -d "$HOME/.ssh" ]; then
