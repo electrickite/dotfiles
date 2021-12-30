@@ -172,7 +172,7 @@ if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
     light \
     mako \
     meson \
-    moreutils
+    moreutils \
     neofetch \
     network-manager-applet \
     noto-fonts \
@@ -232,7 +232,7 @@ if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
     libsixel \
     lf \
     menu-calc \
-    mkinitcpio-colors-git
+    mkinitcpio-colors-git \
     nerd-fonts-hack \
     networkmanager-dmenu-git \
     qgnomeplatform \
