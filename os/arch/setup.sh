@@ -151,7 +151,6 @@ if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
     check \
     cmake \
     docx2txt \
-    edir \
     fd \
     fontconfig \
     freetype2 \
@@ -167,7 +166,6 @@ if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
     imagemagick \
     jq \
     kanshi \
-    lf \
     libertinus-font \
     libnotify \
     libsecret \
@@ -226,11 +224,13 @@ if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
     cliphist \
     delay \
     dragon-drag-and-drop \
+    edir \
     foot \
     glow-bin \
     j4-dmenu-desktop \
     libinput-gestures \
     libsixel \
+    lf \
     menu-calc \
     mkinitcpio-colors-git
     nerd-fonts-hack \
@@ -356,7 +356,7 @@ read extra
 if [ "$extra" = "y" -o "$extra" = "Y" ]; then
   sudo pacman -Syu --needed \
     calibre \
-    bridge-utils \
+    edk2-ovmf \
     frotz-ncurses \
     gnome-clocks \
     gnome-chess \
@@ -367,19 +367,15 @@ if [ "$extra" = "y" -o "$extra" = "Y" ]; then
     gnome-sound-recorder \
     gnome-weather \
     gnuchess \
-    minecraft-launcher \
     networkmanager-openconnect \
     networkmanager-openvpn \
     openvpn \
     openconnect \
-    qemu \
-    virtualbox \
-    virtualbox-guest-iso \
-    virtualbox-host-dkms
+    qemu
 
-  aurman -Syu apachedirectorystudio
-
-  sudo usermod -a -G vboxusers "$USER"
+  aurman -Syu \
+    apachedirectorystudio \
+    minecraft-launcher
 fi
 
 sudo updatedb
