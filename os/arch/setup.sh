@@ -4,7 +4,8 @@
 
 # Before running do the following:
 #  - Install and configure sudo
-#  - If available, copy keys.tar.gpg to your home directory
+#  - If available, copy keys.tar.gpg and cacert.crt to your
+#    home directory
 
 echo "-- Arch setup script --"
 echo "WARNING: This script should only be used to configure new machines!"
@@ -89,8 +90,7 @@ echo "Generating ctags..."
 ctags -f ~/.vim/systags $(pacman -Qlq glibc | grep /usr/include/)
 
 # Add SSH keys
-cd "$HOME"
-
+cd
 if [ -f keys.tar.gpg ]; then
     echo "keys.tar.gpg found. Extracting..."
     gpg --pinentry-mode loopback keys.tar.gpg
@@ -109,6 +109,12 @@ elif [ -d "$HOME/.ssh" ]; then
 else
     echo "No SSH keys file found. Generating new key..."
     ssh-keygen -t rsa -b 2048 -C $email_address
+fi
+
+# Add private certificate to trust store
+if [ -f "$HOME/cacert.crt" ]; then
+    echo "Adding CA Certificate to trust store..."
+    sudo trust anchor --store "$HOME/cacert.crt"
 fi
 
 # Install aurman
@@ -267,8 +273,9 @@ if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
   systemctl --user daemon-reload
   systemctl --user enable bash.service batsignal.service cliphist.service foot.service kanshi.service libinput-gestures.service mako.service nextcloud.service nm-applet.service polkit-gnome.service swayidle.service udiskie.service waybar.service wob.socket
 
-  mkdir -pv  ~/Pictures/screenshots
+  mkdir -pv ~/Pictures/screenshots
   mkdir -pv ~/projects
+  ln -sv "$HOME/.dotfiles/os/arch/arch.jpg" "$HOME/Pictures/bg.jpg"
 fi
 
 echo -n "Install desktop applications? [yN] "
@@ -378,6 +385,7 @@ if [ "$extra" = "y" -o "$extra" = "Y" ]; then
     minecraft-launcher
 fi
 
+echo "Updating locate database..."
 sudo updatedb
 
 echo "Setup complete!"
