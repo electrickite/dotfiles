@@ -50,7 +50,7 @@ sudo pacman -Syu --needed \
   openssh \
   polkit \
   pinentry \
-  python-setuptools
+  python-setuptools \
   rsync \
   s-nail \
   smartmontools \
