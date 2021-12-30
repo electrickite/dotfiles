@@ -81,7 +81,7 @@ cd "$HOME/.dotfiles"
 git submodule update --init --recursive
 
 echo "Linking config files..."
-rm -f ~/.bashrc ~/.bash_profile ~/.gitconfig
+rm -f ~/.bashrc ~/.bash_profile ~/.gitconfig ~/.config/user-dirs.dirs ~/.config/user-dirs.locale
 stow -v $(cat os/arch/packages)
 cd "$HOME"
 
