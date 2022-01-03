@@ -300,6 +300,7 @@ if [ "$desktop" = "y" -o "$desktop" = "Y" ]; then
     gnome-font-viewer \
     gnome-logs \
     gnome-user-docs \
+    goimapnotify \
     gvfs \
     gvfs-afc \
     gvfs-goa \
