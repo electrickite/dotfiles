@@ -4,6 +4,6 @@ Name=lf
 Comment=Launches the lf file manager
 Icon=utilities-terminal
 Terminal=true
-Exec=lf-launch %F
+Exec=delay -q 0.1 -- lf-launch %F
 Categories=ConsoleOnly;System;FileTools;FileManager
 MimeType=inode/directory;
