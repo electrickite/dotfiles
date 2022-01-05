@@ -196,6 +196,7 @@ if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
     pipewire-jack \
     playerctl \
     polkit-gnome \
+    qrencode \
     scdoc \
     slurp \
     starship \

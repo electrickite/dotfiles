@@ -3,9 +3,13 @@
 shopt -s nullglob globstar
 
 typeit=0
-if [[ $1 == "--type" ]]; then
+showmenu=0
+if [[ "$1" == "--type" ]]; then
 	typeit=1
 	shift
+elif [[ "$1" == "--menu" ]]; then
+  showmenu=1
+  shift
 fi
 
 if [[ -n $WAYLAND_DISPLAY ]]; then
@@ -25,11 +29,27 @@ password_files=( "${password_files[@]#"$prefix"/}" )
 password_files=( "${password_files[@]%.gpg}" )
 
 password=$(printf '%s\n' "${password_files[@]}" | "$dmenu" "$@")
+[[ -n "$password" ]] || exit
 
-[[ -n $password ]] || exit
+passcmd=show
+passargs=("$password")
+if [[ $showmenu -eq 1 ]]; then
+  attributes=$(pass "$password" | tail -n +2 | sed 's/: *.*//')
+  attr=$(printf 'Password\n%s' "$attributes" | "$dmenu" "$@" --prompt=Attribute:)
+  [[ -n "$attr" ]] || exit
+
+  if [[ "$attr" != "Password" ]]; then
+    passcmd=attr
+    passargs=("$attr" "$password")
+  fi
+
+  if [[ "$(printf 'Copy\nType' | "$dmenu" "$@" --prompt=Action:)" == "Type" ]]; then
+    typeit=1
+  fi
+fi
 
 if [[ $typeit -eq 0 ]]; then
-	pass show -c "$password" 2>/dev/null
+	pass $passcmd -c "${passargs[@]}" 2>/dev/null
 else
-	pass show "$password" | { IFS= read -r pass; printf %s "$pass"; } | $xdotool
+	pass $passcmd "${passargs[@]}" | { IFS= read -r pass; printf %s "$pass"; } | $xdotool
 fi
