@@ -114,7 +114,7 @@ brew cask install burn
 brew cask install disk-inventory-x
 brew cask install dropbox
 brew cask install firefox
-brew cask install font-hack
+brew cask install font-jetbrains-mono
 brew cask install google-chrome
 brew cask install hammerspoon
 brew cask install hex-fiend

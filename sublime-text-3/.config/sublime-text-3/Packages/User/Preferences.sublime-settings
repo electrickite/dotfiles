@@ -3,7 +3,7 @@
 	"file_exclude_patterns":
 	[
 	],
-	"font_face": "Hack",
+	"font_face": "JetBrains Mono",
 	"font_size": 11,
 	"hot_exit": false,
 	"ignored_packages":

@@ -210,7 +210,7 @@ if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
     ttf-fira-mono \
     ttf-fira-sans \
     ttf-freefont \
-    ttf-hack \
+    ttf-jetbrains-mono \
     ttf-roboto \
     udiskie \
     udisks2 \
@@ -240,7 +240,7 @@ if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
     lf \
     menu-calc \
     mkinitcpio-colors-git \
-    nerd-fonts-hack \
+    nerd-fonts-jetbrains-mono \
     networkmanager-dmenu-git \
     qgnomeplatform \
     setcolors-git \
