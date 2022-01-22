@@ -219,6 +219,7 @@ if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
     wireplumber \
     wl-clipboard \
     wtype \
+    xdg-desktop-portal-gtk \
     xdg-desktop-portal-wlr \
     xorg-server-xwayland \
     xorg-xhost \
@@ -258,7 +259,7 @@ if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
   sudo ln -sv /etc/fonts/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d
   sudo ln -sv /etc/fonts/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d
   ls -l /etc/fonts/conf.d/10-hinting-slight.conf
-  sudo cp -v "$HOME/.dotfiles/os/arch/local-fonts.conf" /etc/fonts/
+  sudo cp -v "$HOME/.dotfiles/os/arch/local-fonts.conf" /etc/fonts/local.conf
   sudo cp -fv "$HOME/.dotfiles/os/arch/freetype2.sh" /etc/profile.d/
   sudo cp -fv "$HOME/.dotfiles/os/arch/jre-fonts.sh" /etc/profile.d/
   sudo cp -fv "$HOME/.dotfiles/os/arch/vconsole.conf" /etc/
@@ -355,6 +356,8 @@ if [ "$desktop" = "y" -o "$desktop" = "Y" ]; then
   mkdir -pv ~/.local/state/msmtp
   mkdir -pv ~/.contacts
   mkdir -pv ~/.cache/vdirsyncer/status/
+
+  sudo cp -v "$HOME/.dotfiles/os/arch/amfora.desktop" /usr/local/share/applications/
 
   echo "-- " >> ~/.config/mutt/sig
   echo "$full_name" >> ~/.config/mutt/sig
