@@ -1,5 +1,16 @@
 # This is the default config file.
 # It also shows all the default values, if you don't create the file.
+# You can edit this file to set your own configuration for Amfora.
+
+# When Amfora updates, defaults may change, but this file on your drive will not.
+# You can always get the latest defaults on GitHub.
+# https://github.com/makeworld-the-better-one/amfora/blob/master/default-config.toml
+
+# Please also check out the Amfora Wiki for more help
+# https://github.com/makeworld-the-better-one/amfora/wiki
+# gemini://makeworld.space/amfora-wiki/
+
+
 
 # All URL values may omit the scheme and/or port, as well as the beginning double slash
 # Valid URL examples:
@@ -23,7 +34,7 @@ auto_redirect = false
 # If a command is set, than the URL will be added (in quotes) to the end of the command.
 # A space will be prepended to the URL.
 #
-# The best to define a command is using a string array.
+# The best way to define a command is using a string array.
 # Examples:
 # http = ['firefox']
 # http = ['custom-browser', '--flag', '--option=2']
@@ -36,7 +47,7 @@ auto_redirect = false
 http = 'default'
 
 # Any URL that will accept a query string can be put here
-search = "gemini://gus.guru/search"
+search = "gemini://geminispace.info/search"
 
 # Whether colors will be used in the terminal
 color = true
@@ -44,17 +55,20 @@ color = true
 # Whether ANSI color codes from the page content should be rendered
 ansi = true
 
+# Whether or not to support source code highlighting in preformatted blocks based on alt text
+highlight_code = true
+
+# Which highlighting style to use (see https://xyproto.github.io/splash/docs/)
+highlight_style = "github"
+
 # Whether to replace list asterisks with unicode bullets
 bullets = true
 
 # Whether to show link after link text
 show_link = false
 
-# A number from 0 to 1, indicating what percentage of the terminal width the left margin should take up.
-left_margin = 0.15
-
 # The max number of columns to wrap a page's text to. Preformatted blocks are not wrapped.
-max_width = 100
+max_width = 80
 
 # 'downloads' is the path to a downloads folder.
 # An empty value means the code will find the default downloads folder for your system.
@@ -65,14 +79,15 @@ downloads = ''
 # Max size for displayable content in bytes - after that size a download window pops up
 page_max_size = 2097152  # 2 MiB
 # Max time it takes to load a page in seconds - after that a download window pops up
-page_max_time = 10
-
-# Whether to replace tab numbers with emoji favicons, which are cached.
-emoji_favicons = false
+page_max_time = 15
 
 # When a scrollbar appears. "never", "auto", and "always" are the only valid values.
 # "auto" means the scrollbar only appears when the page is longer than the window.
 scrollbar = "auto"
+
+# Underline non-gemini URLs
+# This is done to help color blind users
+underline = true
 
 
 [auth]
@@ -81,13 +96,17 @@ scrollbar = "auto"
 
 [auth.certs]
 # Client certificates
-# Set domain name equal to path to client cert
-# "example.com" = 'mycert.crt'
+# Set URL equal to path to client cert file
+#
+# "example.com" = 'mycert.crt'      # Cert is used for all paths on this domain
+# "example.com/dir/"=  'mycert.crt' # Cert is used for /dir/ and everything below only
+#
+# See the comment at the beginning of this file for examples of all valid types of
+# URLs, ports and schemes can be used too
 
 [auth.keys]
 # Client certificate keys
-# Set domain name equal to path to key for the client cert above
-# "example.com" = 'mycert.key'
+# Same as [auth.certs] but the path is to the client key file.
 
 
 [keybindings]
@@ -148,6 +167,10 @@ scrollbar = "auto"
 # bind_reload
 # bind_back
 # bind_forward
+# bind_moveup
+# bind_movedown
+# bind_moveleft
+# bind_moveright
 # bind_pgup
 # bind_pgdn
 # bind_new_tab
@@ -158,23 +181,39 @@ scrollbar = "auto"
 # bind_help
 # bind_sub: for viewing the subscriptions page
 # bind_add_sub
+# bind_copy_page_url
+# bind_copy_target_url
+# bind_beginning: moving to beginning of page (top left)
+# bind_end: same but the for the end (bottom left)
+# bind_url_handler_open: Open highlighted URL with URL handler (#143)
 
 [url-handlers]
 # Allows setting the commands to run for various URL schemes.
 # E.g. to open FTP URLs with FileZilla set the following key:
-#   ftp = 'filezilla'
-# You can set any scheme to "off" or "" to disable handling it, or
+#   ftp = ['filezilla']
+# You can set any scheme to 'off' or '' to disable handling it, or
 # just leave the key unset.
 #
 # DO NOT use this for setting the HTTP command.
 # Use the http setting in the "a-general" section above.
 #
 # NOTE: These settings are overrided by the ones in the proxies section.
+#
+# The best way to define a command is using a string array.
+# Examples:
+# magnet = ['transmission']
+# foo = ['custom-browser', '--flag', '--option=2']
+# tel = ['/path/with spaces/in it/telephone']
+#
 # Note the use of single quotes, so that backslashes will not be escaped.
+# Using just a string will also work, but it is deprecated, and will degrade if
+# you use paths with spaces.
 
 # This is a special key that defines the handler for all URL schemes for which
 # no handler is defined.
-other = 'off'
+# It uses the special value 'default', which will try and use the default
+# application on your computer for opening this kind of URI.
+other = 'default'
 
 
 # [[mediatype-handlers]] section
@@ -292,11 +331,18 @@ workers = 3
 # The number of subscription updates displayed per page.
 entries_per_page = 20
 
+# Set to false to remove the explanatory text from the top of the subscription page
+header = true
+
 
 [theme]
 # This section is for changing the COLORS used in Amfora.
 # These colors only apply if 'color' is enabled above.
 # Colors can be set using a W3C color name, or a hex value such as "#ffffff".
+# Setting a background to "default" keeps the terminal default
+# If your terminal has transparency, set any background to "default" to keep it transparent
+# The key "bg" is already set to "default", but this can be used on other backgrounds,
+# like for modals.
 
 # Note that not all colors will work on terminals that do not have truecolor support.
 # If you want to stick to the standard 16 or 256 colors, you can get
@@ -315,6 +361,7 @@ entries_per_page = 20
 # EXAMPLES:
 # hdg_1 = "green"
 # hdg_2 = "#5f0000"
+# bg = "default"
 
 # Available keys to set:
 
@@ -325,6 +372,15 @@ entries_per_page = 20
 # bottombar_text: The color of the text you type
 # bottombar_bg
 # scrollbar: The scrollbar that appears on the right for long pages
+
+# You can also set an 'include' key to process another TOML file that contains theme keys.
+# Example:
+#   include = "my/path/to/special-theme.toml"
+#
+# Any other theme keys will override this external file.
+# You can use this special key to switch between themes easily.
+# Download other themes here: https://github.com/makeworld-the-better-one/amfora/tree/master/contrib/themes
+
 
 # hdg_1
 # hdg_2
@@ -365,3 +421,53 @@ entries_per_page = 20
 # bkmk_modal_label
 # bkmk_modal_field_bg
 # bkmk_modal_field_text
+
+# Gruvbox Dark theme
+bg =                      "#1d2021"
+fg =                      "#ebdbb2"
+tab_num =                 "#7c6f64"
+tab_divider =             "#d5c4a1"
+bottombar_label =         "#8f3f71"
+bottombar_text =          "#a89984"
+bottombar_bg =            "#32302f"
+scrollbar =               "#504945"
+
+hdg_1 =                   "#fabd2f"
+hdg_2 =                   "#d79921"
+hdg_3 =                   "#fb4934"
+amfora_link =             "#83a598"
+foreign_link =            "#b16286"
+link_number =             "#665c54"
+regular_text =            "#ebdbb2"
+quote_text =              "#d3869b"
+preformatted_text =       "#d3869b"
+list_text =               "#d5c4a1"
+
+btn_bg =                  "#3c3836"
+btn_text =                "#ebdbb2"
+
+dl_choice_modal_bg =      "#3c3836"
+dl_choice_modal_text =    "#ebdbb2"
+dl_modal_bg =             "#3c3836"
+dl_modal_text =           "#ebdbb2"
+info_modal_bg =           "#3c3836"
+info_modal_text =         "#ebdbb2"
+error_modal_bg =          "#3c3836"
+error_modal_text =        "#fe8019"
+yesno_modal_bg =          "#3c3836"
+yesno_modal_text =        "#ebdbb2"
+tofu_modal_bg =           "#3c3836"
+tofu_modal_text =         "#ebdbb2"
+subscription_modal_bg =   "#3c3836"
+subscription_modal_text = "#ebdbb2"
+
+input_modal_bg =          "#3c3836"
+input_modal_text =        "#ebdbb2"
+input_modal_field_bg =    "#1d2021"
+input_modal_field_text =  "#ebdbb2"
+
+bkmk_modal_bg =           "#3c3836"
+bkmk_modal_text =         "#ebdbb2"
+bkmk_modal_label =        "#ebdbb2"
+bkmk_modal_field_bg =     "#1d2021"
+bkmk_modal_field_text =   "#f9f5d7"
