@@ -1,0 +1,5 @@
+#!/bin/sh
+if [ "$XDG_CURRENT_DESKTOP" = "sway" ]; then
+    export DE=gnome
+fi
+exec /usr/bin/xdg-open "$@"
