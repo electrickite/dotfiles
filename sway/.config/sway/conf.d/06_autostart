@@ -2,6 +2,12 @@
 # Startup commands
 #
 
+# Prevent idle while any application is fullscreen
+for_window {
+    [class="^.*"] inhibit_idle fullscreen
+    [app_id="^.*"] inhibit_idle fullscreen
+}
+
 # Configure environment
 set $gnome-schema org.gnome.desktop.interface
 exec {
@@ -17,20 +23,9 @@ exec_always {
 
 # Start sway-session systemd target
 exec "systemctl --user import-environment; \
-      systemctl --user start sway-session.target"
-
-# Note this is a bit of a hack related to an xdg-desktop-portal bug
-# https://github.com/flatpak/xdg-desktop-portal/issues/636
-exec "sleep 10; \
       hash dbus-update-activation-environment 2>/dev/null; \
-      dbus-update-activation-environment --systemd --all"
-
-# Prevent idle while any application is fullscreen
-for_window {
-    [class="^.*"] inhibit_idle fullscreen
-    [app_id="^.*"] inhibit_idle fullscreen
-}
-
+      dbus-update-activation-environment --systemd --all; \
+      systemctl --user start sway-session.target"
 
 # Autostart applications
 # (None currently - See systemctl --user list-units)
