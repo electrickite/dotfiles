@@ -137,10 +137,6 @@ git config --global user.name "$full_name"
 git config --global user.email "$email_address"
 git config --global include.path ~/.gitconfig_main
 
-# Apply TERMINAL patch to xdg-open
-sudo cp $(which xdg-open) /usr/local/bin/
-sudo patch -u /usr/local/bin/xdg-open -i ~/.dotfiles/os/arch/xdg-open.patch 
-
 echo -n "Install graphical environment? [yN] "
 read graphical
 if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
@@ -259,6 +255,7 @@ if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
   sudo ln -sv /etc/fonts/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d
   sudo ln -sv /etc/fonts/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d
   ls -l /etc/fonts/conf.d/10-hinting-slight.conf
+  sudo cp -pv "$HOME/.dotfiles/os/arch/xterm" /usr/local/bin/
   sudo cp -v "$HOME/.dotfiles/os/arch/local-fonts.conf" /etc/fonts/local.conf
   sudo cp -fv "$HOME/.dotfiles/os/arch/freetype2.sh" /etc/profile.d/
   sudo cp -fv "$HOME/.dotfiles/os/arch/jre-fonts.sh" /etc/profile.d/

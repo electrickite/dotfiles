@@ -1,0 +1,11 @@
+#!/bin/sh
+
+if [ $# -ge 1 -a "$1" = "-e" ]; then
+    shift
+fi
+
+if [ -n "$TERMINAL" ]; then
+    exec $TERMINAL "$@"
+else
+    echo "TERMINAL not specified in environment!" >&2
+fi

@@ -1,0 +1,3 @@
+#!/bin/sh
+export DE=gnome
+exec /usr/bin/xdg-open "$@"
