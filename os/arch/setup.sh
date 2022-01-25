@@ -237,6 +237,7 @@ if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
     lf \
     menu-calc \
     mkinitcpio-colors-git \
+    myterm \
     nerd-fonts-jetbrains-mono \
     networkmanager-dmenu-git \
     qgnomeplatform \
@@ -251,11 +252,11 @@ if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
 
   sudo ln -sv bemenu /usr/bin/dmenu
   sudo ln -sv bemenu-run /usr/bin/dmenu-run
+  ln -sv /usr/bin/myterm "$HOME/.local/bin/xterm"
 
   sudo ln -sv /etc/fonts/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d
   sudo ln -sv /etc/fonts/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d
   ls -l /etc/fonts/conf.d/10-hinting-slight.conf
-  sudo cp -pv "$HOME/.dotfiles/os/arch/xterm" /usr/local/bin/
   sudo cp -v "$HOME/.dotfiles/os/arch/local-fonts.conf" /etc/fonts/local.conf
   sudo cp -fv "$HOME/.dotfiles/os/arch/freetype2.sh" /etc/profile.d/
   sudo cp -fv "$HOME/.dotfiles/os/arch/jre-fonts.sh" /etc/profile.d/

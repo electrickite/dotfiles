@@ -3,4 +3,6 @@ export BEMENU_BACKEND=wayland
 export SDL_VIDEODRIVER=wayland
 export XDG_CURRENT_DESKTOP=sway
 export BROWSER=firefox
-export TERMINAL="footclient delay -q 0.1 --"
+export TERMINAL="footclient"
+export TERMINAL_ARGS="delay -q 0.1 --"
+export TERMINAL_STRIP="-e"

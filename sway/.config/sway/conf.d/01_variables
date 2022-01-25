@@ -32,7 +32,7 @@ set {
 
     # Application launcher
     # Note: it's recommended that you pass the final command to sway
-    $menu j4-dmenu-desktop --dmenu="$dmenu $inlineargs --prompt=Run:" --term="$term" --usage-log=$HOME/.cache/j4.cache --no-generic
+    $menu j4-dmenu-desktop --dmenu="$dmenu $inlineargs --prompt=Run:" --term="myterm" --usage-log=$HOME/.cache/j4.cache --no-generic
 
     # Background image
     $img ~/Pictures/bg.jpg
