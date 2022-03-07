@@ -29,6 +29,9 @@
         "all-outputs": false,
         "format": "{value}"
     },
+    "sway/window": {
+        "icon": false
+    },
     "sway/mode": {
         "format": "<span style=\"italic\">{}</span>"
     },

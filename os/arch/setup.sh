@@ -155,8 +155,11 @@ if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
     docx2txt \
     fd \
     fontconfig \
+    foot \
+    foot-terminfo \
     freetype2 \
     gdk-pixbuf2 \
+    glow \
     gnome-keyring \
     gnome-themes-extra \
     go \
@@ -229,8 +232,6 @@ if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
     delay \
     dragon-drag-and-drop \
     edir \
-    foot \
-    glow-bin \
     j4-dmenu-desktop \
     libinput-gestures \
     libsixel \
