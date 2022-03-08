@@ -24,8 +24,8 @@ set {
 
     # dmenu-compatible command
     $dmenu bemenu
-    $dmenuargs -i --list=12 --nb='#282828' --nf='#bdae93' --fb='#3c3836' --ff='#fbf1c7' --tb='#3c3836' --tf='#bdae93' --hb='#32302f' --hf='#fbf1c7' --fn='JetBrainsMono Nerd Font 10' --line-height=21
-    $inlineargs -i --nb='#3c3836' --nf='#bdae93' --fb='#3c3836' --ff='#fbf1c7' --tb='#3c3836' --tf='#bdae93' --hb='#3c3836' --hf='#fbf1c7' --fn='JetBrainsMono Nerd Font 10' --line-height=21
+    $dmenuargs -i --list=12 --nb='#282828' --nf='#bdae93' --fb='#3c3836' --ff='#fbf1c7' --tb='#3c3836' --tf='#bdae93' --hb='#32302f' --hf='#fbf1c7' --fn='BerkeleyMono Nerd Font 10' --line-height=21
+    $inlineargs -i --nb='#3c3836' --nf='#bdae93' --fb='#3c3836' --ff='#fbf1c7' --tb='#3c3836' --tf='#bdae93' --hb='#3c3836' --hf='#fbf1c7' --fn='BerkeleyMono Nerd Font 10' --line-height=21
 
     # Web browser
     $browser firefox
