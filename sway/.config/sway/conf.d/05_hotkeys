@@ -50,11 +50,11 @@ bindsym $mod+Shift+Backspace exec echo "" | $dmenu $inlineargs --prompt=Search: 
 bindsym $mod+Shift+backslash exec echo "" | $dmenu $inlineargs --prompt=Search: | xargs -r -I{} swaymsg exec -- $browser --search \\\"{}\\\"
 bindsym XF86Search exec echo "" | $dmenu $inlineargs --prompt=Search: | xargs -r -I{} swaymsg exec -- $browser --search \\\"{}\\\"
 
-## Launch // Emoji type dialog // <Alt> E ##
-bindsym $alt+e exec $sway_bin/unicode list | $dmenu $dmenuargs --prompt=Type: | $sway_bin/unicode insert
+## Launch // Unicode emoji type dialog // <Super> U ##
+bindsym $mod+u exec $sway_bin/unicode list | $dmenu $dmenuargs --prompt=Type: | $sway_bin/unicode insert
 
-## Launch // Emoji copy dialog // <Alt> <Shift> E ##
-bindsym $alt+Shift+e exec $sway_bin/unicode list | $dmenu $dmenuargs --prompt=Copy: | $sway_bin/unicode copy
+## Launch // Unicode emoji copy dialog // <Super> <Shift> U ##
+bindsym $mod+Shift+u exec $sway_bin/unicode list | $dmenu $dmenuargs --prompt=Copy: | $sway_bin/unicode copy
 
 ## Launch // Email // <XF86Mail> ##
 bindsym XF86Mail exec $TERMINAL mutt
