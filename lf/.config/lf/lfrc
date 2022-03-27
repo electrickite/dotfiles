@@ -187,7 +187,7 @@ cmd paste &{{
 cmd copy_path $wl-copy "$fx"
 
 cmd drag &{{
-    dragon-drag-and-drop -a -x $fx
+    dragon-drop -a -x $fx
 }}
 
 cmd bulkrename $edir -a

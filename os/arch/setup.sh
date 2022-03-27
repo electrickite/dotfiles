@@ -240,7 +240,7 @@ if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
     batsignal \
     cliphist \
     delay \
-    dragon-drag-and-drop \
+    dragon-drop \
     edir \
     j4-dmenu-desktop \
     libinput-gestures \
