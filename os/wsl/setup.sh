@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# Set up Windows Subsystem for Linux (Ubuntu)
+# Set up Windows Subsystem for Linux (Debian)
 
 # Before running do the following:
 #  - Install and configure sudo
-#  - If available, copy keys.tar.gpg to your home directory
+#  - If available, copy keys.tar.gpg and cacert.crt to your home directory
 
 echo "-- WSL (Ubuntu) setup script --"
 echo "WARNING: This script should only be used to configure new installs!"
@@ -20,6 +20,8 @@ echo -n "Enter your email address: "
 read email_address
 echo -n "Enter your Windows username: "
 read win_user
+echo -n "Enter private git host: "
+read git_host
 
 if [[ ! -d "$HOME/.dotfiles" ]]; then
   echo "Could not find $HOME/.dotfiles. Aborting..."; exit 1
@@ -30,15 +32,45 @@ if [[ "$(umask)" = "0000" ]]; then
   umask 0002
 fi
 
-echo "Configuring WSL..."
-sudo mkdir -p /mnt/c
-sudo cp -n "$HOME/.dotfiles/os/wsl/wsl.conf" /etc
+echo -n "Configure WSL mounts? [yN] "
+read wsl
+if [ "$wsl" = "y" -o "$wsl" = "Y" ]; then
+  echo "Configuring WSL..."
+  sudo mkdir -p /mnt/c
+  sudo cp -n "$HOME/.dotfiles/os/wsl/wsl.conf" /etc
 
-echo "C:\  /mnt/c  drvfs  defaults,rw,noatime,uid=1000,gid=1000,umask=2,fmask=113,metadata,case=off  0  0" | sudo tee -a /etc/fstab >/dev/null
-echo "//localhost/C\$/Windows  /mnt/c/Windows  drvfs  defaults,ro,noatime,uid=1000,gid=1000,fmask=000,umask=000,case=off  0  0" | sudo tee -a /etc/fstab >/dev/null
-echo "//localhost/C\$/Program\040Files  /mnt/c/Program\040Files  drvfs  defaults,ro,noatime,uid=1000,gid=1000,fmask=000,umask=000,case=off  0  0" | sudo tee -a /etc/fstab >/dev/null
-echo "//localhost/C\$/Program\040Files\040(x86)  /mnt/c/Program\040Files\040(x86)  drvfs  defaults,ro,noatime,uid=1000,gid=1000,fmask=000,umask=000,case=off  0  0" | sudo tee -a /etc/fstab >/dev/null
-echo "//localhost/C\$/Users/${win_user}/AppData  /mnt/c/Users/${win_user}/AppData  drvfs  defaults,ro,noatime,uid=1000,gid=1000,fmask=000,umask=000,case=off  0  0" | sudo tee -a /etc/fstab >/dev/null
+  echo "C:\  /mnt/c  drvfs  defaults,rw,noatime,uid=1000,gid=1000,umask=2,fmask=113,metadata,case=off  0  0" | sudo tee -a /etc/fstab >/dev/null
+  echo "//localhost/C\$/Windows  /mnt/c/Windows  drvfs  defaults,ro,noatime,uid=1000,gid=1000,fmask=000,umask=000,case=off  0  0" | sudo tee -a /etc/fstab >/dev/null
+  echo "//localhost/C\$/Program\040Files  /mnt/c/Program\040Files  drvfs  defaults,ro,noatime,uid=1000,gid=1000,fmask=000,umask=000,case=off  0  0" | sudo tee -a /etc/fstab >/dev/null
+  echo "//localhost/C\$/Program\040Files\040(x86)  /mnt/c/Program\040Files\040(x86)  drvfs  defaults,ro,noatime,uid=1000,gid=1000,fmask=000,umask=000,case=off  0  0" | sudo tee -a /etc/fstab >/dev/null
+  echo "//localhost/C\$/Users/${win_user}/AppData  /mnt/c/Users/${win_user}/AppData  drvfs  defaults,ro,noatime,uid=1000,gid=1000,fmask=000,umask=000,case=off  0  0" | sudo tee -a /etc/fstab >/dev/null
+fi
+
+echo "Updating packages..."
+sudo apt-get update
+sudo apt-get upgrade
+
+echo "Installing new packages..."
+sudo apt-get install \
+  git \
+  stow \
+  man \
+  bash-completion \
+  openssh-client \
+  silversearcher-ag \
+  exuberant-ctags \
+  gnupg2 \
+  pass \
+  curl \
+  wget \
+  rsync \
+  lynx \
+  vim \
+  tmux \
+  net-tools \
+  dnsutils \
+  zip \
+  unzip
 
 echo "Creating XDG directories..."
 mkdir -pv ~/.config
@@ -52,28 +84,6 @@ git submodule update --init --recursive
 echo "Linking config files..."
 rm -f ~/.bashrc ~/.profile ~/.gitconfig
 stow -v $(cat os/wsl/packages)
-cd "$HOME"
-
-echo "Updating packages..."
-sudo apt-get update
-sudo apt-get upgrade
-
-echo "Installing new packages..."
-sudo apt-get install \
-  git \
-  openssh-client \
-  silversearcher-ag \
-  exuberant-ctags \
-  gnupg \
-  curl \
-  wget \
-  rsync \
-  lynx \
-  vim \
-  tmux \
-  net-tools \
-  dnsutils
-
 cd "$HOME"
 
 # Install FZF
@@ -99,12 +109,27 @@ else
     ssh-keygen -t rsa -b 2048 -C $email_address
 fi
 
+echo "Performing additional configuration..."
+
 echo "AddKeysToAgent  yes" >> ~/.ssh/config
 
-echo "Performing additional configuration..."
+if [ -n "$git_host" ]; then
+  echo "Host $git_host" >> ~/.ssh/config
+  echo "  Port 2222" >> ~/.ssh/config
+fi
+
+# Add private certificate to trust store
+if [ -f "$HOME/cacert.crt" ]; then
+  echo "Adding CA Certificate to trust store..."
+  sudo cp "$HOME/cacert.crt" /usr/local/share/ca-certificates/
+  sudo update-ca-certificates
+fi
+
 git config --global user.name "$full_name"
 git config --global user.email "$email_address"
 git config --global include.path ~/.gitconfig_main
+
+sudo update-alternatives --config editor
 
 mkdir -p "/mnt/c/Users/$win_user/projects"
 ln -sf "/mnt/c/Users/$win_user/projects" ~/projects

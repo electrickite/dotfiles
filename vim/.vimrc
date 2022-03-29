@@ -19,8 +19,10 @@ set spelllang=en_us
 
 " Color and mouse support
 set termguicolors
-let &t_8f = "\<Esc>[38:2::%lu:%lu:%lum"
-let &t_8b = "\<Esc>[48:2::%lu:%lu:%lum"
+if &term != 'xterm-256color'
+  let &t_8f = "\<Esc>[38:2::%lu:%lu:%lum"
+  let &t_8b = "\<Esc>[48:2::%lu:%lu:%lum"
+endif
 set ttymouse=sgr
 set mouse=a
 
@@ -63,7 +65,6 @@ au FileType cpp setl completefunc=syntaxcomplete#Complete
 highlight LineNr term=bold cterm=NONE ctermfg=DarkGray ctermbg=NONE gui=NONE guifg=DarkGray guibg=NONE
 
 " Color scheme
-set termguicolors
 set background=dark
 let g:gruvbox_contrast_dark='hard'
 let g:gruvbox_italic=1
