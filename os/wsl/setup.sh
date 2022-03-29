@@ -44,6 +44,9 @@ if [ "$wsl" = "y" -o "$wsl" = "Y" ]; then
   echo "//localhost/C\$/Program\040Files  /mnt/c/Program\040Files  drvfs  defaults,ro,noatime,uid=1000,gid=1000,fmask=000,umask=000,case=off  0  0" | sudo tee -a /etc/fstab >/dev/null
   echo "//localhost/C\$/Program\040Files\040(x86)  /mnt/c/Program\040Files\040(x86)  drvfs  defaults,ro,noatime,uid=1000,gid=1000,fmask=000,umask=000,case=off  0  0" | sudo tee -a /etc/fstab >/dev/null
   echo "//localhost/C\$/Users/${win_user}/AppData  /mnt/c/Users/${win_user}/AppData  drvfs  defaults,ro,noatime,uid=1000,gid=1000,fmask=000,umask=000,case=off  0  0" | sudo tee -a /etc/fstab >/dev/null
+else
+  sudo touch /etc/wsl.conf
+  echo "options = metadata" | sudo tee -a /etc/wsl.conf >/dev/null
 fi
 
 echo "Updating packages..."
