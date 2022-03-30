@@ -6,7 +6,7 @@
 #  - Install and configure sudo
 #  - If available, copy keys.tar.gpg and cacert.crt to your home directory
 
-echo "-- WSL (Ubuntu) setup script --"
+echo "-- WSL (Debian) setup script --"
 echo "WARNING: This script should only be used to configure new installs!"
 echo
 read -p "Press [Enter] to start setup..."
@@ -64,6 +64,7 @@ sudo apt-get install \
   exuberant-ctags \
   gnupg2 \
   pass \
+  pwgen \
   curl \
   wget \
   rsync \
