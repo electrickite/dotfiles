@@ -7,7 +7,6 @@
 #  - If available, copy the following into your home directory
 #    * keys.tar.gpg
 #    * cacert.crt
-#    * berkeley-mono-typeface.zip
 
 echo "-- Arch setup script --"
 echo "WARNING: This script should only be used to configure new machines!"
@@ -23,7 +22,6 @@ echo -n "Enter your email address: "
 read email_address
 echo -n "Enter private git host: "
 read git_host
-
 
 if [[ ! -d "$HOME/.dotfiles" ]]; then
   echo "Could not find $HOME/.dotfiles. Aborting..."; exit 1
@@ -165,7 +163,6 @@ if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
     docx2txt \
     fd \
     fontconfig \
-    fontforge \
     foot \
     foot-terminfo \
     freetype2 \
@@ -220,6 +217,7 @@ if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
     ttf-fira-mono \
     ttf-fira-sans \
     ttf-freefont \
+    ttf-jetbrains-mono \
     ttf-roboto \
     udiskie \
     udisks2 \
@@ -249,6 +247,7 @@ if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
     menu-calc \
     mkinitcpio-colors-git \
     myterm \
+    nerd-fonts-jetbrains-mono \
     networkmanager-dmenu-git \
     qgnomeplatform \
     setcolors-git \
@@ -263,23 +262,6 @@ if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
   sudo ln -sv bemenu /usr/bin/dmenu
   sudo ln -sv bemenu-run /usr/bin/dmenu-run
   ln -sv /usr/bin/myterm "$HOME/.local/bin/xterm"
-
-  if [ -f "$HOME/berkeley-mono-typeface.zip" -a -n "$git_host" ]; then
-    echo "Installing Berkeley Mono typeface..."
-    mkdir -p "$HOME/bmtf"
-    mv "$HOME/berkeley-mono-typeface.zip" "$HOME/bmtf/"
-    pushd "$HOME/bmtf"
-    git clone "git@${git_host}:berkeley-mono.git" bmono-pkg
-    unzip berkeley-mono-typeface.zip
-    cp berkeley-mono/TTF/*.ttf bmono-pkg/ttf-berkeley-mono/
-    cp berkeley-mono/TTF/*.ttf bmono-pkg/nerd-fonts-berkeley-mono/
-    cd bmono-pkg/ttf-berkeley-mono
-    makepkg -sfi
-    cd ../nerd-fonts-berkeley-mono
-    makepkg -sfi
-    popd
-    rm -rf "$HOME/bmtf"
-  fi
 
   sudo ln -sv /etc/fonts/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d
   sudo ln -sv /etc/fonts/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d
