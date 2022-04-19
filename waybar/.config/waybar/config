@@ -52,11 +52,11 @@
     },
     "cpu": {
         "format": "{usage}% ",
-        "on-click": "gnome-terminal -e htop"
+        "on-click": "$TERMINAL --app-id=terminal-float htop"
     },
     "memory": {
         "format": "{}% ",
-        "on-click": "gnome-terminal -e htop"
+        "on-click": "$TERMINAL --app-id=terminal-float htop"
     },
     "battery": {
         "interval": 60,
@@ -67,7 +67,8 @@
         "format": "{capacity}% ",
         "format-charging": "{capacity}% ⚡{icon}",
         "format-discharging": "{capacity}% {icon}",
-        "format-icons": ["", "", "", "", ""]
+        "format-icons": ["", "", "", "", ""],
+        "on-click": "$TERMINAL --app-id=terminal-float sudo powertop"
     },
     "network": {
         "format": "{ifname}",
@@ -75,7 +76,9 @@
         "format-ethernet": "{ifname} ",
         "format-disconnected": "⚠",
         "tooltip-format": "{ifname} | {ipaddr}/{cidr}",
-        "tooltip-format-wifi": "{ifname} | {ipaddr}/{cidr} | {frequency}MHz {signalStrength}%"
+        "tooltip-format-wifi": "{ifname} | {ipaddr}/{cidr} | {frequency}MHz {signalStrength}%",
+        "on-click": "networkmanager_dmenu",
+        "on-click-right": "nm-connection-editor"
     },
     "pulseaudio": {
         "scroll-step": 5,
@@ -89,7 +92,8 @@
             "car": "",
             "default": ["", ""]
         },
-        "on-click": "pavucontrol"
+        "on-click": "pamixer --toggle-mute",
+        "on-click-right": "pavucontrol"
     },
     "custom/arrow1": {
         "format": ""

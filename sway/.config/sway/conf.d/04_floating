@@ -8,6 +8,7 @@ for_window {
     [window_type = "menu"] floating enable
     [app_id = "floating"] floating enable
     [app_id = "floating_update"] floating enable, resize set width 1000px height 600px
+    [app_id = "terminal-float"] floating enable; resize set 900 680
     [class = "(?i)pinentry"] floating enable
     [app_id="org.keepassxc.KeePassXC"] floating enable, resize set 900 680, move scratchpad, scratchpad show, move position center
     [app_id="libreoffice-.*"] border normal 3
@@ -18,7 +19,7 @@ for_window {
     [title = "Firefox - Sharing Indicator"] kill
     [title = "Firefox — Sharing Indicator"] kill
     [app_id="firefox" title="Library"] floating enable, border pixel 3, sticky enable
-    [app_id = "pavucontrol"] floating enable
+    [app_id = "pavucontrol"] floating enable; resize set 900 680
     [app_id = "blueberry.py"] floating enable
     [app_id="qemu"] floating enable
     [app_id="com.nextcloud.desktopclient.nextcloud" title="Nextcloud Settings"] floating enable
