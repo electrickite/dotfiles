@@ -68,8 +68,11 @@ bindsym $mod+Shift+y exec cliphist list | $dmenu $dmenuargs --prompt=Type: | cli
 ## Launch // Password manager // <Super> P ##
 bindsym $mod+p exec passmenu --type $inlineargs --prompt=Password:
 
-## Launch // Password manager (type) // <Super> <Shift> P ##
+## Launch // Password manager (menu) // <Super> <Shift> P ##
 bindsym $mod+Shift+p exec passmenu --menu $inlineargs --prompt=Password:
+
+## Launch // Password manager (form fill) // <Super> <Alt> P ##
+bindsym $mod+$alt+p exec passmenu --fill $inlineargs --prompt=Password:
 
 #
 # System management

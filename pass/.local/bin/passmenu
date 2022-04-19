@@ -10,6 +10,10 @@ if [[ "$1" == "--type" ]]; then
 elif [[ "$1" == "--menu" ]]; then
   showmenu=1
   shift
+elif [[ "$1" == "--fill" ]]; then
+  fillform=1
+	typeit=1
+  shift
 fi
 
 if [[ -n $WAYLAND_DISPLAY ]]; then
@@ -43,9 +47,14 @@ if [[ $showmenu -eq 1 ]]; then
     passargs=("$attr" "$password")
   fi
 
-  if [[ "$(printf 'Copy\nType' | "$dmenu" "$@" --prompt=Action:)" == "Type" ]]; then
+  if [[ "$(printf 'Type\nCopy' | "$dmenu" "$@" --prompt=Action:)" == "Type" ]]; then
     typeit=1
   fi
+fi
+
+if [[ $fillform -eq 1 ]]; then
+	pass attr Username "$password" | { IFS= read -r pass; printf %s "$pass"; } | $xdotool
+  printf "\t" | $xdotool
 fi
 
 if [[ $typeit -eq 0 ]]; then
