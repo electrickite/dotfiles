@@ -4,5 +4,5 @@ Name=mutt
 Comment=Launches the mutt email client
 Icon=email
 Terminal=true
-Exec=mutt-run
+Exec=mutt-run %u
 Categories=ConsoleOnly;System;Network;Email;

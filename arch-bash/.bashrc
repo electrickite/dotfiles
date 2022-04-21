@@ -28,7 +28,11 @@ lfcd() {
 }
 
 open() {
-  swaymsg exec -- xdg-open \"$(realpath "$1")\"
+  path="$(realpath "$1" 2>/dev/null)"
+  if [[ $? -ne 0 || ! -e "$path" ]]; then
+    path="$1"
+  fi
+  swaymsg exec -- xdg-open \"$path\"
 }
 
 alias ls='ls --color=auto'

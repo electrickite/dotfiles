@@ -1,12 +1,13 @@
 [Added Associations]
 text/plain=org.gnome.gedit.desktop;
 application/x-ms-dos-executable=wine.desktop;
+application/pdf=org.gnome.Evince.desktop;
 
 [Default Applications]
 text/plain=org.gnome.gedit.desktop
 inode/directory=lf.desktop;
 text/html=firefox.desktop
-
+x-scheme-handler/mailto=mutt.desktop
 application/vnd.oasis.opendocument.text=libreoffice-writer.desktop
 application/vnd.oasis.opendocument.text-template=libreoffice-writer.desktop
 application/vnd.oasis.opendocument.text-web=libreoffice-writer.desktop
