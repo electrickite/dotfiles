@@ -203,6 +203,8 @@ if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
     pipewire-jack \
     playerctl \
     polkit-gnome \
+    qgnomeplatform-qt5 \
+    qgnomeplatform-qt6 \
     qrencode \
     scdoc \
     slurp \
@@ -249,7 +251,6 @@ if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
     myterm \
     nerd-fonts-jetbrains-mono \
     networkmanager-dmenu-git \
-    qgnomeplatform \
     setcolors-git \
     ttf-mac-fonts \
     ttf-roboto-slab \
