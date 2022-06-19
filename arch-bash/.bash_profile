@@ -9,7 +9,8 @@ export BROWSER=lynx
 
 # Start gnome-keyring-daemon if present
 if hash gnome-keyring-daemon 2>/dev/null; then
-  eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
+  eval $(gnome-keyring-daemon --start --components="pkcs11,secrets,ssh" --control-directory=/run/user/$(id -u)/keyring 2>/dev/null)
+  export GNOME_KEYRING_CONTROL
   export SSH_AUTH_SOCK
 fi
 
