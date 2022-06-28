@@ -1,0 +1,19 @@
+[dmenu]
+dmenu_command = bemenu -i --list=12 --nb='#282828' --nf='#bdae93' --fb='#3c3836' --ff='#fbf1c7' --tb='#3c3836' --tf='#bdae93' --hb='#32302f' --hf='#fbf1c7' --fn='JetBrainsMono Nerd Font 10' --line-height=21
+pinentry = pinentry
+
+[dmenu_passphrase]
+obscure = True
+obscure_color = #222222
+
+[vault]
+server_1 = SERVER
+email_1 = EMAIL
+twofactor_1 = 
+password_cmd_1 = gpg -qd HOME/.config/pass.gpg
+session_timeout_min = 720
+autotype_default = {USERNAME}{TAB}{PASSWORD}{ENTER}
+type_library = wtype
+editor = vim
+terminal = footclient
+

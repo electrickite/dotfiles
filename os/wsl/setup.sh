@@ -63,7 +63,6 @@ sudo apt-get install \
   silversearcher-ag \
   exuberant-ctags \
   gnupg2 \
-  pass \
   pwgen \
   curl \
   wget \

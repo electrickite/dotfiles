@@ -66,13 +66,13 @@ bindsym $mod+y exec cliphist list | $dmenu $dmenuargs --prompt=Copy: | cliphist 
 bindsym $mod+Shift+y exec cliphist list | $dmenu $dmenuargs --prompt=Type: | cliphist decode | xargs -r -0 wtype
 
 ## Launch // Password manager // <Super> P ##
-bindsym $mod+p exec passmenu --type $inlineargs --prompt=Password:
+bindsym $mod+p exec bwm
 
-## Launch // Password manager (menu) // <Super> <Shift> P ##
-bindsym $mod+Shift+p exec passmenu --menu $inlineargs --prompt=Password:
+## Launch // Password manager (password) // <Super> <Shift> P ##
+bindsym $mod+Shift+p exec bwm --autotype '{PASSWORD}'
 
-## Launch // Password manager (form fill) // <Super> <Alt> P ##
-bindsym $mod+$alt+p exec passmenu --fill $inlineargs --prompt=Password:
+## Launch // Password manager (username) // <Super> <Alt> P ##
+bindsym $mod+$alt+p exec bwm --autotype '{USERNAME}'
 
 #
 # System management

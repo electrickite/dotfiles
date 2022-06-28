@@ -2,10 +2,11 @@
 ### Taken from u/StrangeAstronomer
 ### https://www.reddit.com/r/swaywm/comments/ljl0dh/keeping_secrets_secret_with_keepassxc_clipman_and/
 
-pass_pid=$(ps -ax -o pid= -o ppid= -o command= | grep -i "[p]assword store sleep" | awk '{ print $2 }')
-app_id=$(swaymsg -t get_tree | jq -r '.. | select(.type?) | select(.focused==true) | .app_id')
+tree=$(swaymsg -t get_tree)
+app_id=$(echo "$tree" | jq -r '.. | select(.type?) | select(.focused==true) | .app_id')
+name=$(echo "$tree" | jq -r '.. | select(.type?) | select(.focused==true) | .name')
 
-if [ "$app_id" != "org.keepassxc.KeePassXC" -a -z "$pass_pid" ]; then
+if [ "$app_id" != "org.keepassxc.KeePassXC" -a "$name" != "Bitwarden" ]; then
   cliphist store
 fi
 

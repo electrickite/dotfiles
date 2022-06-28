@@ -152,6 +152,8 @@ if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
     antiword \
     bc \
     bemenu \
+    bitwarden \
+    bitwarden-cli \
     blueman \
     bluez \
     bluez-utils \
@@ -194,7 +196,6 @@ if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
     p7zip \
     pamixer \
     papirus-icon-theme \
-    pass \
     pavucontrol \
     perl-image-exiftool \
     pipewire \
@@ -238,6 +239,7 @@ if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
     adwaita-qt \
     archivemount \
     batsignal \
+    bitwarden-menu-git \
     cliphist \
     delay \
     dragon-drop \
@@ -282,6 +284,14 @@ if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
 
   systemctl --user daemon-reload
   systemctl --user enable bash.service batsignal.service cliphist.service foot.service kanshi.service libinput-gestures.service mako.service nextcloud.service nm-applet.service polkit-gnome.service swayidle.service udiskie.service waybar.service wob.socket
+
+  echo -n "Bitwarden server: "
+  read bw_server
+  echo -n "Bitwarden master password: "
+  read -s bwpass
+  echo "Setting bitwarden-menu PIN"
+  gpg -co ~/.config/pass.gpg <(echo $bwpass); unset bwpass
+  sed "s|EMAIL|${email_address}|g" config.ini.sample | sed "s|SERVER|${bw_server}|g" | sed "s|HOME|${HOME}|g" > ~/.config/bwm/config.ini
 
   mkdir -pv ~/Pictures/screenshots
   mkdir -pv ~/projects
@@ -355,7 +365,6 @@ if [ "$desktop" = "y" -o "$desktop" = "Y" ]; then
 
   aurman -Syu \
     extract_url \
-    pass-attr \
     perl-uri-find \
     urlview
 
