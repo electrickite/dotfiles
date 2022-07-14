@@ -184,6 +184,7 @@ if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
     libertinus-font \
     libnotify \
     libsecret \
+    libsixel \
     light \
     mako \
     meson \
@@ -246,7 +247,6 @@ if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
     edir \
     j4-dmenu-desktop \
     libinput-gestures \
-    libsixel \
     lf \
     menu-calc \
     mkinitcpio-colors-git \
