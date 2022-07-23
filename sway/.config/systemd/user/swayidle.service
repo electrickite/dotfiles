@@ -12,8 +12,8 @@ ExecStart=/usr/bin/swayidle -w \
     timeout 480 'loginctl lock-session' \
     timeout 600 'swaymsg "output * dpms off"' \
        resume 'swaymsg "output * dpms on"' \
-    timeout 1200 '[ "$(cat $battery_status)" == Discharging ] && systemctl suspend' \
-    timeout 3600 'systemctl suspend' \
+    timeout 1200 '[ "$(cat $battery_status)" == Discharging ] && systemctl suspend-then-hibernate' \
+    timeout 3600 'systemctl suspend-then-hibernate' \
     before-sleep '%h/.local/bin/lock' \
     lock '%h/.local/bin/lock' \
     after-resume 'swaymsg "output * dpms on"' \
