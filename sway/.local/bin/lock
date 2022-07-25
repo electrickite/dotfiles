@@ -1,5 +1,6 @@
 #!/bin/sh
 gpgconf --reload gpg-agent >/dev/null 2>&1
-bwm --lock >/dev/null 2>&1 &
+bw lock >/dev/null 2>&1 &
+killall -q bwm
 dbus-send --print-reply --dest=org.keepassxc.KeePassXC.MainWindow /keepassxc org.keepassxc.MainWindow.lockAllDatabases >/dev/null 2>&1
 exec swaylock -f --image "$HOME/Pictures/bg.jpg"
