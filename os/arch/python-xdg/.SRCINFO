@@ -1,0 +1,16 @@
+pkgbase = python-xdg
+	pkgdesc = Variables defined by the XDG Base Directory Specification
+	pkgver = 5.1.1
+	pkgrel = 1
+	url = https://github.com/srstevenson/xdg
+	arch = any
+	license = ISC
+	makedepends = python-poetry
+	makedepends = python-installer
+	makedepends = python-build
+	depends = python
+	conflicts = python-pyxdg
+	source = python-xdg-5.1.1.tar.gz::https://github.com/srstevenson/xdg/archive/5.1.1.tar.gz
+	sha256sums = f4afbbc21a8405da1a7f4ad8f1d8abd3132aca2ef9c3441b39200d939041160f
+
+pkgname = python-xdg

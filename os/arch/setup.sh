@@ -149,6 +149,8 @@ echo -n "Install graphical environment? [yN] "
 read graphical
 if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
   sudo pacman -Syu --needed \
+    adwaita-qt5 \
+    adwaita-qt6 \
     antiword \
     bc \
     bemenu \
@@ -213,6 +215,7 @@ if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
     starship \
     swappy \
     sway \
+    swaybg \
     swayidle \
     swaylock \
     trash-cli \
@@ -237,11 +240,9 @@ if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
     xorg-xrdb
 
   aurman -Syu \
-    adwaita-qt \
     archivemount \
     batsignal \
-    bitwarden-menu-git \
-    cliphist \
+    cliphist-bin \
     delay \
     dragon-drop \
     edir \
@@ -288,10 +289,10 @@ if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
   echo -n "Bitwarden server: "
   read bw_server
   echo -n "Bitwarden master password: "
-  read -s bwpass
+  read bwpass
   echo "Setting bitwarden-menu PIN"
   gpg -co ~/.config/pass.gpg <(echo $bwpass); unset bwpass
-  sed "s|EMAIL|${email_address}|g" config.ini.sample | sed "s|SERVER|${bw_server}|g" | sed "s|HOME|${HOME}|g" > ~/.config/bwm/config.ini
+  sed "s|EMAIL|${email_address}|g" ~/.config/bwm/config.ini.sample | sed "s|SERVER|${bw_server}|g" | sed "s|HOME|${HOME}|g" > ~/.config/bwm/config.ini
 
   mkdir -pv ~/Pictures/screenshots
   mkdir -pv ~/projects
@@ -374,9 +375,9 @@ if [ "$desktop" = "y" -o "$desktop" = "Y" ]; then
   mkdir -pv ~/.contacts
   mkdir -pv ~/.cache/vdirsyncer/status/
 
+  sudo mkdir -p /usr/local/share/applications
   sudo cp -v "$HOME/.dotfiles/os/arch/amfora.desktop" /usr/local/share/applications/
 
-  echo "-- " >> ~/.config/mutt/sig
   echo "$full_name" >> ~/.config/mutt/sig
 fi
 
