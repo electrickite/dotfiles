@@ -1,0 +1,12 @@
+#!/bin/sh
+
+if [ -z "$1" ]; then
+  echo "Usage: $(basename $0) MESSAGE" >&2
+  exit 1
+fi
+
+ttys=$(ps -aho tty | sort | uniq)
+
+for tty in $ttys; do echo -e "\n\n${*}\n" | fold > /dev/$tty; done
+
+# vim:filetype=sh
