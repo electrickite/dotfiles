@@ -19,6 +19,7 @@ exec_always {
     gsettings set $gnome-schema icon-theme 'Papirus-Dark'
     gsettings set org.gtk.Settings.FileChooser window-size '(1100,700)'
     gsettings set org.gnome.desktop.interface cursor-size 32
+    gsettings set org.gnome.desktop.wm.preferences theme 'Adaitia-dark'
 }
 
 # Start sway-session systemd target

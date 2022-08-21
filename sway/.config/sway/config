@@ -2,5 +2,5 @@
 # Read `man 5 sway` for a complete reference.
 
 include ~/.config/sway/conf.d/*
-include ~/.config/sway/$(hostname)/*
+include ~/.config/sway/$(hostname)/config
 #include /etc/sway/config.d/*

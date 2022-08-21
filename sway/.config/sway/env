@@ -6,3 +6,4 @@ export BROWSER=firefox
 export TERMINAL="footclient"
 export TERMINAL_ARGS="delay -q 0.1 --"
 export TERMINAL_STRIP="-e"
+export GTK_THEME=Adwaita:dark
