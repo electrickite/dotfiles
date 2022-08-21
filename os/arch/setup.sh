@@ -278,6 +278,7 @@ if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
   fc-cache -fv
   sudo fc-cache -fv
 
+  ln -s $(hostname)/swayidle ~/.config/sway/swayidle
   sudo mkdir -p /usr/share/glib-2.0/schemas/
   sudo cp -fv "$HOME/.dotfiles/os/arch/10_local_defaults.gschema.override" /usr/share/glib-2.0/schemas/
   sudo glib-compile-schemas /usr/share/glib-2.0/schemas/
