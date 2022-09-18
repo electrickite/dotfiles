@@ -91,8 +91,8 @@ bindsym $mod+Escape exec "$system_menu | $dmenu $inlineargs --prompt=System: | $
 ## System // Copy wayland clipboard to PRIAMRY // <Shift> <Alt> S ##
 bindsym Shift+$alt+s exec wl-paste | xclip -selection clipboard | notify-send "PRIMARY Clipboard synced with Wayland"
 
-## System // Reload sway config // <Super> <Shift> C ##
-bindsym $mod+Shift+c reload, exec "systemctl --user restart kanshi.service"
+## System // Reload sway config // <Super> <Shift> Escape ##
+bindsym $mod+Shift+Escape reload, exec "systemctl --user restart kanshi.service"
 
 #
 # Navigation
@@ -243,7 +243,7 @@ bindsym $alt+space exec makoctl dismiss
 ## Notifications // Dismiss all notifications // <Shift> <Alt> <Space> ##
 bindsym Shift+$alt+space exec makoctl dismiss --all
 
-    # Pulse Audio controls
+# Pulse Audio controls
 ## Media // Volume up // <XF86AudioRaiseVolume> ##
 bindsym --locked XF86AudioRaiseVolume exec pamixer -ui 5 && pw-play $sway_dir/drip.ogg && pamixer --get-volume | sed 's/$/ \\$osdbg \\$osdfg \\$osdfg/' > $wob_fifo
 
@@ -282,3 +282,9 @@ bindsym --locked $mod+i output * dpms on
 
 ## Display // Display off // <Super> <Shift> I ##
 bindsym --locked $mod+Shift+i output * dpms off
+
+## Input // Press mouse button 1 // <Super> <Alt> C ##
+bindsym --locked $mod+$alt+c seat - cursor press button1
+
+## Input // Release mouse button 1 // <Super> C ##
+bindsym --locked $mod+c seat - cursor release button1

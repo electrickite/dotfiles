@@ -40,5 +40,5 @@ case "$cmd" in
   "Calculator") $type = ;;
   "Emoji") wtype -M alt e ;;
   "Show Hotkeys") $type -M shift / ;;
-  "Reload Sway Config") $type -M shift c ;;
+  "Reload Sway Config") $type -M shift -P escape ;;
 esac
