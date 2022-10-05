@@ -183,6 +183,7 @@ if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
     imagemagick \
     jq \
     kanshi \
+    lf \
     libertinus-font \
     libnotify \
     libsecret \
@@ -248,7 +249,6 @@ if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
     edir \
     j4-dmenu-desktop \
     libinput-gestures \
-    lf \
     menu-calc \
     mkinitcpio-colors-git \
     myterm \
