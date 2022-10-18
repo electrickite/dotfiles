@@ -10,4 +10,4 @@ Restart=on-failure
 RestartSec=2
 
 [Install]
-WantedBy=sway-session.target
+WantedBy=default.target
