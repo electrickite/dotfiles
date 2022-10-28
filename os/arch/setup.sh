@@ -290,10 +290,7 @@ if [ "$graphical" = "G" -o "$graphical" = "B" ]; then
 
   aurman -Syu \
     gnome-pass-search-provider-git \
-    gnome-search-provider-emoji-shortcodes \
     gnome-shell-extension-caffeine
-
-  sudo pacman -Rdd pass
 
   rbw config set email "$email_address"
   rbw config set base_url "$bw_server"
