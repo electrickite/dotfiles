@@ -8,6 +8,7 @@ Type=simple
 ExecStart=/usr/bin/waybar
 ExecReload=kill -SIGUSR2 $MAINPID
 ExecStop=/bin/kill -2 $MAINPID
+TimeoutStopSec=3
 
 [Install]
 WantedBy=sway-session.target
