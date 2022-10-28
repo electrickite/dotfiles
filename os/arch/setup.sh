@@ -381,6 +381,7 @@ if [ "$graphical" = "S" -o "$graphical" = "B" ]; then
   sudo cp -v "$HOME/.dotfiles/os/arch/sway-session" /usr/local/bin/
   sudo chmod 755 /usr/local/bin/sway-session
   sudo cp -v "$HOME/.dotfiles/os/arch/sway.desktop" /usr/local/share/wayland-sessions/
+  sudo ln -sv sway /usr/bin/sway-start
 
   systemctl --user enable batsignal.service cliphist.service kanshi.service libinput-gestures.service mako.service nextcloud.service nm-applet.service polkit-gnome.service swayidle.service udiskie.service waybar.service wob.socket
 fi

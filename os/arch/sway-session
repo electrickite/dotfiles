@@ -6,7 +6,7 @@ if [ "x$XDG_SESSION_TYPE" = "xwayland" ] &&
    grep -q "$SHELL" /etc/shells &&
    ! (echo "$SHELL" | grep -q "false") &&
    ! (echo "$SHELL" | grep -q "nologin"); then
-  exec bash -c "exec -l '$SHELL' -c 'exec sway'"
+  exec bash -c "exec -l '$SHELL' -c 'exec sway-start'"
 else
-  exec sway
+  exec sway-start
 fi
