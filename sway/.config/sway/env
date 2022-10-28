@@ -1,8 +1,5 @@
-export _JAVA_AWT_WM_NONREPARENTING=1
 export BEMENU_BACKEND=wayland
-export SDL_VIDEODRIVER=wayland
 export XDG_CURRENT_DESKTOP=sway
-export BROWSER=firefox
 export TERMINAL="footclient"
 export TERMINAL_ARGS="delay -q 0.1 --"
 export TERMINAL_STRIP="-e"

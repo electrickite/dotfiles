@@ -76,6 +76,7 @@ sudo pacman -Syu --needed \
 
 echo "Creating XDG directories..."
 mkdir -pv ~/.config/systemd/user
+mkdir -pv ~/.config/autostart
 mkdir -pv ~/.local
 mkdir -pv ~/.local/{state,bin,share}
 xdg-user-dirs-update --force
@@ -145,21 +146,24 @@ git config --global user.name "$full_name"
 git config --global user.email "$email_address"
 git config --global include.path ~/.gitconfig_main
 
-echo -n "Install graphical environment? [yN] "
+echo -n "Install graphical environment (Gnome, Sway, Both, No)? [gsbN] "
 read graphical
-if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
+graphical="$(echo "$graphical" | tr '[:lower:]' '[:upper:]')"
+if [ "$graphical" != "G" -a "$graphical" != "S" -a "$graphical" != "B" ]; then
+  graphical="N"
+fi
+
+if [ "$graphical" != "N" ]; then
+  echo "Installing graphical packages..."
   sudo pacman -Syu --needed \
     adwaita-qt5 \
     adwaita-qt6 \
     antiword \
     bc \
-    bemenu \
     bitwarden \
     bitwarden-cli \
-    blueman \
     bluez \
     bluez-utils \
-    bolt \
     cairo \
     cdrtools \
     check \
@@ -175,50 +179,36 @@ if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
     gnome-keyring \
     gnome-themes-extra \
     go \
-    grim \
     gsfonts \
     helvum \
     highlight \
     htop \
     imagemagick \
     jq \
-    kanshi \
     lf \
     libertinus-font \
     libnotify \
     libsecret \
     libsixel \
-    light \
-    mako \
     meson \
     moreutils \
     neofetch \
-    network-manager-applet \
     noto-fonts \
     odt2txt \
     otf-font-awesome \
     p7zip \
-    pamixer \
     papirus-icon-theme \
-    pavucontrol \
     perl-image-exiftool \
     pipewire \
     pipewire-alsa \
     pipewire-pulse \
     pipewire-jack \
-    playerctl \
-    polkit-gnome \
     qgnomeplatform-qt5 \
     qgnomeplatform-qt6 \
     qrencode \
     scdoc \
-    slurp \
     starship \
     swappy \
-    sway \
-    swaybg \
-    swayidle \
-    swaylock \
     trash-cli \
     ttf-croscore \
     ttf-dejavu \
@@ -227,44 +217,31 @@ if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
     ttf-freefont \
     ttf-jetbrains-mono \
     ttf-roboto \
-    udiskie \
-    udisks2 \
     unrar \
-    waybar \
     wireplumber \
     wl-clipboard \
-    wtype \
     xdg-desktop-portal-gtk \
-    xdg-desktop-portal-wlr \
     xorg-server-xwayland \
     xorg-xhost \
     xorg-xrdb
 
   aurman -Syu \
     archivemount \
-    batsignal \
-    cliphist-bin \
     delay \
     dragon-drop \
     edir \
-    j4-dmenu-desktop \
     libinput-gestures \
-    menu-calc \
     mkinitcpio-colors-git \
     myterm \
     nerd-fonts-jetbrains-mono \
-    networkmanager-dmenu-git \
     setcolors-git \
     ttf-mac-fonts \
     ttf-roboto-slab \
     vim-gruvbox-git \
-    wev \
-    wob
+    wev
 
   sudo pacman -D --asexplicit check cmake go meson scdoc
 
-  sudo ln -sv bemenu /usr/bin/dmenu
-  sudo ln -sv bemenu-run /usr/bin/dmenu-run
   ln -sv /usr/bin/myterm "$HOME/.local/bin/xterm"
 
   sudo ln -sv /etc/fonts/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d
@@ -278,14 +255,13 @@ if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
   fc-cache -fv
   sudo fc-cache -fv
 
-  ln -s $(hostname)/swayidle ~/.config/sway/swayidle
   sudo mkdir -p /usr/share/glib-2.0/schemas/
   sudo cp -fv "$HOME/.dotfiles/os/arch/10_local_defaults.gschema.override" /usr/share/glib-2.0/schemas/
   sudo glib-compile-schemas /usr/share/glib-2.0/schemas/
   rm ~/.config/dconf/user
 
   systemctl --user daemon-reload
-  systemctl --user enable bash.service batsignal.service cliphist.service foot.service kanshi.service libinput-gestures.service mako.service nextcloud.service nm-applet.service polkit-gnome.service swayidle.service udiskie.service waybar.service wob.socket
+  systemctl --user enable bash@.service foot-server@.socket
 
   echo -n "Bitwarden server: "
   read bw_server
@@ -300,9 +276,125 @@ if [ "$graphical" = "y" -o "$graphical" = "Y" ]; then
   ln -sv "$HOME/.dotfiles/os/arch/arch.jpg" "$HOME/Pictures/bg.jpg"
 fi
 
-echo -n "Install desktop applications? [yN] "
-read desktop
-if [ "$desktop" = "y" -o "$desktop" = "Y" ]; then
+if [ "$graphical" = "G" -o "$graphical" = "B" ]; then
+  echo "Installing GNOME..."
+  sudo pacman -Syu --needed \
+    dconf-editor \
+    gdm \
+    gnome \
+    gnome-shell-extension-appindicator \
+    gnome-tweak-tool \
+    gpaste \
+    rbw \
+    xdg-desktop-portal-gnome
+
+  aurman -Syu \
+    gnome-pass-search-provider-git \
+    gnome-search-provider-emoji-shortcodes \
+    gnome-shell-extension-caffeine
+
+  sudo pacman -Rdd pass
+
+  rbw config set email "$email_address"
+  rbw config set base_url "$bw_server"
+  rbw config set lock_timeout 28800
+  rbw config set pinentry pinentry-rbw
+
+  gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
+  gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
+  gsettings set org.gnome.desktop.interface cursor-size 32
+  gsettings set org.gnome.desktop.wm.preferences theme 'Adaitia-dark'
+  gsettings set org.gnome.desktop.default-applications.terminal exec 'footclient'
+  gsettings set org.gnome.desktop.default-applications.terminal exec-arg ''
+  gsettings set org.gnome.mutter experimental-features ['scale-monitor-framebuffer']
+
+  gsettings set org.gnome.desktop.wm.keybindings switch-applications "['<Alt>Tab']"
+  gsettings set org.gnome.desktop.wm.keybindings switch-applications-backward "['<Shift><Alt>Tab']"
+  gsettings set org.gnome.desktop.wm.keybindings switch-windows "['<Super>Tab']"
+  gsettings set org.gnome.desktop.wm.keybindings switch-windows-backward "['<Shift><Super>Tab']"
+  gsettings set org.gnome.desktop.wm.keybindings close "['<Alt>F4', '<Super><Shift>q']"
+  gsettings set org.gnome.mutter.wayland.keybindings restore-shortcuts "['<Super><Shift>Escape']"
+  gsettings set org.gnome.mutter.keybindings switch-monitor ['<Super>d', 'XF86Display']
+
+  nine="1 2 3 4 5 6 7 8 9"
+  for item in $nine
+  do
+    gsettings set org.gnome.shell.keybindings switch-to-application-$item "[]"
+  done
+
+  for item in $nine
+  do
+    gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-$item "['<Super>$item']"
+  done
+  gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-1 "['<Super>1', '<Super>Home]"
+
+  for item in $nine
+  do
+    gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-$item "['<Shift><Super>$item']"
+  done
+
+  sudo mkdir -p /etc/dconf/profile
+  echo "user-db:user" | sudo tee /etc/dconf/profile/user
+  echo "system-db:local" | sudo tee -a /etc/dconf/profile/user
+  sudo mkdir -p /etc/dconf/db/local.d
+  echo "[org/gnome/mutter]" | sudo tee /etc/dconf/db/local.d/00-hidpi
+  echo "experimental-features=['scale-monitor-framebuffer']" | sudo tee -a /etc/dconf/db/local.d/00-hidpi
+  sudo mkdir -p /etc/dconf/db/locks
+  echo "/org/gnome/mutter/experimental-features" | sudo tee /etc/dconf/db/locks/hidpi
+  sudo dconf update
+fi
+
+if [ "$graphical" = "S" -o "$graphical" = "B" ]; then
+  echo "Installing Sway..."
+  sudo pacman -Syu --needed \
+    bemenu \
+    blueman \
+    bolt \
+    grim \
+    j4-dmenu-desktop \
+    kanshi \
+    light \
+    mako \
+    network-manager-applet \
+    pamixer \
+    pavucontrol \
+    playerctl \
+    polkit-gnome \
+    slurp \
+    sway \
+    swaybg \
+    swayidle \
+    swaylock \
+    udiskie \
+    udisks2 \
+    waybar \
+    wtype \
+    xdg-desktop-portal-wlr
+
+  aurman -Syu \
+    batsignal \
+    cliphist-bin \
+    menu-calc \
+    networkmanager-dmenu-git \
+    wob
+
+  sudo ln -sv bemenu /usr/bin/dmenu
+  sudo ln -sv bemenu-run /usr/bin/dmenu-run
+  ln -s $(hostname)/swayidle ~/.config/sway/swayidle
+  sudo cp -v "$HOME/.dotfiles/os/arch/sway-session" /usr/local/bin/
+  sudo chmod 755 /usr/local/bin/sway-session
+  sudo cp -v "$HOME/.dotfiles/os/arch/sway.desktop" /usr/local/share/wayland-sessions/
+
+  systemctl --user enable batsignal.service cliphist.service kanshi.service libinput-gestures.service mako.service nextcloud.service nm-applet.service polkit-gnome.service swayidle.service udiskie.service waybar.service wob.socket
+fi
+
+desktop="N"
+if [ "$graphical" != "N" ]; then
+  echo -n "Install desktop applications? [yN] "
+  read desktop
+fi
+if [ "$desktop" = "Y" -o "$desktop" = "y" ]; then
+  echo "Installing desktop applications..."
   sudo pacman -Syu --needed \
     amfora \
     aspell-en \
@@ -382,9 +474,13 @@ if [ "$desktop" = "y" -o "$desktop" = "Y" ]; then
   echo "$full_name" >> ~/.config/mutt/sig
 fi
 
-echo -n "Install extra applications? [yN] "
-read extra
+extra="N"
+if [ "$graphical" != "N" ]; then
+  echo -n "Install extra applications? [yN] "
+  read extra
+fi
 if [ "$extra" = "y" -o "$extra" = "Y" ]; then
+  echo "Installing extra applications..."
   sudo pacman -Syu --needed \
     calibre \
     edk2-ovmf \
@@ -394,6 +490,7 @@ if [ "$extra" = "y" -o "$extra" = "Y" ]; then
     gnome-maps \
     gnome-mines \
     gnome-music \
+    gnome-nettool \
     gnome-photos \
     gnome-sound-recorder \
     gnome-weather \
@@ -409,7 +506,8 @@ if [ "$extra" = "y" -o "$extra" = "Y" ]; then
     minecraft-launcher
 fi
 
-echo "Updating locate database..."
+echo "Cleaning up..."
+sudo pacman -Sc
 sudo updatedb
 
 echo "Setup complete!"

@@ -6,6 +6,8 @@ source "$HOME/.config/sway/env"
 
 # Read environment variables from environment.d
 eval $(sed -e '/^$/d' -e '/^\s*#/d' -e 's/^/export /' $HOME/.config/environment.d/*.conf)
+unset XCURSOR_THEME
+unset XCURSOR_SIZE
 
 # Start sway, sending output to systemd journal
 exec systemd-cat --identifier=sway sway

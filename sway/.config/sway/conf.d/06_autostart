@@ -26,6 +26,7 @@ exec_always {
 exec "systemctl --user import-environment; \
       hash dbus-update-activation-environment 2>/dev/null; \
       dbus-update-activation-environment --systemd --all; \
+      wayland-instance; \
       systemctl --user start sway-session.target"
 
 # Autostart applications

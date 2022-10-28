@@ -1,0 +1,4 @@
+#!/bin/sh
+if [ -n "$WAYLAND_DISPLAY" ]; then
+  systemctl --user start wayland-instance@${WAYLAND_DISPLAY}.target
+fi

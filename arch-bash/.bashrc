@@ -32,7 +32,13 @@ open() {
   if [[ $? -ne 0 || ! -e "$path" ]]; then
     path="$1"
   fi
-  swaymsg exec -- xdg-open \"$path\"
+  if [[ "$XDG_CURRENT_DESKTOP" == "sway" ]]; then
+    swaymsg exec -- xdg-open \"$path\"
+  elif [[ "$XDG_CURRENT_DESKTOP" == "GNOME" ]]; then
+    gio open "$path"
+  else
+    xdg-open "$path"
+  fi
 }
 
 alias ls='ls --color=auto'

@@ -1,0 +1,16 @@
+[Unit]
+Description=Bash terminal
+Documentation=man:bash(1)
+PartOf=graphical-session.target
+Requires=foot-server@.socket
+After=waybar.service
+After=foot-server@.socket
+
+[Service]
+Type=simple
+Environment=WAYLAND_DISPLAY=%i
+ExecStart=footclient -w 1024x768 bash --rcfile "%E/bash/sessionrc" -i
+RemainAfterExit=no
+
+[Install]
+WantedBy=wayland-instance@.target

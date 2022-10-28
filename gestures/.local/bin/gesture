@@ -1,0 +1,31 @@
+#!/bin/sh
+if [ "$XDG_CURRENT_DESKTOP" = "sway" ]; then
+  case "$@" in
+    forward )
+      swaymsg seat seat0 cursor press BTN_EXTRA
+      swaymsg seat seat0 cursor release BTN_EXTRA
+      ;;
+	  backward )
+      swaymsg seat seat0 cursor press BTN_SIDE
+      swaymsg seat seat0 cursor release BTN_SIDE
+      ;;
+	  workspace-next )
+      swaymsg workspace next
+      ;;
+	  workspace-prev )
+      swaymsg workspace prev
+      ;;
+	  apps )
+      wtype -M logo -P space
+      ;;
+  esac
+else
+  case "$@" in
+    forward )
+      ydotool key 159:1 159:0
+      ;;
+	  backward )
+      ydotool key 158:1 158:0
+      ;;
+  esac
+fi

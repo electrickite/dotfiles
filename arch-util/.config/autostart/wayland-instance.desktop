@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Wayland Instance
+Exec=wayland-instance
+Terminal=false
+Type=Application
+NoDisplay=true
+X-GNOME-Autostart-enabled=true

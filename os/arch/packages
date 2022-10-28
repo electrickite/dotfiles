@@ -5,6 +5,7 @@ bash
 bw
 env
 foot
+gestures
 git
 gtk
 gpg
@@ -12,7 +13,6 @@ httpd
 i3status
 kanshi
 lf
-libinput-gestures
 mail
 mako
 networkmanager-dmenu

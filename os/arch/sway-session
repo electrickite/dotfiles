@@ -1,0 +1,12 @@
+#!/bin/sh
+
+if [ "x$XDG_SESSION_TYPE" = "xwayland" ] &&
+   [ "x$XDG_SESSION_CLASS" != "xgreeter" ] &&
+   [  -n "$SHELL" ] &&
+   grep -q "$SHELL" /etc/shells &&
+   ! (echo "$SHELL" | grep -q "false") &&
+   ! (echo "$SHELL" | grep -q "nologin"); then
+  exec bash -c "exec -l '$SHELL' -c 'exec sway'"
+else
+  exec sway
+fi

@@ -1,0 +1,38 @@
+#!/bin/sh
+
+buffer=""
+lines=1
+
+echo "OK Pleased to meet you"
+while read -r message
+do
+  if [ $lines -eq 1 ]; then
+    buffer="${message}"
+  else
+    buffer=$(printf "${buffer}\n${message}")
+  fi
+  : $(( lines+=1 ))
+  if [ $lines -eq 3 -a "$message" != "SETPROMPT Master Password" ]; then
+    (echo "$buffer" && cat -) | pinentry "$@" | tail -n +$lines
+    exit 0
+  fi
+
+  case "$message" in
+    GETPIN)
+      pass=$(gpg -qd "$HOME/.config/pass.gpg" | sed 's/%/%25/g' | sed '$ ! s/$/%0A/g' | tr -d '\r\n')
+      if [ -n "$pass" ]; then
+        echo "D $pass"
+        echo "OK"
+      else
+        echo "ERR 536871187 Unknown"
+      fi
+      ;;
+    BYE)
+      echo "OK closing connection"
+      exit 0
+      ;;
+    *)
+      echo "OK"
+      ;;
+  esac
+done
