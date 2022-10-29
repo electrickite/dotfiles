@@ -8,6 +8,21 @@
 #    * keys.tar.gpg
 #    * cacert.crt
 
+aur_packages() {
+  pkg_selected="$1"
+  while : ; do
+    aurman -Syu --needed $pkg_selected
+
+    if [ $? -ne 0 ]; then
+      read -p "!! Aurman error. Retry? [yN] " aur
+      if [ "$aur" != "y" -a "$aur" != "Y" ]; then break; fi
+    else
+      break 
+    fi
+    read -p "Edit packages: " -e -i "$1" pkg_selected
+  done
+}
+
 echo "-- Arch setup script --"
 echo "WARNING: This script should only be used to configure new machines!"
 echo
@@ -226,30 +241,19 @@ if [ "$graphical" != "N" ]; then
     xorg-xhost \
     xorg-xrdb
 
-  while : ; do
-    aurman -Syu \
-      archivemount \
-      delay \
-      dragon-drop \
-      edir \
-      libinput-gestures \
-      mkinitcpio-colors-git \
-      myterm \
-      nerd-fonts-jetbrains-mono \
-      setcolors-git \
-      ttf-mac-fonts \
-      ttf-roboto-slab \
-      vim-gruvbox-git \
-      wev
-
-    if [ $? -ne 0 ]; then
-      echo -n "!! Aurman encountered an error. Retry? [yN]"
-      read aur
-      if [ "$aur" != "y" -a "$aur" != "Y" ]; then break; fi
-    else
-      break 
-    fi
-  done
+aur_packages "archivemount \
+delay \
+dragon-drop \
+edir \
+libinput-gestures \
+mkinitcpio-colors-git \
+myterm \
+nerd-fonts-jetbrains-mono \
+setcolors-git \
+ttf-mac-fonts \
+ttf-roboto-slab \
+vim-gruvbox-git \
+wev"
 
   sudo pacman -D --asexplicit check cmake go meson scdoc
 
@@ -300,19 +304,8 @@ if [ "$graphical" = "G" -o "$graphical" = "B" ]; then
     xdg-desktop-portal-gnome \
     zenity
 
-  while : ; do
-    aurman -Syu \
-      gnome-pass-search-provider-git \
-      gnome-shell-extension-caffeine
-
-    if [ $? -ne 0 ]; then
-      echo -n "!! Aurman encountered an error. Retry? [yN]"
-      read aur
-      if [ "$aur" != "y" -a "$aur" != "Y" ]; then break; fi
-    else
-      break 
-    fi
-  done
+aur_packages "gnome-pass-search-provider-git \
+gnome-shell-extension-caffeine"
 
   sudo systemctl enable gdm.service
 
@@ -394,22 +387,11 @@ if [ "$graphical" = "S" -o "$graphical" = "B" ]; then
     wtype \
     xdg-desktop-portal-wlr
 
-  while : ; do
-    aurman -Syu \
-      batsignal \
-      cliphist-bin \
-      menu-calc \
-      networkmanager-dmenu-git \
-      wob
-
-    if [ $? -ne 0 ]; then
-      echo -n "!! Aurman encountered an error. Retry? [yN]"
-      read aur
-      if [ "$aur" != "y" -a "$aur" != "Y" ]; then break; fi
-    else
-      break 
-    fi
-  done
+aur_packages "batsignal \
+cliphist-bin \
+menu-calc \
+networkmanager-dmenu-git \
+wob"
 
   sudo ln -sv bemenu /usr/bin/dmenu
   sudo ln -sv bemenu-run /usr/bin/dmenu-run
@@ -491,20 +473,9 @@ if [ "$desktop" = "Y" -o "$desktop" = "y" ]; then
     vdirsyncer \
     xchm
 
-  while : ; do
-    aurman -Syu \
-      extract_url \
-      perl-uri-find \
-      urlview
-
-    if [ $? -ne 0 ]; then
-      echo -n "!! Aurman encountered an error. Retry? [yN]"
-      read aur
-      if [ "$aur" != "y" -a "$aur" != "Y" ]; then break; fi
-    else
-      break 
-    fi
-  done
+aur_packages "extract_url \
+perl-uri-find \
+urlview"
 
   mkdir -pv ~/.mail/personal
   mkdir -pv ~/.local/state/mutt
@@ -545,19 +516,8 @@ if [ "$extra" = "y" -o "$extra" = "Y" ]; then
     openconnect \
     qemu-desktop
 
-  while : ; do
-    aurman -Syu \
-      apachedirectorystudio \
-      minecraft-launcher
-
-    if [ $? -ne 0 ]; then
-      echo -n "!! Aurman encountered an error. Retry? [yN]"
-      read aur
-      if [ "$aur" != "y" -a "$aur" != "Y" ]; then break; fi
-    else
-      break 
-    fi
-  done
+aur_packages "apachedirectorystudio \
+minecraft-launcher"
 fi
 
 echo "Cleaning up..."
