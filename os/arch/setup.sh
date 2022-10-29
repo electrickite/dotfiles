@@ -245,7 +245,6 @@ aur_packages "archivemount \
 delay \
 dragon-drop \
 edir \
-libinput-gestures \
 mkinitcpio-colors-git \
 myterm \
 nerd-fonts-jetbrains-mono \
@@ -342,7 +341,7 @@ gnome-shell-extension-caffeine"
   do
     gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-$item "['<Super>$item']"
   done
-  gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-1 "['<Super>1', '<Super>Home]"
+  gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-1 "['<Super>1', '<Super>Home']"
 
   for item in $nine
   do
@@ -389,6 +388,7 @@ if [ "$graphical" = "S" -o "$graphical" = "B" ]; then
 
 aur_packages "batsignal \
 cliphist-bin \
+libinput-gestures \
 menu-calc \
 networkmanager-dmenu-git \
 wob"
