@@ -286,7 +286,8 @@ if [ "$graphical" = "G" -o "$graphical" = "B" ]; then
     gnome-tweak-tool \
     gpaste \
     rbw \
-    xdg-desktop-portal-gnome
+    xdg-desktop-portal-gnome \
+    zenity
 
   aurman -Syu \
     gnome-pass-search-provider-git \
@@ -296,6 +297,8 @@ if [ "$graphical" = "G" -o "$graphical" = "B" ]; then
   rbw config set base_url "$bw_server"
   rbw config set lock_timeout 28800
   rbw config set pinentry pinentry-rbw
+  mkdir -pv ~/.config/systemd/user/org.gnome.Pass.SearchProvider.service.d
+  cp -v os/arch/gnome-pass-search-override.conf ~/.config/systemd/user/org.gnome.Pass.SearchProvider.service.d/override.conf
 
   gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
   gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
@@ -497,7 +500,7 @@ if [ "$extra" = "y" -o "$extra" = "Y" ]; then
     networkmanager-openvpn \
     openvpn \
     openconnect \
-    qemu
+    qemu-desktop
 
   aurman -Syu \
     apachedirectorystudio \

@@ -1,0 +1,37 @@
+#!/bin/sh
+
+choice=$(zenity --list \
+  --title="System Menu" --name="System Menu" --text="Choose an action" \
+  --column="Action" --column="Description" \
+  --width=370 --height=300 \
+  Poweroff "Shut down the compuer" \
+  Restart "Restart the computer" \
+  Exit "Log out GNOME session" \
+  Lock "Lock the screen" \
+  Hibernate "Preserve state and power off" \
+  Suspend "Suspend and enter low power mode" \
+  Settings "Open System Settings")
+
+case "$choice" in
+  Poweroff)
+    exec systemctl poweroff
+    ;;
+  Restart)
+    exec systemctl reboot 
+    ;;
+  Exit)
+    exec gnome-session-quit --logout --no-prompt
+    ;;
+  Lock)
+    exec loginctl lock-session
+    ;;
+  Hibernate)
+    exec systemctl hibernate
+    ;;
+  Suspend)
+    exec systemctl suspend-then-hibernate
+    ;;
+  Settings)
+    exec gnome-control-center
+    ;;
+esac
