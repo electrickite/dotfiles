@@ -128,6 +128,7 @@ fi
 
 # Install aurman
 if ! type -P aurman &>/dev/null; then
+  echo "Installing aurman..."
   read -p "Enter aurman PGP key to import [465022E743D71E39] " aurman_key
   aurman_key=${aurman_key:-465022E743D71E39}
   gpg --receive-keys $aurman_key
@@ -225,20 +226,30 @@ if [ "$graphical" != "N" ]; then
     xorg-xhost \
     xorg-xrdb
 
-  aurman -Syu \
-    archivemount \
-    delay \
-    dragon-drop \
-    edir \
-    libinput-gestures \
-    mkinitcpio-colors-git \
-    myterm \
-    nerd-fonts-jetbrains-mono \
-    setcolors-git \
-    ttf-mac-fonts \
-    ttf-roboto-slab \
-    vim-gruvbox-git \
-    wev
+  while : ; do
+    aurman -Syu \
+      archivemount \
+      delay \
+      dragon-drop \
+      edir \
+      libinput-gestures \
+      mkinitcpio-colors-git \
+      myterm \
+      nerd-fonts-jetbrains-mono \
+      setcolors-git \
+      ttf-mac-fonts \
+      ttf-roboto-slab \
+      vim-gruvbox-git \
+      wev
+
+    if [ $? -ne 0 ]; then
+      echo -n "!! Aurman encountered an error. Retry? [yN]"
+      read aur
+      if [ "$aur" != "y" -a "$aur" != "Y" ]; then break; fi
+    else
+      break 
+    fi
+  done
 
   sudo pacman -D --asexplicit check cmake go meson scdoc
 
@@ -289,16 +300,28 @@ if [ "$graphical" = "G" -o "$graphical" = "B" ]; then
     xdg-desktop-portal-gnome \
     zenity
 
-  aurman -Syu \
-    gnome-pass-search-provider-git \
-    gnome-shell-extension-caffeine
+  while : ; do
+    aurman -Syu \
+      gnome-pass-search-provider-git \
+      gnome-shell-extension-caffeine
+
+    if [ $? -ne 0 ]; then
+      echo -n "!! Aurman encountered an error. Retry? [yN]"
+      read aur
+      if [ "$aur" != "y" -a "$aur" != "Y" ]; then break; fi
+    else
+      break 
+    fi
+  done
+
+  sudo systemctl enable gdm.service
 
   rbw config set email "$email_address"
   rbw config set base_url "$bw_server"
   rbw config set lock_timeout 28800
   rbw config set pinentry pinentry-rbw
   mkdir -pv ~/.config/systemd/user/org.gnome.Pass.SearchProvider.service.d
-  cp -v os/arch/gnome-pass-search-override.conf ~/.config/systemd/user/org.gnome.Pass.SearchProvider.service.d/override.conf
+  cp -v ~/.dotfiles/os/arch/gnome-pass-search-override.conf ~/.config/systemd/user/org.gnome.Pass.SearchProvider.service.d/override.conf
 
   gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
   gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
@@ -306,7 +329,7 @@ if [ "$graphical" = "G" -o "$graphical" = "B" ]; then
   gsettings set org.gnome.desktop.wm.preferences theme 'Adaitia-dark'
   gsettings set org.gnome.desktop.default-applications.terminal exec 'footclient'
   gsettings set org.gnome.desktop.default-applications.terminal exec-arg ''
-  gsettings set org.gnome.mutter experimental-features ['scale-monitor-framebuffer']
+  gsettings set org.gnome.mutter experimental-features "['scale-monitor-framebuffer']"
 
   gsettings set org.gnome.desktop.wm.keybindings switch-applications "['<Alt>Tab']"
   gsettings set org.gnome.desktop.wm.keybindings switch-applications-backward "['<Shift><Alt>Tab']"
@@ -371,12 +394,22 @@ if [ "$graphical" = "S" -o "$graphical" = "B" ]; then
     wtype \
     xdg-desktop-portal-wlr
 
-  aurman -Syu \
-    batsignal \
-    cliphist-bin \
-    menu-calc \
-    networkmanager-dmenu-git \
-    wob
+  while : ; do
+    aurman -Syu \
+      batsignal \
+      cliphist-bin \
+      menu-calc \
+      networkmanager-dmenu-git \
+      wob
+
+    if [ $? -ne 0 ]; then
+      echo -n "!! Aurman encountered an error. Retry? [yN]"
+      read aur
+      if [ "$aur" != "y" -a "$aur" != "Y" ]; then break; fi
+    else
+      break 
+    fi
+  done
 
   sudo ln -sv bemenu /usr/bin/dmenu
   sudo ln -sv bemenu-run /usr/bin/dmenu-run
@@ -458,10 +491,20 @@ if [ "$desktop" = "Y" -o "$desktop" = "y" ]; then
     vdirsyncer \
     xchm
 
-  aurman -Syu \
-    extract_url \
-    perl-uri-find \
-    urlview
+  while : ; do
+    aurman -Syu \
+      extract_url \
+      perl-uri-find \
+      urlview
+
+    if [ $? -ne 0 ]; then
+      echo -n "!! Aurman encountered an error. Retry? [yN]"
+      read aur
+      if [ "$aur" != "y" -a "$aur" != "Y" ]; then break; fi
+    else
+      break 
+    fi
+  done
 
   mkdir -pv ~/.mail/personal
   mkdir -pv ~/.local/state/mutt
@@ -502,9 +545,19 @@ if [ "$extra" = "y" -o "$extra" = "Y" ]; then
     openconnect \
     qemu-desktop
 
-  aurman -Syu \
-    apachedirectorystudio \
-    minecraft-launcher
+  while : ; do
+    aurman -Syu \
+      apachedirectorystudio \
+      minecraft-launcher
+
+    if [ $? -ne 0 ]; then
+      echo -n "!! Aurman encountered an error. Retry? [yN]"
+      read aur
+      if [ "$aur" != "y" -a "$aur" != "Y" ]; then break; fi
+    else
+      break 
+    fi
+  done
 fi
 
 echo "Cleaning up..."
