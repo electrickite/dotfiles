@@ -1,0 +1,10 @@
+decoration {
+  border: 1px solid #777;
+  background: #777;
+}
+
+/* unfocused window */
+decoration:backdrop {
+  border: inherit;
+  background: inherit;
+}

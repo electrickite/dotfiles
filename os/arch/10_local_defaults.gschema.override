@@ -33,9 +33,6 @@ home-icon-visible = false
 trash-icon-visible = false
 volumes-visible = false
 
-[org.gnome.nautilus.icon-view]
-default-zoom-level = 'standard'
-
 
 #####################
 # Touchpad settings #
