@@ -175,6 +175,7 @@ if [ "$graphical" != "N" ]; then
     adwaita-qt5 \
     adwaita-qt6 \
     antiword \
+    aspell-en \
     bc \
     bitwarden \
     bitwarden-cli \
@@ -199,6 +200,8 @@ if [ "$graphical" != "N" ]; then
     helvum \
     highlight \
     htop \
+    hunspell \
+    hunspell-en_US \
     imagemagick \
     jq \
     lf \
@@ -293,13 +296,17 @@ fi
 if [ "$graphical" = "G" -o "$graphical" = "B" ]; then
   echo "Installing GNOME..."
   sudo pacman -Syu --needed \
+    cups \
+    cups-pdf \
     dconf-editor \
+    espeak-ng \
     gdm \
     gnome \
     gnome-shell-extension-appindicator \
     gnome-tweak-tool \
     gpaste \
     rbw \
+    system-config-printer \
     xdg-desktop-portal-gnome \
     zenity
 
@@ -307,6 +314,8 @@ aur_packages "gnome-pass-search-provider-git \
 gnome-shell-extension-caffeine"
 
   sudo systemctl enable gdm.service
+  sudo systemctl enable cups.socket
+  echo "Out \${HOME}/Documents" | sudo tee -a /etc/cups/cups-pdf.conf
 
   rbw config set email "$email_address"
   rbw config set base_url "$bw_server"
@@ -404,6 +413,43 @@ wob"
   systemctl --user enable batsignal.service cliphist.service kanshi.service libinput-gestures.service mako.service nextcloud.service nm-applet.service polkit-gnome.service swayidle.service udiskie.service waybar.service wob.socket
 fi
 
+echo -n "Install email client (Evolution, Mutt, Both, No)? [embN] "
+read mail
+mail="$(echo "$mail" | tr '[:lower:]' '[:upper:]')"
+if [ "$mail" != "E" -a "$mail" != "M" -a "$mail" != "B" ]; then
+  mail="N"
+fi
+
+if [ "$mail" = "E" -o "$mail" = "B" ]; then
+  echo "Installing Evolution..."
+  sudo pacman -Syu --needed \
+    evolution
+fi
+
+if [ "$mail" = "M" -o "$mail" = "B" ]; then
+  echo "Installing Mutt..."
+  sudo pacman -Syu --needed \
+    goimapnotify \
+    isync \
+    khard \
+    mutt \
+    notmuch \
+    notmuch-mutt \
+    vdirsyncer
+
+aur_packages "extract_url \
+perl-uri-find \
+urlview"
+
+  mkdir -pv ~/.mail/personal
+  mkdir -pv ~/.local/state/mutt
+  mkdir -pv ~/.local/state/msmtp
+  mkdir -pv ~/.contacts
+  mkdir -pv ~/.cache/vdirsyncer/status/
+
+  echo "$full_name" >> ~/.config/mutt/sig
+fi
+
 desktop="N"
 if [ "$graphical" != "N" ]; then
   echo -n "Install desktop applications? [yN] "
@@ -413,7 +459,6 @@ if [ "$desktop" = "Y" -o "$desktop" = "y" ]; then
   echo "Installing desktop applications..."
   sudo pacman -Syu --needed \
     amfora \
-    aspell-en \
     baobab \
     cheese \
     dconf-editor \
@@ -430,17 +475,12 @@ if [ "$desktop" = "Y" -o "$desktop" = "y" ]; then
     gnome-font-viewer \
     gnome-logs \
     gnome-user-docs \
-    goimapnotify \
     gvfs \
     gvfs-afc \
     gvfs-goa \
     gvfs-mtp \
     gvfs-nfs \
     gvfs-smb \
-    hunspell \
-    hunspell-en_US \
-    isync \
-    khard \
     libreoffice-fresh \
     linux-zen-docs \
     lsof \
@@ -448,13 +488,10 @@ if [ "$desktop" = "Y" -o "$desktop" = "y" ]; then
     mpv \
     msmtp \
     msmtp-mta \
-    mutt \
     nautilus \
     nautilus-sendto \
     nextcloud-client \
     nmap \
-    notmuch \
-    notmuch-mutt \
     ntfs-3g \
     openbsd-netcat \
     pandoc \
@@ -470,23 +507,10 @@ if [ "$desktop" = "Y" -o "$desktop" = "y" ]; then
     seahorse \
     transmission-gtk \
     tree \
-    vdirsyncer \
     xchm
-
-aur_packages "extract_url \
-perl-uri-find \
-urlview"
-
-  mkdir -pv ~/.mail/personal
-  mkdir -pv ~/.local/state/mutt
-  mkdir -pv ~/.local/state/msmtp
-  mkdir -pv ~/.contacts
-  mkdir -pv ~/.cache/vdirsyncer/status/
 
   sudo mkdir -p /usr/local/share/applications
   sudo cp -v "$HOME/.dotfiles/os/arch/amfora.desktop" /usr/local/share/applications/
-
-  echo "$full_name" >> ~/.config/mutt/sig
 fi
 
 extra="N"
