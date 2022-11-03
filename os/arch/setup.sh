@@ -305,10 +305,14 @@ if [ "$graphical" = "G" -o "$graphical" = "B" ]; then
     gnome-shell-extension-appindicator \
     gnome-tweak-tool \
     gpaste \
+    gst-plugin-pipewire \
     rbw \
     system-config-printer \
     xdg-desktop-portal-gnome \
     zenity
+
+  # Note: Add gstreamer-vaapi after GNOME bug is resolved
+  # https://bugs.archlinux.org/task/76368
 
 aur_packages "gnome-pass-search-provider-git \
 gnome-shell-extension-caffeine"
