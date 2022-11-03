@@ -293,9 +293,28 @@ wev"
   ln -sv "$HOME/.dotfiles/os/arch/arch.jpg" "$HOME/Pictures/bg.jpg"
 fi
 
-if [ "$graphical" = "G" -o "$graphical" = "B" ]; then
-  echo "Installing GNOME..."
+intel="N"
+if [ "$graphical" != "N" ]; then
+  echo -n "Install Intel graphics drivers? [yN] "
+  read intel
+fi
+if [ "$intel" = "y" -o "$intel" = "Y" ]; then
+  echo "Installing Intel graphics drivers..."
   sudo pacman -Syu --needed \
+    intel-media-driver \
+    libva-utils \
+    mesa \
+    vulkan-intel \
+    vulkan-mesa-layers
+fi
+
+if [ "$graphical" = "G" -o "$graphical" = "B" ]; then
+  if [ "$intel" = "y" -o "$intel" = "Y" ]; then
+    gst_packages="gstreamer-vaapi"
+  fi
+
+  echo "Installing GNOME..."
+  sudo pacman -Syu --needed $gst_packages \
     cups \
     cups-pdf \
     dconf-editor \
@@ -310,9 +329,6 @@ if [ "$graphical" = "G" -o "$graphical" = "B" ]; then
     system-config-printer \
     xdg-desktop-portal-gnome \
     zenity
-
-  # Note: Add gstreamer-vaapi after GNOME bug is resolved
-  # https://bugs.archlinux.org/task/76368
 
 aur_packages "gnome-pass-search-provider-git \
 gnome-shell-extension-caffeine"
