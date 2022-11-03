@@ -313,6 +313,9 @@ if [ "$graphical" = "G" -o "$graphical" = "B" ]; then
 aur_packages "gnome-pass-search-provider-git \
 gnome-shell-extension-caffeine"
 
+  mkdir -pv ~/.local/share/gnome-shell/extensions
+  git clone https://github.com/martinhjartmyr/gnome-shell-extension-focus-changer.git ~/.local/share/gnome-shell/extensions/focus-changer@heartmire
+
   sudo systemctl enable gdm.service
   sudo systemctl enable cups.socket
   echo "Out \${HOME}/Documents" | sudo tee -a /etc/cups/cups-pdf.conf
@@ -338,7 +341,16 @@ gnome-shell-extension-caffeine"
   gsettings set org.gnome.desktop.wm.keybindings switch-windows-backward "['<Shift><Super>Tab']"
   gsettings set org.gnome.desktop.wm.keybindings close "['<Alt>F4', '<Super><Shift>q']"
   gsettings set org.gnome.mutter.wayland.keybindings restore-shortcuts "['<Super><Shift>Escape']"
-  gsettings set org.gnome.mutter.keybindings switch-monitor ['<Super>d', 'XF86Display']
+  gsettings set org.gnome.mutter.keybindings switch-monitor "['<Super>d', 'XF86Display']"
+
+  gsettings set org.gnome.desktop.wm.keybindings move-to-monitor-down "['<Control><Super>Down']"
+  gsettings set org.gnome.desktop.wm.keybindings move-to-monitor-left "['<Control><Super>Left']"
+  gsettings set org.gnome.desktop.wm.keybindings move-to-monitor-right "['<Control><Super>Right']"
+  gsettings set org.gnome.desktop.wm.keybindings move-to-monitor-up "['<Control><Super>Up']"
+  gsettings set org.gnome.desktop.wm.keybindings maximize "['<Shift><Super>Up']"
+  gsettings set org.gnome.desktop.wm.keybindings unmaximize "['<Shift><Super>Down']"
+  gsettings set org.gnome.mutter.keybindings toggle-tiled-left "['<Shift><Super>Left']"
+  gsettings set org.gnome.mutter.keybindings toggle-tiled-right "['<Shift><Super>Right']"
 
   nine="1 2 3 4 5 6 7 8 9"
   for item in $nine
