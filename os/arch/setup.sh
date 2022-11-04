@@ -325,6 +325,7 @@ if [ "$graphical" = "G" -o "$graphical" = "B" ]; then
     gnome-tweak-tool \
     gst-plugin-pipewire \
     rbw \
+    speech-dispatcher \
     system-config-printer \
     xdg-desktop-portal-gnome \
     zenity
