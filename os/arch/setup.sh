@@ -197,6 +197,7 @@ if [ "$graphical" != "N" ]; then
     gnome-themes-extra \
     go \
     gsfonts \
+    gvim \
     helvum \
     highlight \
     htop \
@@ -328,6 +329,7 @@ if [ "$graphical" = "G" -o "$graphical" = "B" ]; then
     speech-dispatcher \
     system-config-printer \
     xdg-desktop-portal-gnome \
+    webp-pixbuf-loader \
     zenity
 
 aur_packages "extension-manager \
@@ -363,7 +365,7 @@ gnome-shell-extension-caffeine"
   gsettings set org.gnome.desktop.wm.keybindings switch-windows-backward "['<Shift><Super>Tab']"
   gsettings set org.gnome.desktop.wm.keybindings close "['<Alt>F4', '<Super><Shift>q']"
   gsettings set org.gnome.mutter.wayland.keybindings restore-shortcuts "['<Super><Shift>Escape']"
-  gsettings set org.gnome.mutter.keybindings switch-monitor "['<Super>d', 'XF86Display']"
+  gsettings set org.gnome.mutter.keybindings switch-monitor "['<Super>o', 'XF86Display']"
 
   gsettings set org.gnome.desktop.wm.keybindings move-to-monitor-down "['<Control><Super>Down']"
   gsettings set org.gnome.desktop.wm.keybindings move-to-monitor-left "['<Control><Super>Left']"
@@ -373,6 +375,8 @@ gnome-shell-extension-caffeine"
   gsettings set org.gnome.desktop.wm.keybindings unmaximize "['<Shift><Super>Down']"
   gsettings set org.gnome.mutter.keybindings toggle-tiled-left "['<Shift><Super>Left']"
   gsettings set org.gnome.mutter.keybindings toggle-tiled-right "['<Shift><Super>Right']"
+  gsettings set org.gnome.desktop.wm.keybindings begin-move "['<Alt>F7', '<Super>d']"
+  gsettings set org.gnome.desktop.wm.keybindings begin-resize "['<Alt>F8', '<Super>r']"
 
   nine="1 2 3 4 5 6 7 8 9"
   for item in $nine
@@ -501,13 +505,13 @@ if [ "$desktop" = "Y" -o "$desktop" = "y" ]; then
     ext4magic \
     file-roller \
     firefox \
-    gedit \
     gnome-calculator \
     gnome-characters \
     gnome-dictionary \
     gnome-disk-utility \
     gnome-font-viewer \
     gnome-logs \
+    gnome-text-editor \
     gnome-user-docs \
     gvfs \
     gvfs-afc \

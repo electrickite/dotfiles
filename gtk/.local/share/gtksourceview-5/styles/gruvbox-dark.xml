@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ Copyright (C) 2016 Jean-Patrick Guerrero <jeanpatrick.guerrero@gmail.com>
+ Color scheme by morhetz - https://github.com/morhetz/gruvbox
+-->
+
+<style-scheme id="gruvbox-dark" _name="Gruvbox Dark" version="1.0">
+
+  <author>Corey Hinshaw</author>
+  <_description>Dark color scheme using the Gruvbox color palette</_description>
+
+  <metadata>
+    <property name="variant">dark</property>
+    <property name="light-variant">gruvbox</property>
+  </metadata>
+
+  <!-- Gruvbox Palette -->
+
+  <color name="dark0_hard"	value="#1d2021"/>
+  <color name="dark0"		value="#282828"/>
+  <color name="dark0_soft"	value="#32302f"/>
+  <color name="dark1"		value="#3c3836"/>
+  <color name="dark2"		value="#504945"/>
+  <color name="dark3"		value="#665c54"/>
+  <color name="dark4"		value="#7c6f64"/>
+
+  <color name="gray"		value="#928374"/>
+
+  <color name="light0_hard"	value="#f9f5d7"/>
+  <color name="light0"		value="#fbf1c7"/>
+  <color name="light0_soft"	value="#f2e5bc"/>
+  <color name="light1"		value="#ebdbb2"/>
+  <color name="light2"		value="#d5c4a1"/>
+  <color name="light3"		value="#bdae93"/>
+  <color name="light4"		value="#a89984"/>
+
+  <color name="bright_red"	value="#fb4934"/>
+  <color name="bright_green"	value="#b8bb26"/>
+  <color name="bright_yellow"	value="#fabd2f"/>
+  <color name="bright_blue"	value="#83a598"/>
+  <color name="bright_purple"	value="#d3869b"/>
+  <color name="bright_aqua"	value="#8ec07c"/>
+  <color name="bright_orange"	value="#fe8019"/>
+
+  <color name="neutral_red"	value="#cc241d"/>
+  <color name="neutral_green"	value="#98971a"/>
+  <color name="neutral_yellow"	value="#d79921"/>
+  <color name="neutral_blue"	value="#458588"/>
+  <color name="neutral_purple"	value="#b16286"/>
+  <color name="neutral_aqua"	value="#689d6a"/>
+  <color name="neutral_orange"	value="#d65d0e"/>
+
+  <color name="faded_red"	value="#9d0006"/>
+  <color name="faded_green"	value="#79740e"/>
+  <color name="faded_yellow"	value="#b57614"/>
+  <color name="faded_blue"	value="#076678"/>
+  <color name="faded_purple"	value="#8f3f71"/>
+  <color name="faded_aqua"	value="#427b58"/>
+  <color name="faded_orange"	value="#af3a03"/>
+
+
+  <!-- Global Styles -->
+  <style name="background-pattern"         background="#2e2c2b"/>
+  <style name="bracket-match"              bold="true"/>
+  <style name="bracket-mismatch"           foreground="dark0" background="bright_red"/>
+  <style name="current-line"               background="dark1"/>
+  <style name="current-line-number"        background="dark0" foreground="light4"/>
+  <style name="cursor"                     foreground="light1"/>
+  <style name="draw-spaces"                foreground="light2"/>
+  <style name="line-numbers"               foreground="dark4" background="dark0"/>
+  <style name="map-overlay"                background="dark4"/>
+  <style name="right-margin"               foreground="light0" background="light1"/>
+  <style name="search-match"               foreground="dark0" background="bright_orange"/>
+  <style name="secondary-cursor"           foreground="light1"/>
+  <style name="selection"                  foreground="light0" background="dark4"/>
+  <style name="text"                       foreground="light0" background="dark0_hard"/>
+
+  <!-- Defaults -->
+  <style name="def:base-n-integer"         foreground="bright_purple"/>
+  <style name="def:boolean"                foreground="bright_purple"/>
+  <style name="def:builtin"                foreground="bright_orange"/>
+  <style name="def:character"              foreground="bright_purple"/>
+  <style name="def:comment"                foreground="gray"/>
+  <style name="def:complex"                foreground="bright_purple"/>
+  <style name="def:constant"               foreground="bright_purple"/>
+  <style name="def:decimal"                foreground="bright_purple"/>
+  <style name="def:deletion"               strikethrough="true"/>
+  <style name="def:doc-comment"            foreground="gray"/>
+  <style name="def:doc-comment-element"    italic="true"/>
+  <style name="def:emphasis"               italic="true"/>
+  <style name="def:error"                  underline="error" underline-color="bright_red"/>
+  <style name="def:floating-point"         foreground="bright_purple"/>
+  <style name="def:function"               foreground="bright_green"/>
+  <style name="def:heading"                foreground="neutral_yellow" bold="true"/>
+  <style name="def:identifier"             foreground="bright_blue"/>
+  <style name="def:inline-code"            foreground="bright_purple"/>
+  <style name="def:keyword"                foreground="bright_orange"/>
+  <style name="def:link-destination"       foreground="bright_blue" italic="true" underline="low"/>
+  <style name="def:link-text"              foreground="neutral_red"/>
+  <style name="def:list-marker"            foreground="neutral_orange" bold="true"/>
+  <style name="def:net-address"            foreground="bright_blue" underline="low"/>
+  <style name="def:preformatted-section"   foreground="bright_purple"/>
+  <style name="def:number"                 foreground="bright_purple"/>
+  <style name="def:note"                   foreground="gray"/>
+  <style name="def:operator"               foreground="bright_purple"/>
+  <style name="def:preprocessor"           foreground="bright_aqua"/>
+  <style name="def:reserved"               foreground="bright_aqua"/>
+  <style name="def:shebang"                foreground="light4"/>
+  <style name="def:special-char"           foreground="bright_orange"/>
+  <style name="def:special-constant"       foreground="bright_purple"/>
+  <style name="def:statement"              foreground="bright_orange"/>
+  <style name="def:string"                 foreground="bright_green"/>
+  <style name="def:strong-emphasis"        bold="true"/>
+  <style name="def:type"                   foreground="bright_yellow" bold="true"/>
+  <style name="def:underlined"             underline="single"/>
+  <style name="def:warning"                underline="error" underline-color="bright_yellow"/>
+
+  <!-- C# -->
+  <style name="c-sharp:format"             foreground="faded_purple"/>
+  <style name="c-sharp:preprocessor"       foreground="dark4"/>
+
+  <!-- C -->
+  <style name="c:printf"                   foreground="bright_purple"/>
+  <style name="c:signal-name"              foreground="bright_red"/>
+  <style name="c:storage-class"            foreground="bright_green" bold="true"/>
+  <style name="c:type-keyword"             foreground="bright_green" bold="true"/>
+
+  <!-- CSS -->
+  <style name="css:id-selector"            foreground="neutral_green" bold="true"/>
+  <style name="css:property-name"          foreground="neutral_orange"/>
+  <style name="css:pseudo-selector"        foreground="bright_purple" bold="true"/>
+  <style name="css:selector-symbol"        foreground="neutral_orange" bold="true"/>
+  <style name="css:type-selector"          foreground="neutral_green" bold="true"/>
+  <style name="css:vendor-specific"        foreground="faded_yellow"/>
+
+  <!-- Diff -->
+  <style name="diff:added-line"            foreground="neutral_green"/>
+  <style name="diff:changed-line"          foreground="neutral_orange"/>
+  <style name="diff:diff-file"             foreground="bright_purple"/>
+  <style name="diff:location"              foreground="neutral_yellow"/>
+  <style name="diff:removed-line"          foreground="bright_red"/>
+
+  <!-- Go -->
+  <style name="go:printf"                  foreground="faded_purple"/>
+
+  <!-- Python 2 -->
+  <style name="python:builtin-function"    foreground="bright_blue"/>
+  <style name="python:class-name"          foreground="bright_green" bold="true"/>
+  <style name="python:module-handler"      foreground="bright_red"/>
+
+  <!-- Rust -->
+  <style name="rust:attribute"             foreground="bright_purple"/>
+  <style name="rust:lifetime"              foreground="bright_orange" bold="false" italic="false"/>
+  <style name="rust:macro"                 foreground="bright_purple" bold="false"/>
+  <style name="rust:scope"                 foreground="bright_orange"/>
+
+  <!-- Vala -->
+  <style name="vala:attributes"            foreground="light1" bold="false"/>
+
+  <!-- XML -->
+  <style name="xml:attribute-name"         foreground="neutral_orange"/>
+  <style name="xml:attribute-value"        foreground="bright_purple"/>
+  <style name="xml:element-name"           foreground="neutral_green"/>
+  <style name="xml:namespace"              foreground="neutral_yellow"/>
+  <style name="xml:processing-instruction" foreground="neutral_yellow" bold="true"/>
+
+</style-scheme>
