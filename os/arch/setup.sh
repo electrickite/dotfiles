@@ -354,6 +354,7 @@ gnome-shell-extension-caffeine"
   gsettings set org.gnome.desktop.default-applications.terminal exec 'footclient'
   gsettings set org.gnome.desktop.default-applications.terminal exec-arg ''
   gsettings set org.gnome.mutter experimental-features "['scale-monitor-framebuffer']"
+  gsettings set org.gnome.Evince.Default inverted-colors true
 
   gsettings set org.gnome.desktop.wm.keybindings switch-applications "['<Alt>Tab']"
   gsettings set org.gnome.desktop.wm.keybindings switch-applications-backward "['<Shift><Alt>Tab']"
