@@ -323,7 +323,6 @@ if [ "$graphical" = "G" -o "$graphical" = "B" ]; then
     gnome \
     gnome-shell-extension-appindicator \
     gnome-tweak-tool \
-    gpaste \
     gst-plugin-pipewire \
     rbw \
     system-config-printer \
