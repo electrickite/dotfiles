@@ -92,7 +92,7 @@
   <style name="def:error"                  underline="error" underline-color="bright_red"/>
   <style name="def:floating-point"         foreground="bright_purple"/>
   <style name="def:function"               foreground="bright_green"/>
-  <style name="def:heading"                foreground="neutral_yellow" bold="true"/>
+  <style name="def:heading"                foreground="bright_yellow" bold="true"/>
   <style name="def:identifier"             foreground="bright_blue"/>
   <style name="def:inline-code"            foreground="bright_purple"/>
   <style name="def:keyword"                foreground="bright_orange"/>
@@ -112,7 +112,7 @@
   <style name="def:statement"              foreground="bright_orange"/>
   <style name="def:string"                 foreground="bright_green"/>
   <style name="def:strong-emphasis"        bold="true"/>
-  <style name="def:type"                   foreground="bright_yellow" bold="true"/>
+  <style name="def:type"                   foreground="neutral_yellow" bold="true"/>
   <style name="def:underlined"             underline="single"/>
   <style name="def:warning"                underline="error" underline-color="bright_yellow"/>
 
