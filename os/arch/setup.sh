@@ -329,7 +329,8 @@ if [ "$graphical" = "G" -o "$graphical" = "B" ]; then
     xdg-desktop-portal-gnome \
     zenity
 
-aur_packages "gnome-pass-search-provider-git \
+aur_packages "extension-manager \
+gnome-pass-search-provider-git \
 gnome-shell-extension-caffeine"
 
   mkdir -pv ~/.local/share/gnome-shell/extensions
