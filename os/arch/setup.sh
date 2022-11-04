@@ -269,6 +269,7 @@ wev"
   sudo cp -fv "$HOME/.dotfiles/os/arch/freetype2.sh" /etc/profile.d/
   sudo cp -fv "$HOME/.dotfiles/os/arch/jre-fonts.sh" /etc/profile.d/
   sudo cp -fv "$HOME/.dotfiles/os/arch/vconsole.conf" /etc/
+  sudo cp -Rv "$HOME/.dotfiles/os/arch/xdg-document-portal.service.d" /etc/systemd/user/
   sudo gdk-pixbuf-query-loaders --update-cache
   fc-cache -fv
   sudo fc-cache -fv
@@ -347,8 +348,7 @@ gnome-shell-extension-caffeine"
   rbw config set base_url "$bw_server"
   rbw config set lock_timeout 28800
   rbw config set pinentry pinentry-rbw
-  mkdir -pv ~/.config/systemd/user/org.gnome.Pass.SearchProvider.service.d
-  cp -v ~/.dotfiles/os/arch/gnome-pass-search-override.conf ~/.config/systemd/user/org.gnome.Pass.SearchProvider.service.d/override.conf
+  cp -Rv "$HOME/.dotfiles/os/arch/org.gnome.Pass.SearchProvider.service.d" ~/.config/systemd/user/
 
   gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
   gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
@@ -448,7 +448,7 @@ wob"
   sudo cp -v "$HOME/.dotfiles/os/arch/sway.desktop" /usr/local/share/wayland-sessions/
   sudo ln -sv sway /usr/bin/sway-start
 
-  systemctl --user enable batsignal.service cliphist.service kanshi.service libinput-gestures.service mako.service nextcloud.service nm-applet.service polkit-gnome.service swayidle.service udiskie.service waybar.service wob.socket
+  systemctl --user enable batsignal.service cliphist.service kanshi.service libinput-gestures.service mako.service nm-applet.service polkit-gnome.service swayidle.service udiskie.service waybar.service wob.socket
 fi
 
 echo -n "Install email client (Evolution, Mutt, Both, No)? [embN] "
@@ -539,6 +539,7 @@ if [ "$desktop" = "Y" -o "$desktop" = "y" ]; then
     perl-mime-tools \
     perl-term-readkey \
     pwgen \
+    python-nautilus \
     simple-scan \
     sushi \
     xdg-user-dirs-gtk \
@@ -549,6 +550,10 @@ if [ "$desktop" = "Y" -o "$desktop" = "y" ]; then
 
   sudo mkdir -p /usr/local/share/applications
   sudo cp -v "$HOME/.dotfiles/os/arch/amfora.desktop" /usr/local/share/applications/
+
+  if [ "$graphical" = "S" -o "$graphical" = "B" ]; then
+    systemctl --user enable nextcloud.service
+  fi
 fi
 
 extra="N"
