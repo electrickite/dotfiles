@@ -290,7 +290,7 @@ wev"
   gpg -co ~/.config/pass.gpg <(echo $bwpass); unset bwpass
   sed "s|EMAIL|${email_address}|g" ~/.config/bwm/config.ini.sample | sed "s|SERVER|${bw_server}|g" | sed "s|HOME|${HOME}|g" > ~/.config/bwm/config.ini
 
-  mkdir -pv ~/Pictures/screenshots
+  mkdir -pv ~/Pictures/Screenshots
   mkdir -pv ~/projects
   ln -sv "$HOME/.dotfiles/os/arch/arch.jpg" "$HOME/Pictures/bg.jpg"
 fi
