@@ -115,19 +115,19 @@ if [ -f keys.tar.gpg ]; then
     gpg --pinentry-mode loopback keys.tar.gpg
     rm -rf ~/.gnupg
     tar -xf keys.tar
-    chmod 700 $HOME/.ssh
-    chmod 600 $HOME/.ssh/id_rsa
-    chmod 644 $HOME/.ssh/id_rsa.pub
-    echo "pinentry-program /usr/bin/pinentry" > $HOME/.gnupg/gpg-agent.conf
-    echo "max-cache-ttl 28800" >> $HOME/.gnupg/gpg-agent.conf
-    echo "default-cache-ttl 28800" >> $HOME/.gnupg/gpg-agent.conf
+    chmod 700 "$HOME/.ssh"
+    chmod 600 "$HOME/.ssh/id_rsa"
+    chmod 644 "$HOME/.ssh/id_rsa.pub"
+    echo "pinentry-program /usr/bin/pinentry" > "$HOME/.gnupg/gpg-agent.conf"
+    echo "max-cache-ttl 28800" >> "$HOME/.gnupg/gpg-agent.conf"
+    echo "default-cache-ttl 28800" >> "$HOME/.gnupg/gpg-agent.conf"
     gpg-connect-agent reloadagent /bye
     rm -i keys.ta*
 elif [ -d "$HOME/.ssh" ]; then
     echo "SSH key found."
 else
     echo "No SSH keys file found. Generating new key..."
-    ssh-keygen -t rsa -b 2048 -C $email_address
+    ssh-keygen -t rsa -b 2048 -C "$email_address"
 fi
 
 if [ -n "$git_host" ]; then
@@ -146,7 +146,7 @@ if ! type -P aurman &>/dev/null; then
   echo "Installing aurman..."
   read -p "Enter aurman PGP key to import [465022E743D71E39] " aurman_key
   aurman_key=${aurman_key:-465022E743D71E39}
-  gpg --receive-keys $aurman_key
+  gpg --receive-keys "$aurman_key"
 
   echo "Installing aurman..."
   cd ~
