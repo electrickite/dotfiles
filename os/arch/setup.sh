@@ -317,6 +317,7 @@ if [ "$graphical" = "G" -o "$graphical" = "B" ]; then
 
   echo "Installing GNOME..."
   sudo pacman -Syu --needed $gst_packages \
+    avahi \
     cups \
     cups-pdf \
     dconf-editor \
@@ -340,8 +341,7 @@ gnome-shell-extension-caffeine"
   mkdir -pv ~/.local/share/gnome-shell/extensions
   git clone https://github.com/martinhjartmyr/gnome-shell-extension-focus-changer.git ~/.local/share/gnome-shell/extensions/focus-changer@heartmire
 
-  sudo systemctl enable gdm.service
-  sudo systemctl enable cups.socket
+  sudo systemctl enable gdm.service cups.socket avahi.socket avahi.service
   echo "Out \${HOME}/Documents" | sudo tee -a /etc/cups/cups-pdf.conf
 
   rbw config set email "$email_address"
