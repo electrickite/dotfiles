@@ -236,6 +236,7 @@ if [ "$graphical" != "N" ]; then
     ttf-fira-sans \
     ttf-freefont \
     ttf-jetbrains-mono \
+    ttf-jetbrains-mono-nerd \
     ttf-roboto \
     unrar \
     wireplumber \
@@ -251,7 +252,6 @@ dragon-drop \
 edir \
 mkinitcpio-colors-git \
 myterm \
-nerd-fonts-jetbrains-mono \
 setcolors-git \
 ttf-mac-fonts \
 ttf-roboto-slab \
