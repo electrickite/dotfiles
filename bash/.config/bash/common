@@ -3,16 +3,16 @@ set -o vi
 export EDITOR=vim
 export VISUAL=$EDITOR
 
-if command -v chruby >/dev/null; then
-  chruby 2.7
-fi
-
 alias listening='lsof -nP +c 15 | grep LISTEN'
 alias be='bundle exec'
 alias vi=vim
 
-webroot() {
-  ln -s "$1" "$HOME/Sites/webroot"
+h2d(){
+  echo "ibase=16; $@"|bc
+}
+
+d2h(){
+  echo "obase=16; $@"|bc
 }
 
 tunnel() {
