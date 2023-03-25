@@ -68,6 +68,7 @@ sudo pacman -Syu --needed \
   networkmanager \
   openssh \
   polkit \
+  powertop \
   pinentry \
   python-setuptools \
   rsync \
@@ -88,6 +89,9 @@ sudo pacman -Syu --needed \
   xdg-user-dirs \
   xdg-utils \
   zip
+
+echo "Installing services..."
+sudo cp -fv "$HOME/.dotfiles/os/arch/powertop.service" /etc/systemd/system/
 
 echo "Creating XDG directories..."
 mkdir -pv ~/.config/systemd/user
