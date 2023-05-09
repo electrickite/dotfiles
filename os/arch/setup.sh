@@ -402,6 +402,7 @@ gnome-shell-extension-caffeine"
   sudo mkdir -p /etc/dconf/profile
   echo "user-db:user" | sudo tee /etc/dconf/profile/user
   echo "system-db:local" | sudo tee -a /etc/dconf/profile/user
+  sudo cp /etc/dconf/profile/user /etc/dconf/profile/gdm
   sudo mkdir -p /etc/dconf/db/local.d
   echo "[org/gnome/mutter]" | sudo tee /etc/dconf/db/local.d/00-hidpi
   echo "experimental-features=['scale-monitor-framebuffer']" | sudo tee -a /etc/dconf/db/local.d/00-hidpi
