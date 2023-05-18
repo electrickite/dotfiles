@@ -148,8 +148,8 @@ fi
 # Install aurman
 if ! type -P aurman &>/dev/null; then
   echo "Installing aurman..."
-  read -p "Enter aurman PGP key to import [465022E743D71E39] " aurman_key
-  aurman_key=${aurman_key:-465022E743D71E39}
+  read -p "Enter aurman PGP key to import [F3FAE51DB14A292C] " aurman_key
+  aurman_key=${aurman_key:-F3FAE51DB14A292C}
   gpg --receive-keys "$aurman_key"
 
   echo "Installing aurman..."
