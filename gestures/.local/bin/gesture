@@ -5,18 +5,24 @@ if [ "$XDG_CURRENT_DESKTOP" = "sway" ]; then
       swaymsg seat seat0 cursor press BTN_EXTRA
       swaymsg seat seat0 cursor release BTN_EXTRA
       ;;
-	  backward )
+    backward )
       swaymsg seat seat0 cursor press BTN_SIDE
       swaymsg seat seat0 cursor release BTN_SIDE
       ;;
-	  workspace-next )
+    workspace-next )
       swaymsg workspace next
       ;;
-	  workspace-prev )
+    workspace-prev )
       swaymsg workspace prev
       ;;
-	  apps )
+    apps )
       wtype -M logo -P space
+      ;;
+    mousedown )
+      swaymsg seat seat0 cursor press button1
+      ;;
+    mouseup )
+      swaymsg seat seat0 cursor release button1
       ;;
   esac
 else
@@ -24,8 +30,14 @@ else
     forward )
       ydotool key 159:1 159:0
       ;;
-	  backward )
+    backward )
       ydotool key 158:1 158:0
+      ;;
+    mousedown )
+      ydotool click 0x40
+      ;;
+    mouseup )
+      ydotool click 0x80
       ;;
   esac
 fi
