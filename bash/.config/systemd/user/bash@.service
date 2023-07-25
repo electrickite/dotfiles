@@ -2,9 +2,9 @@
 Description=Bash terminal
 Documentation=man:bash(1)
 PartOf=graphical-session.target
-Requires=foot-server@.socket
+Requires=foot-server.socket
 After=waybar.service
-After=foot-server@.socket
+After=foot-server.socket
 
 [Service]
 Type=simple

@@ -284,7 +284,7 @@ wev"
   rm ~/.config/dconf/user
 
   systemctl --user daemon-reload
-  systemctl --user enable bash@.service foot-server@.socket
+  systemctl --user enable bash@.service foot-server.socket
 
   echo -n "Bitwarden server: "
   read bw_server
