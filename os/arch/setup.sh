@@ -529,7 +529,6 @@ if [ "$desktop" = "Y" -o "$desktop" = "y" ]; then
     linux-zen-docs \
     lsof \
     minicom \
-    mpv \
     msmtp \
     msmtp-mta \
     nautilus \
@@ -548,11 +547,12 @@ if [ "$desktop" = "Y" -o "$desktop" = "y" ]; then
     python-nautilus \
     simple-scan \
     sushi \
-    xdg-user-dirs-gtk \
     seahorse \
     transmission-gtk \
     tree \
-    xchm
+    vlc \
+    xchm \
+    xdg-user-dirs-gtk
 
   sudo mkdir -p /usr/local/share/applications
   sudo cp -v "$HOME/.dotfiles/os/arch/amfora.desktop" /usr/local/share/applications/
