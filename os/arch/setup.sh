@@ -554,6 +554,8 @@ if [ "$desktop" = "Y" -o "$desktop" = "y" ]; then
     xchm \
     xdg-user-dirs-gtk
 
+aur_packages "units"
+
   sudo mkdir -p /usr/local/share/applications
   sudo cp -v "$HOME/.dotfiles/os/arch/amfora.desktop" /usr/local/share/applications/
 
