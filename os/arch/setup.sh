@@ -201,6 +201,8 @@ if [ "$graphical" != "N" ]; then
     gnome-themes-extra \
     go \
     gsfonts \
+    gtk2 \
+    gtk3 \
     gvim \
     helvum \
     highlight \
@@ -227,8 +229,6 @@ if [ "$graphical" != "N" ]; then
     pipewire-alsa \
     pipewire-pulse \
     pipewire-jack \
-    qgnomeplatform-qt5 \
-    qgnomeplatform-qt6 \
     qrencode \
     scdoc \
     starship \
@@ -256,6 +256,7 @@ dragon-drop \
 edir \
 mkinitcpio-colors-git \
 myterm \
+qt5-styleplugins \
 setcolors-git \
 ttf-mac-fonts \
 ttf-roboto-slab \
