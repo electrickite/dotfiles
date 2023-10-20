@@ -330,6 +330,7 @@ if [ "$graphical" = "G" -o "$graphical" = "B" ]; then
     gdm \
     gnome \
     gnome-shell-extension-appindicator \
+    gnome-shell-extension-caffeine \
     gnome-tweak-tool \
     gst-plugin-pipewire \
     rbw \
@@ -341,8 +342,7 @@ if [ "$graphical" = "G" -o "$graphical" = "B" ]; then
     zenity
 
 aur_packages "extension-manager \
-gnome-pass-search-provider-git \
-gnome-shell-extension-caffeine"
+gnome-pass-search-provider-git"
 
   mkdir -pv ~/.local/share/gnome-shell/extensions
   git clone https://github.com/martinhjartmyr/gnome-shell-extension-focus-changer.git ~/.local/share/gnome-shell/extensions/focus-changer@heartmire
