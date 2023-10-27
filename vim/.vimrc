@@ -5,7 +5,7 @@ set encoding=utf-8
 " Enable filetype detection and syntax highlighting
 filetype plugin indent on
 syntax on
-let asmsyntax="nasm"
+let asmsyntax="asm"
 
 " Editor behavior
 set backspace=indent,eol,start
