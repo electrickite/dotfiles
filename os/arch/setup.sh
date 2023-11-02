@@ -243,6 +243,7 @@ if [ "$graphical" != "N" ]; then
     ttf-jetbrains-mono-nerd \
     ttf-roboto \
     unrar \
+    wev \
     wireplumber \
     wl-clipboard \
     xdg-desktop-portal-gtk \
@@ -260,8 +261,7 @@ qt5-styleplugins \
 setcolors-git \
 ttf-mac-fonts \
 ttf-roboto-slab \
-vim-gruvbox-git \
-wev"
+vim-gruvbox-git"
 
   sudo pacman -D --asexplicit check cmake go meson scdoc
 
