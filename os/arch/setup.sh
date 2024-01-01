@@ -66,6 +66,7 @@ sudo pacman -Syu --needed \
   mlocate \
   net-tools \
   networkmanager \
+  nvme-cli \
   openssh \
   polkit \
   powertop \
