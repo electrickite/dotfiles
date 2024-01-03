@@ -1,0 +1,51 @@
+##########################
+# Default GNOME settings #
+##########################
+
+[org.gnome.desktop.background]
+show-desktop-icons = true
+
+[org.gnome.desktop.datetime]
+automatic-timezone = true
+
+[org.gnome.desktop.interface]
+icon-theme = "Papirus"
+cursor-theme = "Adwaita"
+font-name = "Fira Sans Semi-Light 11"
+document-font-name = "Roboto Slab 11"
+monospace-font-name = "Fira Mono 11"
+clock-show-date = true
+clock-format = '12h'
+
+[org.gtk.Settings.FileChooser]
+sort-directories-first = true
+startup-mode = 'cwd'
+clock-format = '12h'
+
+[org.gnome.desktop.wm.preferences]
+resize-with-right-button = true
+theme = "Adwaita"
+titlebar-font = 'Fira Sans Semi-Bold 11'
+titlebar-uses-system-font = false
+
+[org.gnome.nautilus.desktop]
+home-icon-visible = false
+trash-icon-visible = false
+volumes-visible = false
+
+
+#####################
+# Touchpad settings #
+#####################
+
+[org.gnome.desktop.peripherals.touchpad]
+tap-to-click = true
+natural-scroll = true
+
+
+##################
+# GNOME Software #
+##################
+
+[org.gnome.software]
+download-updates = false
