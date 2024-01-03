@@ -129,7 +129,8 @@ fi
 # Add private certificate to trust store
 if [ -f "$HOME/cacert.crt" ]; then
     echo "Adding CA Certificate to trust store..."
-    sudo cp "$HOME/cacert.crt" /usr/local/share/ca-certificates/localca.crt
+    sudo mkdir -p /usr/local/share/ca-certificates
+    sudo cp "$HOME/cacert.crt" /usr/local/share/ca-certificates/
     sudo update-ca-certificates
 fi
 
@@ -139,6 +140,7 @@ git config --global user.email "$email_address"
 git config --global include.path ~/.gitconfig_main
 
 echo "Cleaning up..."
+rm -i "$HOME/cacert.crt"
 sudo updatedb
 
 echo "Setup complete!"
