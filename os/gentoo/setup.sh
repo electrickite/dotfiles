@@ -43,7 +43,6 @@ sudo emerge --noreplace \
   app-portage/gentoolkit \
   dev-vcs/git \
   app-crypt/gnupg \
-  net-misc/inetutils \
   sys-apps/lsb-release \
   sys-apps/less \
   www-client/lynx \
