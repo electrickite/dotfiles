@@ -189,3 +189,6 @@ Shortcut switch to buffer 2 nmap <leader>2 <Plug>AirlineSelectTab2
 Shortcut switch to buffer 3 nmap <leader>3 <Plug>AirlineSelectTab3
 Shortcut switch to buffer 4 nmap <leader>4 <Plug>AirlineSelectTab4
 Shortcut switch to buffer 5 nmap <leader>5 <Plug>AirlineSelectTab5
+
+" Include ~/.vim/vimrc.local if it exists
+runtime vimrc.local
