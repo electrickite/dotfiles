@@ -316,9 +316,25 @@ if [ "$intel" = "y" -o "$intel" = "Y" ]; then
     vulkan-mesa-layers
 fi
 
+amd="N"
+if [ "$graphical" != "N" ]; then
+  echo -n "Install AMD graphics drivers? [yN] "
+  read amd
+fi
+if [ "$amd" = "y" -o "$amd" = "Y" ]; then
+  echo "Installing AMD graphics drivers..."
+  sudo pacman -Syu --needed \
+    libva-mesa-driver \
+    libva-utils \
+    mesa \
+    mesa-vdpau \
+    vulkan-mesa-layers \
+    vulkan-radeon
+fi
+
 if [ "$graphical" = "G" -o "$graphical" = "B" ]; then
-  if [ "$intel" = "y" -o "$intel" = "Y" ]; then
-    gst_packages="gstreamer-vaapi"
+  if [ "$intel" = "y" -o "$intel" = "Y" -o "$amd" = "y" -o "$amd" = "Y" ]; then
+    gst_packages="gstreamer-vaapi gst-plugin-va"
   fi
 
   echo "Installing GNOME..."
