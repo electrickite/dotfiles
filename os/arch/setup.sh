@@ -344,11 +344,13 @@ if [ "$graphical" = "G" -o "$graphical" = "B" ]; then
     cups-pdf \
     dconf-editor \
     espeak-ng \
+    fwupd \
+    gcr-4 \
     gdm \
     gnome \
     gnome-shell-extension-appindicator \
     gnome-shell-extension-caffeine \
-    gnome-tweak-tool \
+    gnome-tweaks \
     gst-plugin-pipewire \
     rbw \
     speech-dispatcher \
@@ -365,7 +367,9 @@ gnome-pass-search-provider-git"
   git clone https://github.com/martinhjartmyr/gnome-shell-extension-focus-changer.git ~/.local/share/gnome-shell/extensions/focus-changer@heartmire
 
   sudo systemctl enable gdm.service cups.socket ydotool.service
+  systemctl --user enable gcr-ssh-agent.socket
   echo "Out \${HOME}/Documents" | sudo tee -a /etc/cups/cups-pdf.conf
+  echo "password	optional	pam_gnome_keyring.so" | sudo tee -a /etc/pam.d/passwd
 
   rbw config set email "$email_address"
   rbw config set base_url "$bw_server"
