@@ -260,8 +260,8 @@ vim-gruvbox-git"
 
   ln -sv /usr/bin/myterm "$HOME/.local/bin/xterm"
 
-  sudo ln -sv /etc/fonts/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d
-  sudo ln -sv /etc/fonts/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d
+  sudo ln -sv /etc/fonts/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d ||:
+  sudo ln -sv /etc/fonts/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d ||:
   ls -l /etc/fonts/conf.d/10-hinting-slight.conf
   sudo cp -v "$HOME/.dotfiles/os/arch/local-fonts.conf" /etc/fonts/local.conf
   sudo cp -fv "$HOME/.dotfiles/os/arch/freetype2.sh" /etc/profile.d/
@@ -275,7 +275,7 @@ vim-gruvbox-git"
   sudo mkdir -p /usr/share/glib-2.0/schemas/
   sudo cp -fv "$HOME/.dotfiles/os/arch/10_local_defaults.gschema.override" /usr/share/glib-2.0/schemas/
   sudo glib-compile-schemas /usr/share/glib-2.0/schemas/
-  rm ~/.config/dconf/user
+  rm -f ~/.config/dconf/user
 
   systemctl --user daemon-reload
   systemctl --user enable bash@.service foot-server.socket
@@ -516,9 +516,7 @@ fi
 if [ "$desktop" = "Y" -o "$desktop" = "y" ]; then
   echo "Installing desktop applications..."
   sudo pacman -Syu --needed \
-    amfora \
     baobab \
-    cheese \
     dconf-editor \
     evince \
     ext4magic \
@@ -570,9 +568,6 @@ if [ "$desktop" = "Y" -o "$desktop" = "y" ]; then
     xdg-user-dirs-gtk
 
 aur_packages "units"
-
-  sudo mkdir -p /usr/local/share/applications
-  sudo cp -v "$HOME/.dotfiles/os/arch/amfora.desktop" /usr/local/share/applications/
 
   if [ "$graphical" = "S" -o "$graphical" = "B" ]; then
     systemctl --user enable nextcloud.service
