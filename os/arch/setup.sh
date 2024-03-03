@@ -12,7 +12,7 @@ set -e
 aur_packages() {
   pkg_selected="$1"
   while : ; do
-    aurman -Syu --needed $pkg_selected
+    aurman -Syu --needed --noconfirm --noedit --skip_news $pkg_selected
 
     if [ $? -ne 0 ]; then
       read -p "!! Aurman error. Retry? [yN] " aur
@@ -42,7 +42,7 @@ if [[ ! -d "$HOME/.dotfiles" ]]; then
 fi
 
 echo "Installing packages..."
-sudo pacman -Syu --needed \
+sudo pacman -Syu --needed --noconfirm \
   base-devel \
   bash-completion \
   ctags \
@@ -170,7 +170,7 @@ fi
 
 if [ "$graphical" != "N" ]; then
   echo "Installing graphical packages..."
-  sudo pacman -Syu --needed \
+  sudo pacman -Syu --needed --noconfirm \
     antiword \
     aspell-en \
     bc \
@@ -300,7 +300,7 @@ if [ "$graphical" != "N" ]; then
 fi
 if [ "$intel" = "y" -o "$intel" = "Y" ]; then
   echo "Installing Intel graphics drivers..."
-  sudo pacman -Syu --needed \
+  sudo pacman -Syu --needed --noconfirm \
     intel-media-driver \
     libva-utils \
     mesa \
@@ -315,7 +315,7 @@ if [ "$graphical" != "N" ]; then
 fi
 if [ "$amd" = "y" -o "$amd" = "Y" ]; then
   echo "Installing AMD graphics drivers..."
-  sudo pacman -Syu --needed \
+  sudo pacman -Syu --needed --noconfirm \
     libva-mesa-driver \
     libva-utils \
     mesa \
@@ -330,7 +330,7 @@ if [ "$graphical" = "G" -o "$graphical" = "B" ]; then
   fi
 
   echo "Installing GNOME..."
-  sudo pacman -Syu --needed $gst_packages \
+  sudo pacman -Syu --needed --noconfirm $gst_packages \
     avahi \
     cups \
     cups-pdf \
@@ -358,8 +358,8 @@ gnome-pass-search-provider-git"
   mkdir -pv ~/.local/share/gnome-shell/extensions
   git clone https://github.com/martinhjartmyr/gnome-shell-extension-focus-changer.git ~/.local/share/gnome-shell/extensions/focus-changer@heartmire
 
-  sudo systemctl enable gdm.service cups.socket ydotool.service
-  systemctl --user enable gcr-ssh-agent.socket
+  sudo systemctl enable gdm.service cups.socket
+  systemctl --user enable gcr-ssh-agent.socket ydotool.service
   echo "Out \${HOME}/Documents" | sudo tee -a /etc/cups/cups-pdf.conf
   echo "password	optional	pam_gnome_keyring.so" | sudo tee -a /etc/pam.d/passwd
 
@@ -428,7 +428,7 @@ fi
 
 if [ "$graphical" = "S" -o "$graphical" = "B" ]; then
   echo "Installing Sway..."
-  sudo pacman -Syu --needed \
+  sudo pacman -Syu --needed --noconfirm \
     bemenu \
     blueman \
     bolt \
@@ -480,13 +480,13 @@ fi
 
 if [ "$mail" = "E" -o "$mail" = "B" ]; then
   echo "Installing Evolution..."
-  sudo pacman -Syu --needed \
+  sudo pacman -Syu --needed --noconfirm \
     evolution
 fi
 
 if [ "$mail" = "M" -o "$mail" = "B" ]; then
   echo "Installing Mutt..."
-  sudo pacman -Syu --needed \
+  sudo pacman -Syu --needed --noconfirm \
     goimapnotify \
     isync \
     khard \
@@ -515,7 +515,7 @@ if [ "$graphical" != "N" ]; then
 fi
 if [ "$desktop" = "Y" -o "$desktop" = "y" ]; then
   echo "Installing desktop applications..."
-  sudo pacman -Syu --needed \
+  sudo pacman -Syu --needed --noconfirm \
     baobab \
     dconf-editor \
     evince \
@@ -581,7 +581,7 @@ if [ "$graphical" != "N" ]; then
 fi
 if [ "$extra" = "y" -o "$extra" = "Y" ]; then
   echo "Installing extra applications..."
-  sudo pacman -Syu --needed \
+  sudo pacman -Syu --needed --noconfirm \
     calibre \
     edk2-ovmf \
     frotz-ncurses \
