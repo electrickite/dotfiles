@@ -125,7 +125,7 @@ if [ -f keys.tar.gpg ]; then
     echo "max-cache-ttl 28800" >> "$HOME/.gnupg/gpg-agent.conf"
     echo "default-cache-ttl 28800" >> "$HOME/.gnupg/gpg-agent.conf"
     gpg-connect-agent reloadagent /bye
-    rm -i keys.ta*
+    rm keys.tar*
 elif [ -d "$HOME/.ssh" ]; then
     echo "SSH key found."
 else
