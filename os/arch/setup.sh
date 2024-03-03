@@ -116,7 +116,10 @@ ctags -f ~/.vim/systags $(pacman -Qlq glibc | grep /usr/include/)
 cd
 if [ -f keys.tar.gpg ]; then
     echo "keys.tar.gpg found. Extracting..."
-    gpg --pinentry-mode loopback keys.tar.gpg
+    while gpg --pinentry-mode loopback keys.tar.gpg; [[ $? -ne 0 ]];
+    do
+      echo "Key decryption failed! Bad passphrase?"
+    done
     rm -rf ~/.gnupg
     tar -xf keys.tar
     chmod 700 "$HOME/.ssh"
