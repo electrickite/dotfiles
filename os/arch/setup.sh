@@ -170,7 +170,7 @@ fi
 
 if [ "$graphical" != "N" ]; then
   echo "Installing graphical packages..."
-  sudo pacman -Syu --needed --noconfirm \
+  yes | sudo pacman -Syu --needed \
     antiword \
     aspell-en \
     bc \
@@ -330,7 +330,7 @@ if [ "$graphical" = "G" -o "$graphical" = "B" ]; then
   fi
 
   echo "Installing GNOME..."
-  sudo pacman -Syu --needed --noconfirm $gst_packages \
+  sudo pacman -Syu --needed $gst_packages \
     avahi \
     cups \
     cups-pdf \
@@ -606,7 +606,7 @@ minecraft-launcher"
 fi
 
 echo "Cleaning up..."
-sudo pacman -Sc
+sudo pacman -Sc --noconfirm
 sudo updatedb
 
 echo "Setup complete!"
