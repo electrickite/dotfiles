@@ -35,8 +35,6 @@ echo -n "Enter your name: "
 read full_name
 echo -n "Enter your email address: "
 read email_address
-echo -n "Enter private git host: "
-read git_host
 
 if [[ ! -d "$HOME/.dotfiles" ]]; then
   echo "Could not find $HOME/.dotfiles. Aborting..."; exit 1
@@ -133,11 +131,6 @@ elif [ -d "$HOME/.ssh" ]; then
 else
     echo "No SSH keys file found. Generating new key..."
     ssh-keygen -t rsa -b 2048 -C "$email_address"
-fi
-
-if [ -n "$git_host" ]; then
-  echo "Host $git_host" >> ~/.ssh/config
-  echo "  Port 2222" >> ~/.ssh/config
 fi
 
 # Add private certificate to trust store
