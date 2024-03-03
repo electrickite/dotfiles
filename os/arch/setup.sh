@@ -151,7 +151,7 @@ if ! type -P aurman &>/dev/null; then
   cd ~
   git clone https://aur.archlinux.org/aurman.git aurman-build
   cd aurman-build
-  makepkg -si
+  makepkg -si --noconfirm
   cd ~
   rm -rf aurman-build
 fi
