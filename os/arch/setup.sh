@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 # Set up Arch Linux
 
@@ -170,15 +171,12 @@ fi
 if [ "$graphical" != "N" ]; then
   echo "Installing graphical packages..."
   sudo pacman -Syu --needed \
-    adwaita-qt5 \
-    adwaita-qt6 \
     antiword \
     aspell-en \
     bc \
     bitwarden \
     bitwarden-cli \
     bluez \
-    bluez-utils \
     cairo \
     cdrtools \
     check \
@@ -252,6 +250,7 @@ edir \
 mkinitcpio-colors-git \
 myterm \
 qt5-styleplugins \
+qt6gtk2 \
 setcolors-git \
 ttf-mac-fonts \
 ttf-roboto-slab \
@@ -521,7 +520,6 @@ if [ "$desktop" = "Y" -o "$desktop" = "y" ]; then
     baobab \
     cheese \
     dconf-editor \
-    eog \
     evince \
     ext4magic \
     file-roller \
@@ -542,6 +540,7 @@ if [ "$desktop" = "Y" -o "$desktop" = "y" ]; then
     gvfs-smb \
     libreoffice-fresh \
     linux-zen-docs \
+    loupe \
     lsof \
     minicom \
     msmtp \
@@ -561,8 +560,9 @@ if [ "$desktop" = "Y" -o "$desktop" = "y" ]; then
     pwgen \
     python-nautilus \
     simple-scan \
-    sushi \
     seahorse \
+    snapshot \
+    sushi \
     transmission-gtk \
     tree \
     vlc \
