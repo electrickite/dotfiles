@@ -1,9 +1,9 @@
 #!/bin/sh
 
 choice=$(zenity --list \
-  --title="System Menu" --name="System Menu" --text="Choose an action" \
+  --title="System Menu" --text="Choose an action" \
   --column="Action" --column="Description" \
-  --width=370 --height=300 \
+  --width=410 --height=440 \
   Poweroff "Shut down the compuer" \
   Restart "Restart the computer" \
   Exit "Log out GNOME session" \
