@@ -225,6 +225,8 @@ if [ "$graphical" != "N" ]; then
     pipewire-pulse \
     pipewire-jack \
     qrencode \
+    qt5-wayland \
+    qt6-wayland \
     scdoc \
     starship \
     swappy \
@@ -347,6 +349,7 @@ if [ "$graphical" = "G" -o "$graphical" = "B" ]; then
     gnome-shell-extension-caffeine \
     gnome-tweaks \
     gst-plugin-pipewire \
+    nss-mdns \
     rbw \
     speech-dispatcher \
     system-config-printer \
