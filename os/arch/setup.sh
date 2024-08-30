@@ -53,6 +53,7 @@ sudo pacman -Syu --needed --noconfirm \
   dnsutils \
   dosfstools \
   ethtool \
+  firewalld \
   fzf \
   git \
   gnupg \
@@ -80,7 +81,6 @@ sudo pacman -Syu --needed --noconfirm \
   texinfo \
   the_silver_searcher \
   tmux \
-  ufw \
   usbutils \
   unzip \
   vim \
@@ -163,6 +163,8 @@ echo "Performing additional configuration..."
 git config --global user.name "$full_name"
 git config --global user.email "$email_address"
 git config --global include.path ~/.gitconfig_main
+
+systemctl enable firewalld.service
 
 echo -n "Install graphical environment (Gnome, Sway, Both, No)? [gsbN] "
 read graphical
