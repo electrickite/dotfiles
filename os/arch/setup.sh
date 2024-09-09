@@ -352,6 +352,7 @@ if [ "$graphical" = "G" -o "$graphical" = "B" ]; then
     gnome-tweaks \
     gst-plugin-pipewire \
     nss-mdns \
+    plymouth \
     rbw \
     speech-dispatcher \
     system-config-printer \
@@ -370,6 +371,7 @@ gnome-pass-search-provider-git"
   systemctl --user enable gcr-ssh-agent.socket ydotool.service
   echo "Out \${HOME}/Documents" | sudo tee -a /etc/cups/cups-pdf.conf
   echo "password	optional	pam_gnome_keyring.so" | sudo tee -a /etc/pam.d/passwd
+  sudo cp -fv "$HOME/.dotfiles/os/arch/plymouthd.conf" /etc/plymouth/plymouthd.conf
 
   rbw config set email "$email_address"
   rbw config set base_url "$bw_server"
@@ -614,6 +616,7 @@ minecraft-launcher"
 fi
 
 echo "Cleaning up..."
+sudo mkinitcpio -P linux-zen
 sudo pacman -Sc --noconfirm
 sudo updatedb
 

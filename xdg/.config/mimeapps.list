@@ -1,10 +1,15 @@
 [Added Associations]
-text/plain=org.gnome.gedit.desktop;
+text/plain=org.gnome.gedit.desktop;org.gnome.TextEditor.desktop;
 application/x-ms-dos-executable=wine.desktop;
 application/pdf=org.gnome.Evince.desktop;
+image/jpeg=org.gnome.Loupe.desktop;
+image/heif=org.gnome.Loupe.desktop;
+image/png=org.gnome.Loupe.desktop;
+text/markdown=org.gnome.TextEditor.desktop;
+x-scheme-handler/magnet=userapp-transmission-gtk-6DH8K2.desktop;
 
 [Default Applications]
-text/plain=org.gnome.gedit.desktop
+text/plain=org.gnome.TextEditor.desktop
 text/html=firefox.desktop
 application/vnd.oasis.opendocument.text=libreoffice-writer.desktop
 application/vnd.oasis.opendocument.text-template=libreoffice-writer.desktop
@@ -24,3 +29,9 @@ application/vnd.oasis.opendocument.text-flat-xml=libreoffice-writer.desktop
 application/macwriteii=libreoffice-writer.desktop
 application/x-iwork-pages-sffpages=libreoffice-writer.desktop
 application/x-mswrite=libreoffice-writer.desktop
+image/jpeg=org.gnome.Loupe.desktop
+image/heif=org.gnome.Loupe.desktop
+image/png=org.gnome.Loupe.desktop
+text/markdown=org.gnome.TextEditor.desktop
+x-scheme-handler/magnet=userapp-transmission-gtk-6DH8K2.desktop
+x-scheme-handler/discord-712264497787568171=discord-712264497787568171.desktop
