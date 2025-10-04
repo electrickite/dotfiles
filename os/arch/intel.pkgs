@@ -1,0 +1,5 @@
+intel-media-driver
+libva-utils
+mesa
+vulkan-intel
+vulkan-mesa-layers

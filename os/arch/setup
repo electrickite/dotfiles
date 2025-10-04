@@ -1,0 +1,507 @@
+#!/bin/bash
+set -e
+
+# Set up Arch Linux
+
+# Before running do the following:
+#  - Install and configure sudo
+#  - If available, copy the following into your home directory
+#    * keys.tar.gpg
+#    * cacert.crt
+#
+# Best run in a dedicated shell using source:
+#   $ bash
+#   $ source ~/.dotfiles/os/arch/setup
+#   $ arch_full_install
+#   $ exit
+
+dotfiles="$HOME/.dotfiles"
+
+aur_packages() {
+  local aur=
+  local pkg_selected="$1"
+  while : ; do
+    aurman -Syu --needed --noconfirm --noedit --skip_news $pkg_selected
+
+    if [ $? -ne 0 ]; then
+      read -p "!! Aurman error. Retry? [yN] " aur
+      if [ "$aur" != "y" -a "$aur" != "Y" ]; then break; fi
+    else
+      break 
+    fi
+    read -p "Edit packages: " -e -i "$1" pkg_selected
+  done
+}
+
+sanity_check() {
+  if [[ ! -d "$HOME" ]]; then
+    echo "Could not find home directory. Aborting..."; exit 1
+  fi
+  if [[ ! -d "$dotfiles" ]]; then
+    echo "Could not find $dotfiles. Aborting..."; exit 1
+  fi
+
+  echo "-- Arch setup script --"
+  echo "WARNING: This script should only be used to configure new machines!"
+  echo
+  read -p "Press [Enter] to start setup..."
+}
+
+get_user_info() {
+  echo -n "Enter your name: "
+  read full_name
+  echo -n "Enter your email address: "
+  read email_address
+}
+
+install_base_packages() {
+  echo "Installing base packages..."
+  sudo pacman -Syu --needed --noconfirm $(cat "$dotfiles/os/arch/base.pkgs")
+}
+
+install_base_services() {
+  echo "Installing services..."
+  sudo cp -fv "$dotfiles/os/arch/powertop.service" /etc/systemd/system/
+}
+
+create_xdg_dir() {
+  echo "Creating XDG directories..."
+  mkdir -pv "$HOME/.config/systemd/user"
+  mkdir -pv "$HOME/.config/autostart"
+  mkdir -pv "$HOME/.local"
+  mkdir -pv "$HOME/.local/"{state,bin,share}
+  xdg-user-dirs-update --force
+}
+
+init_submodules() {
+  echo "Initializing dotfile git submodules..."
+  pushd "$dotfiles" > /dev/null
+  git submodule update --init --recursive
+  popd > /dev/null
+}
+
+link_config() {
+  echo "Linking config files..."
+  rm -f "$HOME"/{.bashrc,.bash_profile,.gitconfig,.config/user-dirs.dirs,.config/user-dirs.locale
+  pushd "$dotfiles" > /dev/null
+  stow -v $(cat os/arch/stow.pkgs)
+  popd > /dev/null
+}
+
+generate_ctags() {
+  echo "Generating ctags..."
+  ctags -f "$HOME/.vim/systags" $(pacman -Qlq glibc | grep /usr/include/)
+}
+
+configure_keys() {
+  cd
+  if [ -f keys.tar.gpg ]; then
+    echo "keys.tar.gpg found. Extracting..."
+    while gpg --pinentry-mode loopback keys.tar.gpg; [[ $? -ne 0 ]];
+    do
+      echo "Key decryption failed! Bad passphrase?"
+    done
+    rm -rf "$HOME/.gnupg"
+    tar -xf keys.tar
+    chmod 700 "$HOME/.ssh"
+    chmod 600 "$HOME/.ssh/id_rsa"
+    chmod 644 "$HOME/.ssh/id_rsa.pub"
+    echo "pinentry-program /usr/bin/pinentry" > "$HOME/.gnupg/gpg-agent.conf"
+    echo "max-cache-ttl 28800" >> "$HOME/.gnupg/gpg-agent.conf"
+    echo "default-cache-ttl 28800" >> "$HOME/.gnupg/gpg-agent.conf"
+    gpg-connect-agent reloadagent /bye
+    rm keys.tar*
+  elif [ -d "$HOME/.ssh" ]; then
+    echo "SSH key found."
+  else
+    echo "No SSH keys file found. Generating new key..."
+    while [ -z "$email_address" ]; do
+      get_user_info
+    done
+    ssh-keygen -t rsa -b 2048 -C "$email_address"
+  fi
+}
+
+add_ca_cert() {
+  if [ -f "$HOME/cacert.crt" ]; then
+    echo "Adding CA Certificate to trust store..."
+    sudo trust anchor --store "$HOME/cacert.crt"
+  fi
+}
+
+install_aurman() {
+  if ! type -P aurman &>/dev/null; then
+    echo "Installing aurman..."
+    local aurman_key=
+    read -p "Enter aurman PGP key to import [F3FAE51DB14A292C] " aurman_key
+    aurman_key=${aurman_key:-F3FAE51DB14A292C}
+    gpg --receive-keys "$aurman_key" ||:
+
+    echo "Installing aurman..."
+    git clone https://aur.archlinux.org/aurman.git aurman-build
+    pushd aurman-build > /dev/null
+    makepkg -si --noconfirm
+    popd > /dev/null
+    rm -rf aurman-build
+  fi
+}
+
+configure_git() {
+  echo "Performing git configuration..."
+  while [ -z "$email_address" -o -z "$full_name" ]; do
+    get_user_info
+  done
+  git config --global user.name "$full_name"
+  git config --global user.email "$email_address"
+  git config --global include.path "$HOME/.gitconfig_main"
+}
+
+install_firewall() {
+  echo "Installing firewall..."
+  if [ -z "$1" -o "$1" = ufw ]; then
+    sudo pacman -Syu --needed --noconfirm ufw
+    sudo ufw default deny
+    sudo ufw enable
+    sudo systemctl enable ufw
+  elif [ "$1" = "firewalld" ]; then
+    sudo pacman -Syu --needed --noconfirm firewalld
+    sudo systemctl enable firewalld.service
+    sudo systemctl start firewalld.service
+  fi
+}
+
+configure_cups() {
+  echo "Configuring printer services..."
+  sudo systemctl enable cups.socket
+  echo "Out \${HOME}/Documents" | sudo tee -a /etc/cups/cups-pdf.conf
+}
+
+configure_plymouth() {
+  echo "Configuring boot splash screen..."
+  sudo cp -fv "$HOME/.dotfiles/os/arch/plymouthd.conf" /etc/plymouth/plymouthd.conf
+}
+
+install_gtk_base() {
+  echo "Installing graphical packages..."
+  yes | sudo pacman -Syu --needed $(cat "$dotfiles/os/arch/gtk-base.pkgs")
+  aur_packages "$(cat "$dotfiles/os/arch/gtk-base.aur.pkgs")"
+
+  sudo pacman -D --asexplicit check cmake go meson scdoc
+
+  ln -sv /usr/bin/myterm "$HOME/.local/bin/xterm"
+
+  sudo ln -sv /etc/fonts/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d ||:
+  sudo ln -sv /etc/fonts/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d ||:
+  ls -l /etc/fonts/conf.d/10-hinting-slight.conf
+  sudo cp -v "$HOME/.dotfiles/os/arch/local-fonts.conf" /etc/fonts/local.conf
+  sudo cp -fv "$HOME/.dotfiles/os/arch/freetype2.sh" /etc/profile.d/
+  sudo cp -fv "$HOME/.dotfiles/os/arch/jre-fonts.sh" /etc/profile.d/
+  sudo cp -fv "$HOME/.dotfiles/os/arch/vconsole.conf" /etc/
+  sudo cp -Rv "$HOME/.dotfiles/os/arch/xdg-document-portal.service.d" /etc/systemd/user/
+  sudo gdk-pixbuf-query-loaders --update-cache
+  fc-cache -fv
+  sudo fc-cache -fv
+
+  sudo mkdir -p /usr/share/glib-2.0/schemas/
+  sudo cp -fv "$HOME/.dotfiles/os/arch/10_local_defaults.gschema.override" /usr/share/glib-2.0/schemas/
+  sudo glib-compile-schemas /usr/share/glib-2.0/schemas/
+  rm -f "$HOME/.config/dconf/user"
+
+  systemctl --user daemon-reload
+  systemctl --user enable bash@.service foot-server.socket
+
+  mkdir -pv "$HOME/Pictures/Screenshots"
+  mkdir -pv "$HOME/projects"
+  ln -sv "$HOME/.dotfiles/os/arch/arch.jpg" "$HOME/Pictures/bg.jpg"
+}
+
+install_intel_driver() {
+  echo "Installing Intel graphics drivers..."
+  sudo pacman -Syu --needed --noconfirm $(cat "$HOME/os/arch/intel.pkgs")
+}
+
+install_amd_driver() {
+  echo "Installing AMD graphics drivers..."
+  sudo pacman -Syu --needed --noconfirm $(cat "$HOME/os/arch/amd.pkgs")
+}
+
+install_gnome() {
+  echo "Installing GNOME..."
+  sudo pacman -Syu --needed --noconfirm $1 $(cat "$dotfiles/os/arch/gnome.pkgs")
+
+  mkdir -pv "$HOME/.local/share/gnome-shell/extensions"
+  git clone https://github.com/martinhjartmyr/gnome-shell-extension-focus-changer.git "$HOME/.local/share/gnome-shell/extensions/focus-changer@heartmire"
+
+  sudo systemctl enable gdm.service
+  systemctl --user enable gcr-ssh-agent.socket ydotool.service
+  echo "password	optional	pam_gnome_keyring.so" | sudo tee -a /etc/pam.d/passwd
+  configure_cups
+  configure_plymouth
+
+  gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
+  gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
+  gsettings set org.gnome.desktop.interface cursor-size 32
+  gsettings set org.gnome.desktop.wm.preferences theme 'Adaitia-dark'
+  gsettings set org.gnome.desktop.default-applications.terminal exec 'footclient'
+  gsettings set org.gnome.desktop.default-applications.terminal exec-arg ''
+  gsettings set org.gnome.mutter experimental-features "['scale-monitor-framebuffer']"
+  gsettings set org.gnome.Evince.Default inverted-colors true
+
+  gsettings set org.gnome.desktop.wm.keybindings switch-applications "['<Alt>Tab']"
+  gsettings set org.gnome.desktop.wm.keybindings switch-applications-backward "['<Shift><Alt>Tab']"
+  gsettings set org.gnome.desktop.wm.keybindings switch-windows "['<Super>Tab']"
+  gsettings set org.gnome.desktop.wm.keybindings switch-windows-backward "['<Shift><Super>Tab']"
+  gsettings set org.gnome.desktop.wm.keybindings close "['<Alt>F4', '<Super><Shift>q']"
+  gsettings set org.gnome.mutter.wayland.keybindings restore-shortcuts "['<Super><Shift>Escape']"
+  gsettings set org.gnome.mutter.keybindings switch-monitor "['<Super>o', 'XF86Display']"
+
+  gsettings set org.gnome.desktop.wm.keybindings move-to-monitor-down "['<Control><Super>Down']"
+  gsettings set org.gnome.desktop.wm.keybindings move-to-monitor-left "['<Control><Super>Left']"
+  gsettings set org.gnome.desktop.wm.keybindings move-to-monitor-right "['<Control><Super>Right']"
+  gsettings set org.gnome.desktop.wm.keybindings move-to-monitor-up "['<Control><Super>Up']"
+  gsettings set org.gnome.desktop.wm.keybindings maximize "['<Shift><Super>Up']"
+  gsettings set org.gnome.desktop.wm.keybindings unmaximize "['<Shift><Super>Down']"
+  gsettings set org.gnome.mutter.keybindings toggle-tiled-left "['<Shift><Super>Left']"
+  gsettings set org.gnome.mutter.keybindings toggle-tiled-right "['<Shift><Super>Right']"
+  gsettings set org.gnome.desktop.wm.keybindings begin-move "['<Alt>F7', '<Super>d']"
+  gsettings set org.gnome.desktop.wm.keybindings begin-resize "['<Alt>F8', '<Super>r']"
+
+  nine="1 2 3 4 5 6 7 8 9"
+  for item in $nine
+  do
+    gsettings set org.gnome.shell.keybindings switch-to-application-$item "[]"
+  done
+
+  for item in $nine
+  do
+    gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-$item "['<Super>$item']"
+  done
+  gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-1 "['<Super>1', '<Super>Home']"
+
+  for item in $nine
+  do
+    gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-$item "['<Shift><Super>$item']"
+  done
+
+  sudo mkdir -p /etc/dconf/profile
+  echo "user-db:user" | sudo tee /etc/dconf/profile/user
+  echo "system-db:local" | sudo tee -a /etc/dconf/profile/user
+  sudo cp /etc/dconf/profile/user /etc/dconf/profile/gdm
+  sudo mkdir -p /etc/dconf/db/local.d
+  echo "[org/gnome/mutter]" | sudo tee /etc/dconf/db/local.d/00-hidpi
+  echo "experimental-features=['scale-monitor-framebuffer']" | sudo tee -a /etc/dconf/db/local.d/00-hidpi
+  sudo mkdir -p /etc/dconf/db/locks
+  echo "/org/gnome/mutter/experimental-features" | sudo tee /etc/dconf/db/locks/hidpi
+  sudo dconf update
+
+  install_firewall firewalld
+}
+
+install_sway() {
+  echo "Installing Sway..."
+  sudo pacman -Syu --needed --noconfirm $(cat "$dotfiles/os/arch/sway.pkgs")
+  aur_packages "$(cat "$dotfiles/os/arch/sway.aur.pkgs")"
+
+  sudo ln -sv bemenu /usr/bin/dmenu
+  sudo ln -sv bemenu-run /usr/bin/dmenu-run
+  ln -s $(hostname)/swayidle "$HOME/.config/sway/swayidle"
+  sudo cp -v "$HOME/.dotfiles/os/arch/sway-session" /usr/local/bin/
+  sudo chmod 755 /usr/local/bin/sway-session
+  sudo cp -v "$HOME/.dotfiles/os/arch/sway.desktop" /usr/local/share/wayland-sessions/
+  sudo ln -sv sway /usr/bin/sway-start
+
+  systemctl --user enable batsignal.service cliphist.service kanshi.service libinput-gestures.service mako.service nm-applet.service polkit-gnome.service swayidle.service udiskie.service waybar.service wob.socket
+  install_firewall ufw
+}
+
+install_kde() {
+  echo "Installing KDE..."
+  sudo pacman -Syu --needed --noconfirm $1 $(cat "$dotfiles/os/arch/kde.pkgs")
+  aur_packages "$(cat "$dotfiles/os/arch/kde.aur.pkgs")"
+
+  sudo systemctl enable sddm.service power-profiles-daemon.service
+  configure_cups
+  install_firewall ufw
+}
+
+install_evolution() {
+  echo "Installing Evolution..."
+  sudo pacman -Syu --needed --noconfirm \
+    evolution
+}
+
+install_mutt() {
+  echo "Installing Mutt..."
+  sudo pacman -Syu --needed --noconfirm \
+    goimapnotify \
+    isync \
+    khard \
+    mutt \
+    notmuch \
+    notmuch-mutt \
+    vdirsyncer
+
+aur_packages "extract_url \
+perl-uri-find \
+urlview"
+
+  mkdir -pv "$HOME/.mail/personal"
+  mkdir -pv "$HOME/.local/state/mutt"
+  mkdir -pv "$HOME/.local/state/msmtp"
+  mkdir -pv "$HOME/.contacts"
+  mkdir -pv "$HOME/.cache/vdirsyncer/status/"
+
+  while [ -z "$full_name" ]; do
+    get_user_info
+  done
+  echo "$full_name" >> ~/.config/mutt/sig
+}
+
+install_gtk_apps() {
+  echo "Installing desktop applications..."
+  sudo pacman -Syu --needed --noconfirm $(cat "$dotfiles/os/arch/gtk-app.pkgs")
+  aur_packages "$(cat "$dotfiles/os/arch/gtk-app.aur.pkgs")"
+
+  if [ "$1" = "sway" ]; then
+    systemctl --user enable nextcloud.service
+  fi
+}
+
+install_kde_apps() {
+  echo "Installing desktop applications..."
+  sudo pacman -Syu --needed --noconfirm $(cat "$dotfiles/os/arch/kde-app.pkgs")
+  aur_packages "$(cat "$dotfiles/os/arch/kde-app.aur.pkgs")"
+}
+
+install_extra_gtk_apps() {
+  echo "Installing extra applications..."
+  sudo pacman -Syu --needed --noconfirm $(cat "$dotfiles/os/arch/gtk-extra.pkgs")
+  aur_packages "$(cat "$dotfiles/os/arch/gtk-extra.aur.pkgs")"
+}
+
+install_extra_kde_apps() {
+  echo "Installing extra applications..."
+  sudo pacman -Syu --needed --noconfirm $(cat "$dotfiles/os/arch/kde-extra.pkgs")
+  aur_packages "$(cat "$dotfiles/os/arch/kde-extra.aur.pkgs")"
+}
+
+cleanup() {
+  echo "Cleaning up..."
+  sudo mkinitcpio -P linux-zen
+  sudo pacman -Sc --noconfirm
+  sudo updatedb
+}
+
+arch_base_install() {
+  sanity_check
+  get_user_info
+  install_base_packages
+  install_base_services
+  create_xdg_dir
+  init_submodules
+  link_config
+  generate_ctags
+  configure_keys
+  add_ca_cert
+  install_aurman
+  configure_git
+  if [ "$1" != "nofw" ]; then
+    install_firewall ufw
+  fi
+}
+
+arch_full_install() {
+  local graphical driver gstpkg mail apps extra
+  arch_base_install nofw
+
+  echo -n "Install graphical environment (Gnome, Sway, KDE, No)? [gskN] "
+  read graphical
+  graphical="$(echo "$graphical" | tr '[:lower:]' '[:upper:]')"
+  if [ "$graphical" != "G" -a "$graphical" != "S" -a "$graphical" != "K" ]; then
+    graphical="N"
+    install_firewall ufw
+  fi
+
+  if [ "$graphical" != "N" ]; then
+    echo -n "Install Intel or AMD graphics drivers? [iaN] "
+    read driver
+    driver="$(echo "$driver" | tr '[:lower:]' '[:upper:]')"
+  fi
+  if [ "$driver" = "I" ]; then
+    install_intel_driver
+  fi
+  if [ "$driver" = "A" ]; then
+    install_amd_driver
+  fi
+
+  case "$graphical" in
+    G)
+      if [ "$driver" = "I" -o "$driver" = "A" ]; then
+        gstpkg="gstreamer-vaapi gst-plugin-va"
+      fi
+      install_gtk_base
+      install_gnome "$gstpkg"
+      ;;
+    S)
+      install_gtk_base
+      install_sway
+      ;;
+    K)
+      install_kde
+      ;;
+  esac
+
+  echo -n "Install email client (Evolution, Mutt, No)? [emN] "
+  read mail
+  mail="$(echo "$mail" | tr '[:lower:]' '[:upper:]')"
+  if [ "$mail" != "E" -a "$mail" != "M" ]; then
+    mail="N"
+  fi
+  if [ "$mail" = "E" ]; then
+    install_evolution
+  elif [ "$mail" = "M" ]; then
+    install_mutt
+  fi
+
+  apps="N"
+  if [ "$graphical" != "N" ]; then
+    echo -n "Install desktop applications? [yN] "
+    read apps
+  fi
+  if [ "$apps" = "y" -o "$apps" = "Y" ]; then
+    case "$graphical" in
+      G)
+        install_gtk_apps
+        ;;
+      S)
+        install_gtk_apps sway
+        ;;
+      K)
+        install_kde_apps
+        ;;
+    esac
+  fi
+
+  extra="N"
+  if [ "$graphical" != "N" ]; then
+    echo -n "Install extra applications? [yN] "
+    read extra
+  fi
+  if [ "$extra" = "y" -o "$extra" = "Y" ]; then
+    case "$graphical" in
+      G | S)
+        install_extra_gtk_apps
+        ;;
+      K)
+        install_extra_kde_apps
+        ;;
+    esac
+  fi
+
+  cleanup
+}
+
+if ! (return 0 2>/dev/null); then
+  # Script is executed, run install function
+  arch_full_install
+fi
