@@ -1,0 +1,14 @@
+arch-bash
+bash
+env
+git
+gpg
+httpd
+linux-util
+mail
+pandoc
+starship
+vdir
+vim
+xdg
+xorg

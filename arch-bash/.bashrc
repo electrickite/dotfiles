@@ -51,7 +51,6 @@ alias less='less -R'
 alias ssh='TERM=xterm-256color ssh'
 alias pacupdate='sudo pacman -Syu && aurman -Syu --devel'
 alias todo=todo.sh
-alias gmni=amfora
 
 _completion_loader todo.sh
 complete -F _todo todo
