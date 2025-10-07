@@ -83,7 +83,11 @@ init_submodules() {
 
 link_config() {
   echo "Linking config files..."
-  rm -f "$HOME"/{.bashrc,.bash_profile,.gitconfig,.config/user-dirs.dirs,.config/user-dirs.locale
+  rm -f "$HOME/.bashrc"
+  rm -f "$HOME/.bash_profile"
+  rm -f "$HOME/.gitconfig"
+  rm -f "$HOME/.config/user-dirs.dirs"
+  rm -f "$HOME/.config/user-dirs.locale"
   pushd "$dotfiles" > /dev/null
   stow -v $(cat os/arch/base.stow)
   popd > /dev/null
