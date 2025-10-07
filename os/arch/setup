@@ -511,6 +511,7 @@ arch_full_install() {
   fi
 
   cleanup
+  echo "Installation complete!"
 }
 
 if ! (return 0 2>/dev/null); then
