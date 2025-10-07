@@ -21,7 +21,7 @@ lynx
 lz4
 man-db
 man-pages
-mlocate
+plocate
 net-tools
 networkmanager
 nvme-cli
