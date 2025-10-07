@@ -33,6 +33,12 @@ aur_packages() {
   done
 }
 
+stow_packages() {
+  pushd "$dotfiles" > /dev/null
+  stow -v $(cat os/arch/$1)
+  popd > /dev/null
+}
+
 sanity_check() {
   if [[ ! -d "$HOME" ]]; then
     echo "Could not find home directory. Aborting..."; exit 1
@@ -88,9 +94,7 @@ link_config() {
   rm -f "$HOME/.gitconfig"
   rm -f "$HOME/.config/user-dirs.dirs"
   rm -f "$HOME/.config/user-dirs.locale"
-  pushd "$dotfiles" > /dev/null
-  stow -v $(cat os/arch/base.stow)
-  popd > /dev/null
+  stow_packages base.stow
 }
 
 generate_ctags() {
@@ -233,7 +237,7 @@ install_amd_driver() {
 install_gnome() {
   echo "Installing GNOME..."
   sudo pacman -Syu --needed --noconfirm $1 $(cat "$dotfiles/os/arch/gnome.pkgs")
-  stow -v $(cat os/arch/gnome.stow)
+  stow_packages gnome.stow
 
   mkdir -pv "$HOME/.local/share/gnome-shell/extensions"
   git clone https://github.com/martinhjartmyr/gnome-shell-extension-focus-changer.git "$HOME/.local/share/gnome-shell/extensions/focus-changer@heartmire"
@@ -307,7 +311,7 @@ install_sway() {
   echo "Installing Sway..."
   sudo pacman -Syu --needed --noconfirm $(cat "$dotfiles/os/arch/sway.pkgs")
   aur_packages "$(cat "$dotfiles/os/arch/sway.aur.pkgs")"
-  stow -v $(cat os/arch/sway.stow)
+  stow_packages sway.stow
 
   sudo ln -sv bemenu /usr/bin/dmenu
   sudo ln -sv bemenu-run /usr/bin/dmenu-run
@@ -325,7 +329,7 @@ install_kde() {
   echo "Installing KDE..."
   sudo pacman -Syu --needed --noconfirm $1 $(cat "$dotfiles/os/arch/kde.pkgs")
   aur_packages "$(cat "$dotfiles/os/arch/kde.aur.pkgs")"
-  stow -v $(cat os/arch/kde.stow)
+  stow_packages kde.stow
 
   sudo systemctl enable sddm.service power-profiles-daemon.service
   configure_cups
