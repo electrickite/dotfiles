@@ -115,9 +115,9 @@ configure_keys() {
     chmod 700 "$HOME/.ssh"
     chmod 600 "$HOME/.ssh/id_rsa"
     chmod 644 "$HOME/.ssh/id_rsa.pub"
-    echo "pinentry-program /usr/bin/pinentry" > "$HOME/.gnupg/gpg-agent.conf"
-    echo "max-cache-ttl 28800" >> "$HOME/.gnupg/gpg-agent.conf"
+    echo "max-cache-ttl 28800" > "$HOME/.gnupg/gpg-agent.conf"
     echo "default-cache-ttl 28800" >> "$HOME/.gnupg/gpg-agent.conf"
+    echo "pinentry-program /usr/bin/pinentry" >> "$HOME/.gnupg/gpg-agent.conf"
     gpg-connect-agent reloadagent /bye
     rm keys.tar*
   elif [ -d "$HOME/.ssh" ]; then
@@ -333,6 +333,8 @@ install_kde() {
 
   sudo systemctl enable sddm.service power-profiles-daemon.service
   configure_cups
+  sed -i '$ d' "$HOME/.gnupg/gpg-agent.conf"
+  echo "pinentry-program /usr/bin/pinentry-qt" >> "$HOME/.gnupg/gpg-agent.conf"
   install_firewall ufw
 }
 

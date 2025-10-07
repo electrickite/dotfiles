@@ -35,6 +35,7 @@ pipewire-alsa
 pipewire-pulse
 pipewire-jack
 plasma
+plymouth
 power-profiles-daemon
 qrencode
 sddm
