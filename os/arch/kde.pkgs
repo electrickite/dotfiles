@@ -19,6 +19,7 @@ htop
 hunspell
 hunspell-en_US
 imagemagick
+inter-font
 jq
 kate
 khelpcenter
@@ -45,8 +46,6 @@ system-config-printer
 trash-cli
 ttf-croscore
 ttf-dejavu
-ttf-fira-mono
-ttf-fira-sans
 ttf-freefont
 ttf-jetbrains-mono
 ttf-jetbrains-mono-nerd

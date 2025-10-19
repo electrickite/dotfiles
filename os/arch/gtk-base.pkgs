@@ -28,6 +28,7 @@ htop
 hunspell
 hunspell-en_US
 imagemagick
+inter-font
 jq
 lf
 libertinus-font
@@ -55,8 +56,6 @@ swappy
 trash-cli
 ttf-croscore
 ttf-dejavu
-ttf-fira-mono
-ttf-fira-sans
 ttf-freefont
 ttf-jetbrains-mono
 ttf-jetbrains-mono-nerd
