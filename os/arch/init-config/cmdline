@@ -1,0 +1,1 @@
+rd.shell=0 rd.emergency=reboot amdgpu.seamless=1 scsi_mod.use_blk_mq=1 nowatchdog random.trust_cpu=on rtc_cmos.use_acpi_alarm=1 amdgpu.abmlevel=0 amdgpu.dcdebugmask=0x40000 pcie_aspm=off splash quiet loglevel=3 udev.log-priority=3

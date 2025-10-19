@@ -1,0 +1,7 @@
+[Login]
+KillUserProcesses=yes
+HandleSuspendKey=sleep
+HandleLidSwitch=sleep
+HandleLidSwitchExternalPower=sleep
+IdleAction=sleep
+IdleActionSec=90min

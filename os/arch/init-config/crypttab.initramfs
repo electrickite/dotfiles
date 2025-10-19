@@ -1,0 +1,3 @@
+# Configuration for early boot encrypted block devices.
+# See crypttab(5) for details.
+cryptolvm    UUID=XXX-XXX-XXX    none    luks,discard,no-read-workqueue,no-write-workqueue
