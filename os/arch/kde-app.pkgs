@@ -1,10 +1,8 @@
 akonadi-calendar-tools
 akonadi-import-wizard
 akonadiconsole
-akregator
 ark
 audiocd-kio
-calligra
 colord-kde
 dolphin
 dolphin-plugins
@@ -43,7 +41,6 @@ kio-extras
 kio-zeroconf
 kjournald
 kleopatra
-kmag
 kmail
 kmail-account-wizard
 kmouth
@@ -62,6 +59,7 @@ ktimer
 ktorrent
 kwalletmanager
 kweather
+libreoffice-fresh
 linux-zen-docs
 lsof
 mariadb
@@ -83,7 +81,7 @@ pim-data-exporter
 pim-sieve-editor
 pwgen
 signon-kwallet-extension
-skanlite
+skanpage
 sweeper
 svgpart
 tree
