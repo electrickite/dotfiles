@@ -12,6 +12,7 @@ dosfstools
 ethtool
 fzf
 git
+git-lfs
 gnupg
 gzip
 inetutils

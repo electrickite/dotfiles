@@ -6,6 +6,7 @@ audiocd-kio
 colord-kde
 dolphin
 dolphin-plugins
+espeakup
 falkon
 ffmpegthumbs
 filelight
@@ -42,7 +43,6 @@ kjournald
 kleopatra
 kmail
 kmail-account-wizard
-kmouth
 kolourpaint
 kompare
 konsole
@@ -54,7 +54,6 @@ krecorder
 krfb
 kruler
 ksystemlog
-ktimer
 ktorrent
 kwalletmanager
 kweather
@@ -72,6 +71,7 @@ nmap
 ntfs-3g
 okular
 openbsd-netcat
+orca
 pandoc
 partitionmanager
 perl
@@ -81,6 +81,7 @@ pim-sieve-editor
 pwgen
 signon-kwallet-extension
 skanpage
+speech-dispatcher
 sweeper
 svgpart
 tree
