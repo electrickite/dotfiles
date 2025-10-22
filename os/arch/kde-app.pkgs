@@ -16,11 +16,10 @@ gwenview
 isoimagewriter
 k3b
 kaddressbook
-kalarm
+kalk
 kamoso
 kate
 kbackup
-kcalc
 kcharselect
 kclock
 kcron
@@ -86,3 +85,4 @@ sweeper
 svgpart
 tree
 vlc
+vlc-plugins-all
