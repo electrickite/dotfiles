@@ -49,7 +49,6 @@ alias grep='grep --color=auto'
 alias ip='ip --color=auto'
 alias less='less -R'
 alias ssh='TERM=xterm-256color ssh'
-alias pacupdate='sudo pacman -Syu && aurman -Syu --devel'
 alias todo=todo.sh
 
 _completion_loader todo.sh

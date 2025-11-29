@@ -1,0 +1,9 @@
+#!/bin/sh
+
+if [ "$1" = "clean" ]; then
+  sudo pacman -Sc --noconfirm
+  exit $?
+fi
+
+sudo pacman -Syu
+aurman -Syu --devel

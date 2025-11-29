@@ -6,6 +6,7 @@ gpg
 httpd
 linux-util
 mail
+pacman
 pandoc
 starship
 vdir
