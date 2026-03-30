@@ -36,10 +36,11 @@ pipewire-alsa
 pipewire-pulse
 pipewire-jack
 plasma
+plasma-keyboard
+plasma-login-manager
 plymouth
 power-profiles-daemon
 qrencode
-sddm
 sonnet
 starship
 system-config-printer

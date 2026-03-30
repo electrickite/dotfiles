@@ -332,7 +332,7 @@ install_kde() {
   aur_packages "$(cat "$dotfiles/os/arch/kde.aur.pkgs")"
   stow_packages kde.stow
 
-  sudo systemctl enable sddm.service power-profiles-daemon.service
+  sudo systemctl enable plasmalogin.service power-profiles-daemon.service
   sudo mkdir -p /usr/lib/systemd/system-sleep
   sudo cp -v "$HOME/.dotfiles/os/arch/kde_lock.sh" /usr/lib/systemd/system-sleep/lock_before_suspend.sh
   sudo chmod 755 /usr/lib/systemd/system-sleep/lock_before_suspend.sh
