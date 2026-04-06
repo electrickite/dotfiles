@@ -1,0 +1,10 @@
+[Appearance]
+Blur=true
+Translucency=true
+
+[Dialogs]
+FirstRun=false
+
+[Window]
+ShowSystrayIcon=false
+ShowTabBar=false
