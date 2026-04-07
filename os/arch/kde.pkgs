@@ -29,6 +29,7 @@ libertinus-font
 libsixel
 moreutils
 noto-fonts
+noto-fonts-cjk
 otf-font-awesome
 p7zip
 pipewire
@@ -50,6 +51,7 @@ ttf-dejavu
 ttf-freefont
 ttf-jetbrains-mono
 ttf-jetbrains-mono-nerd
+ttf-opensans
 ttf-roboto
 unrar
 wireplumber
