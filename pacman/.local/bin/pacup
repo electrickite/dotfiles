@@ -1,9 +1,39 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ "$1" = "clean" ]; then
-  sudo pacman -Sc --noconfirm
+  aurman -Sc --noconfirm
+  res=$?
+  if [ $res -eq 0 ] && ls /var/cache/pacman/pkg/download-* >/dev/null 2>&1; then
+    sudo rmdir /var/cache/pacman/pkg/download-* >/dev/null 2>&1
+  fi
+  exit $res
+fi
+
+if [ "$1" = "rebuild" -a "$2" = "python" ]; then
+  aurman -S --rebuild --aur $(comm -12 <(pacman -Qqo /usr/lib/python* | sort) <(pacman -Qqm | sort))
   exit $?
 fi
 
-sudo pacman -Syu
-aurman -Syu --devel
+if [ "$1" = "rebuild" ]; then
+  shift
+  if [ -z "$1" ]; then
+    echo "Missing package name(s)!" >&2
+    exit 1
+  fi
+  aurman -S --rebuild --aur "$@"
+  exit $?
+fi
+
+if [ "$1" = "--help" -o "$1" = "help" ]; then
+  echo "$0 [COMMAND]"
+  echo "Commands: clean, rebuild, rebuild python"
+  exit 0
+fi
+
+if [ -z "$1" -o "$1" = "upgrade" ]; then
+  sudo pacman -Syu && aurman -Su --aur --devel
+  exit $?
+fi
+
+echo "Unknown command!" >&2
+exit 1
