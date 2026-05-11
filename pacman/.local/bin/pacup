@@ -4,7 +4,7 @@ if [ "$1" = "clean" ]; then
   aurman -Sc --noconfirm
   res=$?
   if [ $res -eq 0 ] && sudo ls /var/cache/pacman/pkg/download-* >/dev/null 2>&1; then
-    sudo rmdir -v /var/cache/pacman/pkg/download-* >/dev/null 2>&1
+    sudo rmdir -v /var/cache/pacman/pkg/download-*
   fi
   exit $res
 fi
